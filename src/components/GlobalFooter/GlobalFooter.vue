@@ -2,11 +2,11 @@
   <div class="footer">
     <div class="links">
       <a
-        href="https://pro.loacg.com/"
+        href="http://vue.catchadmin.com/"
         target="_blank"
-      >Pro 首页</a>
+      >CatchAdmin 首页</a>
       <a
-        href="https://github.com/sendya/ant-design-pro-vue"
+        href="https://gitee.com/jaguarjack/catchAdmin"
         target="_blank"
       >
         <a-icon type="github" />
@@ -16,7 +16,7 @@
     </div>
     <div class="copyright">
       Copyright
-      <a-icon type="copyright" /> 2018 <span>白鹭学园技术组出品</span>
+      <a-icon type="copyright" /> 2017~2019 <span>CatchAdmin 开发</span>
     </div>
   </div>
 </template>
