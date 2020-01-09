@@ -35,7 +35,7 @@
           <a-divider type="vertical" />
           <a-dropdown>
             <a-menu slot="overlay">
-              <a-menu-item><a @click="handleAddSon(record)">新增子菜单</a></a-menu-item>
+              <a-menu-item><a @click="handleAddSon(record)">新增</a></a-menu-item>
               <a-menu-item><a @click="handleDel(record)">删除</a></a-menu-item>
             </a-menu>
             <a>更多<a-icon type="down"/></a>
@@ -91,11 +91,6 @@ export default {
           sorter: true
         },
         {
-          title: '更新时间',
-          dataIndex: 'updated_at',
-          sorter: true
-        },
-        {
           title: '操作',
           dataIndex: 'action',
           width: '150px',
@@ -120,7 +115,7 @@ export default {
     },
     handleDel (record) {
       this.$confirm({
-        title: '确定删除' + record.username + '吗?',
+        title: '确定删除' + record.permission_name + '吗?',
         okText: '确定',
         okType: 'danger',
         cancelText: '取消',

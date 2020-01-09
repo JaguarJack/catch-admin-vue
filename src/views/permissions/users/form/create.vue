@@ -102,7 +102,6 @@ export default {
       this.id = record.id
       this.getRoles()
       this.getUser(this.id)
-      console.log(this.defaultRoles)
       const { form: { setFieldsValue } } = this
       this.$nextTick(() => {
         setFieldsValue(pick(record, ['username', 'email']))

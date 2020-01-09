@@ -18,7 +18,7 @@
               type="text"
               placeholder="账户: admin"
               v-decorator="[
-                'username',
+                'email',
                 {rules: [{ required: true, message: '请输入或邮箱地址' }, { validator: handleUsernameOrEmail }], validateTrigger: 'change'}
               ]"
             >
@@ -107,12 +107,12 @@ export default {
 
       state.loginBtn = true
 
-      const validateFieldsKey = ['username', 'password']
+      const validateFieldsKey = ['email', 'password']
 
       validateFields(validateFieldsKey, { force: true }, (err, values) => {
         if (!err) {
           const loginParams = { ...values }
-          loginParams['email'] = values.username
+          loginParams['email'] = values.email
           loginParams.password = values.password
           Login(loginParams)
             .then((res) => this.loginSuccess(res))

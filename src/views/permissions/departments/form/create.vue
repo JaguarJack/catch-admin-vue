@@ -10,76 +10,47 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item
-          label="菜单名称"
+          label="部门名称"
           type="text"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
         >
-          <a-input allowClear v-decorator="['permission_name', {rules: [{required: true, min: 2, message: '请输入至少3个字符！'}]}]" />
+          <a-input allowClear v-decorator="['department_name', {rules: [{required: true, min: 2, message: '请输入至少3个字符！'}]}]" />
         </a-form-item>
         <a-form-item
-          label="菜单图标"
+          label="部门负责人"
           type="text"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
         >
-          <a-select
-            showSearch
-            placeholder="选择图标"
-            optionFilterProp="children"
-            style="width: 320px"
-            v-decorator="['icon']"
-          >
-            <a-select-option v-for="(icon, key) in icons" :key="`${key}-${icon}`" :value="icon">
-              {{ icon }} <a-icon :type="icon" :style="{ fontSize: '16px' }" />
-            </a-select-option>
-          </a-select>
+          <a-input allowClear v-decorator="['principal']" />
         </a-form-item>
         <a-form-item
-          label="菜单路由"
-          type="text"
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-        >
-          <a-input allowClear v-decorator="['route', {rules: [{required: true, min: 2, message: '请输入至少3个字符！'}]}]" />
-        </a-form-item>
-        <a-form-item
-          label="菜单标识"
+          label="联系方式"
           type="text"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           :filterOption="filterOption"
         >
-          <a-input allowClear v-decorator="['permission_mark',{rules: [{required: true, min: 2, message: '请输入至少3个字符！'}]}]" />
+          <a-input allowClear v-decorator="['mobile']" />
+        </a-form-item>
+        <a-form-item
+          label="邮箱"
+          type="text"
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          :filterOption="filterOption"
+        >
+          <a-input allowClear v-decorator="['email']" />
         </a-form-item>
         <a-form-item
           :label-col="labelCol"
           :wrapper-col="wrapperCol"
-          label="请求方法"
+          label="状态"
         >
-          <a-select v-decorator="['method',{initialValue:methodValue},{rules: [{required: true}]}]">
-            <a-select-option value="get">
-              get
-            </a-select-option>
-            <a-select-option value="post">
-              post
-            </a-select-option>
-            <a-select-option value="put">
-              put
-            </a-select-option>
-            <a-select-option value="delete">
-              delete
-            </a-select-option>
-          </a-select>
-        </a-form-item>
-        <a-form-item
-          :label-col="labelCol"
-          :wrapper-col="wrapperCol"
-          label="类型"
-        >
-          <a-radio-group buttonStyle="solid" v-decorator="['type',{initialValue: typeValue},{rules: [{required: true}]}]">
-            <a-radio-button :value="1">菜单</a-radio-button>
-            <a-radio-button :value="2">按钮</a-radio-button>
+          <a-radio-group v-decorator="['status',{initialValue: status},{rules: [{required: true}]}]">
+            <a-radio :value="1">启用</a-radio>
+            <a-radio :value="2">禁用</a-radio>
           </a-radio-group>
         </a-form-item>
         <a-form-item
@@ -95,9 +66,8 @@
 </template>
 
 <script>
-import { store, update } from '@/api/permission'
+import { store, update } from '@/api/departments'
 import pick from 'lodash.pick'
-import icons from './icons'
 
 export default {
   data () {
@@ -111,38 +81,35 @@ export default {
         sm: { span: 13 }
       },
       visible: false,
-      title: '新建菜单',
+      title: '新建部门',
       confirmLoading: false,
       id: null,
       parent_id: 0,
-      methodValue: 'GET',
-      typeValue: 2,
+      status: 1,
       form: this.$form.createForm(this),
-      sort: 1,
-      icons
+      sort: 1
     }
   },
   methods: {
     add () {
       this.visible = true
-      this.title = '新增菜单'
+      this.title = '新增部门'
     },
     edit (record) {
       this.visible = true
-      this.title = '编辑菜单'
+      this.title = '编辑部门'
       const { form: { setFieldsValue } } = this
       this.id = record.id
       this.$nextTick(() => {
-        setFieldsValue(pick(record, ['permission_name', 'route', 'permission_mark', 'method', 'type', 'sort', 'icon']))
+        setFieldsValue(pick(record, ['department_name', 'principal', 'mobile', 'email', 'status', 'sort']))
       })
-      this.methodValue = record.method
-      this.typeValue = record.type
+      // this.status = record.status
       this.sort = record.sort
-      console.log(record.sort)
+      console.log(record.status)
     },
     addSon (record) {
       this.visible = true
-      this.title = '新增子菜单 (' + record.permission_name + ')'
+      this.title = '新增子部门 (' + record.department_name + ')'
       this.parent_id = record.id
     },
     handleSubmit () {
@@ -182,8 +149,7 @@ export default {
       this.id = null
       this.confirmLoading = false
       this.parent_id = 0
-      this.methodValue = 'GET'
-      this.typeValue = '2'
+      this.status = '2'
       this.sort = 1
       this.form.resetFields()
     },
