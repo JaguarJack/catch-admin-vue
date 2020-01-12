@@ -72,7 +72,7 @@ export default {
       columns: [
         {
           title: '部门名称',
-          dataIndex: 'department_name'
+          dataIndex: 'title'
         },
         {
           title: '排序',

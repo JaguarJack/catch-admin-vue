@@ -35,7 +35,7 @@
           <a-divider type="vertical" />
           <a-dropdown>
             <a-menu slot="overlay">
-              <a-menu-item><a @click="handleAddSon(record)">新增子角色</a></a-menu-item>
+              <a-menu-item><a @click="handleAddSon(record)">新增</a></a-menu-item>
               <a-menu-item><a @click="handleDel(record)">删除</a></a-menu-item>
             </a-menu>
             <a>更多<a-icon type="down"/></a>

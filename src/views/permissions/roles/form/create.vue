@@ -38,6 +38,39 @@
           >
           </a-tree>
         </a-form-item>
+        <a-form-item
+          label="数据范围"
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+        >
+          <a-select
+            style="width: 100%"
+            @change="handleChange"
+            v-decorator="['data_range', {initialValue: range},{rules: [{required: true, message: '请选择数据范围'}]}]"
+          >
+            <a-select-option v-for="i in this.dataRange" :key="i.id">{{ i.text }}</a-select-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item
+          label="数据授权"
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          v-if="show"
+        >
+          <a-tree-select
+            style="width: 320px"
+            :dropdownStyle="{ maxHeight: '400px', overflow: 'auto' }"
+            :treeData="departments"
+            placeholder="请选择部门"
+            allowClear
+            treeCheckable
+            treeDefaultExpandAll
+            @change="onDepartmentChange"
+            :showCheckedStrategy="SHOW_PARENT"
+            v-decorator="['departments', {initialValue: department_ids},{rules: [{required: true, message: '请选择部门'}]}]"
+          >
+          </a-tree-select>
+        </a-form-item>
       </a-form>
     </a-spin>
   </a-modal>
@@ -47,6 +80,9 @@
 import { store, update, read } from '@/api/role'
 import pick from 'lodash.pick'
 import { getPermissionList } from '@/api/permission'
+import { getDepartmentList } from '@/api/departments'
+import { TreeSelect } from 'ant-design-vue'
+const SHOW_PARENT = TreeSelect.SHOW_PAREN
 
 export default {
   data () {
@@ -66,7 +102,20 @@ export default {
       parent_id: 0,
       form: this.$form.createForm(this),
       permissions: [],
-      permissionids: []
+      permissionids: [],
+      show: false,
+      dataRange: [
+        { id: 0, text: '请选择数据权限' },
+        { id: 1, text: '全部数据权限' },
+        { id: 2, text: '自定义数据权限' },
+        { id: 3, text: '仅本人数据权限' },
+        { id: 4, text: '本部门数据权限' },
+        { id: 5, text: '部门以及以下数据权限' }
+      ],
+      range: 0,
+      departments: [],
+      department_ids: [],
+      SHOW_PARENT
     }
   },
   methods: {
@@ -80,6 +129,7 @@ export default {
       this.title = '编辑角色'
       const { form: { setFieldsValue } } = this
       this.id = record.id
+      this.range = record.data_range
       this.getRolePermissions(this.id)
       this.getPermissions(record.parent_id > 0 ? { role_id: record.parent_id } : {})
       this.$nextTick(() => {
@@ -101,9 +151,16 @@ export default {
         })
       })
     },
+    // 获取权限列表
     getPermissions (params) {
       getPermissionList(params).then(res => {
         this.permissions = this.resetPermissions(res.data)
+      })
+    },
+    // 获取部门列表
+    getDepartments () {
+      getDepartmentList().then(res => {
+        this.departments = this.resetDepartments(res.data)
       })
     },
     handleSubmit () {
@@ -166,6 +223,16 @@ export default {
       })
       return permissions
     },
+    // 重组部门结构
+    resetDepartments (departments) {
+      departments.map(item => {
+        item.value = item.id
+        if (item.children) {
+          this.resetDepartments(item.children)
+        }
+      })
+      return departments
+    },
     onCheck (checkedKeys, info) {
       const data = info.node.dataRef
       const ids = []
@@ -186,6 +253,17 @@ export default {
           this.getAllLeaf(item.children, ids)
         }
       })
+    },
+    handleChange (value) {
+      if (value === 2) {
+        this.getDepartments()
+        this.show = true
+      } else {
+        this.show = false
+      }
+    },
+    onDepartmentChange (value, node, extra) {
+      this.roleids = value
     }
   }
 }

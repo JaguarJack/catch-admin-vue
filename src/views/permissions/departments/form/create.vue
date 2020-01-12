@@ -109,7 +109,7 @@ export default {
     },
     addSon (record) {
       this.visible = true
-      this.title = '新增子部门 (' + record.department_name + ')'
+      this.title = '新增子部门 (' + record.title + ')'
       this.parent_id = record.id
     },
     handleSubmit () {
@@ -149,7 +149,7 @@ export default {
       this.id = null
       this.confirmLoading = false
       this.parent_id = 0
-      this.status = '2'
+      this.status = 1
       this.sort = 1
       this.form.resetFields()
     },

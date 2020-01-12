@@ -42,3 +42,10 @@ export function del (id) {
     method: 'delete'
   })
 }
+
+export function getAllJobs () {
+  return axios({
+    url: '/jobs/all',
+    method: 'get'
+  })
+}

@@ -183,7 +183,7 @@ export default {
       this.confirmLoading = false
       this.parent_id = 0
       this.methodValue = 'GET'
-      this.typeValue = '2'
+      this.typeValue = 2
       this.sort = 1
       this.form.resetFields()
     },

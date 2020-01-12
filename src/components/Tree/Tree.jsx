@@ -48,7 +48,7 @@ export default {
     },
     renderMenuItem (item) {
       return (
-        <Item key={item.key}>
+        <Item key={item.id}>
           { this.renderIcon(item.icon) }
           { item.title }
           <a class="btn" style="width: 20px;z-index:1300" {...{ on: { click: () => this.handlePlus(item) } }}><a-icon type="plus"/></a>
@@ -86,7 +86,7 @@ export default {
       })
 
       const title = (
-        <span slot="title">
+        <span slot="title" {...{ on: { click: item => this.$emit('click', item) } }}>
           { this.renderIcon(item.icon) }
           <span>{ item.title }</span>
         </span>
