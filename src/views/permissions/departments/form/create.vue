@@ -15,7 +15,7 @@
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
         >
-          <a-input allowClear v-decorator="['department_name', {rules: [{required: true, min: 2, message: '请输入至少3个字符！'}]}]" />
+          <a-input allowClear v-decorator="['title', {rules: [{required: true, min: 2, message: '请输入至少3个字符！'}]}]" />
         </a-form-item>
         <a-form-item
           label="部门负责人"
@@ -100,12 +100,10 @@ export default {
       this.title = '编辑部门'
       const { form: { setFieldsValue } } = this
       this.id = record.id
+      console.log(record)
       this.$nextTick(() => {
-        setFieldsValue(pick(record, ['department_name', 'principal', 'mobile', 'email', 'status', 'sort']))
+        setFieldsValue(pick(record, ['title', 'principal', 'mobile', 'email', 'status', 'sort']))
       })
-      // this.status = record.status
-      this.sort = record.sort
-      console.log(record.status)
     },
     addSon (record) {
       this.visible = true
@@ -116,23 +114,21 @@ export default {
       const { form: { validateFields } } = this
       if (this.id) {
         validateFields((errors, values) => {
+          values['department_name'] = values['title']
           if (!errors) {
             this.confirmLoading = true
-            update(this.id, values).then((res) => {
-              this.refresh(res.message)
-            }).catch(err => this.failed(err))
-          }
-        })
-      } else {
-        validateFields((errors, values) => {
-          if (!errors) {
-            this.confirmLoading = true
-            if (this.parent_id > 0) {
-              values['parent_id'] = this.parent_id
+            if (this.id) {
+              update(this.id, values).then((res) => {
+                this.refresh(res.message)
+              }).catch(err => this.failed(err))
+            } else {
+              if (this.parent_id > 0) {
+                values['parent_id'] = this.parent_id
+              }
+              store(values).then((res) => {
+                this.refresh(res.message)
+              }).catch(err => this.failed(err))
             }
-            store(values).then((res) => {
-              this.refresh(res.message)
-            }).catch(err => this.failed(err))
           }
         })
       }
