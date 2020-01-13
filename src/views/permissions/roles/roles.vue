@@ -78,11 +78,6 @@ export default {
           sorter: true
         },
         {
-          title: '更新时间',
-          dataIndex: 'updated_at',
-          sorter: true
-        },
-        {
           title: '操作',
           dataIndex: 'action',
           width: '150px',

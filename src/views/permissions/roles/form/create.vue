@@ -42,11 +42,13 @@
           label="数据范围"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
+          placeholder="请选择数据范围"
         >
           <a-select
             style="width: 100%"
             @change="handleChange"
-            v-decorator="['data_range', {initialValue: range},{rules: [{required: true, message: '请选择数据范围'}]}]"
+            placeholder="请选择数据范围"
+            v-decorator="['data_range', {initialValue: range}]"
           >
             <a-select-option v-for="i in this.dataRange" :key="i.id">{{ i.text }}</a-select-option>
           </a-select>
@@ -63,10 +65,9 @@
             :treeData="departments"
             placeholder="请选择部门"
             allowClear
-            treeCheckable
+            multiple
             treeDefaultExpandAll
             @change="onDepartmentChange"
-            :showCheckedStrategy="SHOW_PARENT"
             v-decorator="['departments', {initialValue: department_ids},{rules: [{required: true, message: '请选择部门'}]}]"
           >
           </a-tree-select>
@@ -81,8 +82,6 @@ import { store, update, read } from '@/api/role'
 import pick from 'lodash.pick'
 import { getPermissionList } from '@/api/permission'
 import { getDepartmentList } from '@/api/departments'
-import { TreeSelect } from 'ant-design-vue'
-const SHOW_PARENT = TreeSelect.SHOW_PAREN
 
 export default {
   data () {
@@ -105,7 +104,6 @@ export default {
       permissionids: [],
       show: false,
       dataRange: [
-        { id: 0, text: '请选择数据权限' },
         { id: 1, text: '全部数据权限' },
         { id: 2, text: '自定义数据权限' },
         { id: 3, text: '仅本人数据权限' },
@@ -114,8 +112,7 @@ export default {
       ],
       range: 0,
       departments: [],
-      department_ids: [],
-      SHOW_PARENT
+      department_ids: []
     }
   },
   methods: {
