@@ -1,6 +1,6 @@
 <template>
   <a-modal
-    title="新建用户"
+    :title="title"
     :width="640"
     :visible="visible"
     :confirmLoading="confirmLoading"
@@ -29,14 +29,14 @@
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
         >
-          <a-input allowClear allotype="password" v-decorator="['password', {rules: [{required: required, min: 5, message: '请输入密码'}]}]" />
+          <a-input allowClear allotype="password" v-decorator="['password', {rules: [{required: password_required, min: 5, message: '请输入密码'}]}]" />
         </a-form-item>
         <a-form-item
           label="确认密码"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
         >
-          <a-input allowClear type="password" v-decorator="['passwordConfirm', {rules: [{required: required, min: 5, message: '请确认密码'}]}]" />
+          <a-input allowClear type="password" v-decorator="['passwordConfirm', {rules: [{required: password_required, min: 5, message: '请确认密码'}]}]" />
         </a-form-item>
         <a-form-item
           label="角色"
@@ -47,12 +47,11 @@
             style="width: 320px"
             :dropdownStyle="{ maxHeight: '400px', overflow: 'auto' }"
             :treeData="roles"
+            multiple
             placeholder="请选择角色"
             allowClear
-            treeCheckable
             treeDefaultExpandAll
             @change="onChange"
-            :showCheckedStrategy="SHOW_PARENT"
             v-decorator="['roles', {initialValue: roleids},{rules: [{required: true, message: '请选择角色'}]}]"
           >
           </a-tree-select>
@@ -69,7 +68,7 @@
             placeholder="请选择部门"
             allowClear
             treeDefaultExpandAll
-            @change="onDepartmentChange"
+            @select="onDepartmentSelect"
             v-decorator="['department_id', {initialValue: department.has},{rules: [{required: true, message: '请选择部门'}]}]"
           >
           </a-tree-select>
@@ -103,8 +102,6 @@ import pick from 'lodash.pick'
 import { getAllJobs } from '@/api/jobs'
 import { getDepartmentList } from '@/api/departments'
 
-import { TreeSelect } from 'ant-design-vue'
-const SHOW_PARENT = TreeSelect.SHOW_PARENT
 export default {
   data () {
     return {
@@ -118,13 +115,13 @@ export default {
       },
       visible: false,
       confirmLoading: false,
+      title: '新建用户',
       id: null,
       form: this.$form.createForm(this),
       roles: [],
       defaultRoles: [],
       roleids: [],
-      SHOW_PARENT,
-      required: true,
+      password_required: true,
       job: {
         list: [],
         has: [],
@@ -139,24 +136,30 @@ export default {
   },
   methods: {
     add () {
-      this.visible = true
-      this.getRoles()
-      this.getJobs()
-      this.getDepartments()
+      this.init()
+      this.title = '新建用户'
     },
     edit (record) {
-      this.visible = true
-      this.required = false
+      this.password_required = false
+      this.title = '编辑用户'
       this.id = record.id
-      this.department.has = 'value_' + record.department_id
-      this.getRoles()
-      this.getJobs()
-      this.getDepartments()
-      this.getUser(this.id)
+      this.init()
+      if (record.department_id) {
+        this.department.has = String(record.department_id)
+      }
       const { form: { setFieldsValue } } = this
       this.$nextTick(() => {
         setFieldsValue(pick(record, ['username', 'email']))
       })
+    },
+    init () {
+      this.visible = true
+      this.getRoles()
+      this.getJobs()
+      this.getDepartments()
+      if (this.id) {
+        this.getUserRoles(this.id)
+      }
     },
     handleEmail (rule, value, callback) {
       if (!validEmail(value)) {
@@ -177,7 +180,7 @@ export default {
       })
     },
     // 获取用户角色
-    getUser (id) {
+    getUserRoles (id) {
       read(id).then(res => {
         const roles = res.data.roles
         roles.map(item => {
@@ -209,7 +212,7 @@ export default {
     // 重组部门结构
     resetDepartments (departments) {
       departments.map(item => {
-        item.value = 'value_' + item.id
+        item.value = String(item.id)
         if (item.children) {
           // item.disabled = true
           this.resetDepartments(item.children)
@@ -225,7 +228,7 @@ export default {
             this.confirmLoading = true
             values['roles'] = this.roleids
             values['jobs'] = this.job.ids
-            values['department_id'] = this.department.id.split('_')[1]
+            values['department_id'] = this.department.id
             update(this.id, values).then((res) => {
               this.refresh(res.message)
             }).catch(err => this.failed(err))
@@ -235,7 +238,7 @@ export default {
         validateFields((errors, values) => {
           if (!errors) {
             values['jobs'] = this.job.ids
-            values['department_id'] = this.department.id.split('_')[1]
+            values['department_id'] = this.department.id
             this.confirmLoading = true
             store(values).then((res) => {
               this.refresh(res.message)
@@ -273,9 +276,17 @@ export default {
     onChange (value, node, extra) {
       this.roleids = value
     },
-    onDepartmentChange (value) {
-      console.log(value)
-      this.department.id = value
+    onDepartmentSelect (value, node, extra) {
+      console.log(node)
+      if (node.dataRef.parent_id === 0 || node.dataRef.children && node.dataRef.children.length > 0) {
+        this.$message.error('不允许选择父节点')
+        this.$nextTick(() => {
+          this.form.setFieldsValue({ department_id: null })
+        })
+        return false
+      } else {
+        this.department.id = value
+      }
     },
     handleJobsChange (value) {
       this.job.ids = value
