@@ -2,15 +2,17 @@
   <page-view :avatar="avatar" :title="false">
     <div slot="headerContent">
       <div class="title">{{ timeFix }}，{{ user.name }}<span class="welcome-text">，{{ welcome }}</span></div>
-      <div>前端工程师 | 蚂蚁金服 - 某某某事业群 - VUE平台</div>
+      <div>欢迎使用 CatchAdmin 后台管理</div>
     </div>
     <div slot="extra">
       <a-row class="more-info">
         <a-col :span="8">
-          <head-info title="项目" content="56" :center="false" :bordered="false"/>
+          <head-info title="GITHUB" content="" :center="false" :bordered="false"/>
         </a-col>
         <a-col :span="8">
-          <head-info title="团队排名" content="8/24" :center="false" :bordered="false"/>
+          <head-info title="GITEE" content="8/24" :center="false" :bordered="false"/>
+          <svg :xmlns='svg' version="1.1">
+          </svg>
         </a-col>
         <a-col :span="8">
           <head-info title="项目数" content="2,223" :center="false" />
@@ -139,7 +141,7 @@ export default {
       radarLoading: true,
       activities: [],
       teams: [],
-
+      svg: 'https://img.shields.io/github/stars/yanwenwu/catch-admin.svg',
       // data
       axis1Opts: {
         dataKey: 'item',

@@ -112,26 +112,24 @@ export default {
     },
     handleSubmit () {
       const { form: { validateFields } } = this
-      if (this.id) {
-        validateFields((errors, values) => {
-          values['department_name'] = values['title']
-          if (!errors) {
-            this.confirmLoading = true
-            if (this.id) {
-              update(this.id, values).then((res) => {
-                this.refresh(res.message)
-              }).catch(err => this.failed(err))
-            } else {
-              if (this.parent_id > 0) {
-                values['parent_id'] = this.parent_id
-              }
-              store(values).then((res) => {
-                this.refresh(res.message)
-              }).catch(err => this.failed(err))
+      validateFields((errors, values) => {
+        values['department_name'] = values['title']
+        if (!errors) {
+          this.confirmLoading = true
+          if (this.id) {
+            update(this.id, values).then((res) => {
+              this.refresh(res.message)
+            }).catch(err => this.failed(err))
+          } else {
+            if (this.parent_id > 0) {
+              values['parent_id'] = this.parent_id
             }
+            store(values).then((res) => {
+              this.refresh(res.message)
+            }).catch(err => this.failed(err))
           }
-        })
-      }
+        }
+      })
     },
     failed (errors) {
       this.$notification['error']({

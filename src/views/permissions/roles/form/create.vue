@@ -65,6 +65,7 @@
             :treeData="departments"
             placeholder="请选择部门"
             allowClear
+            treeCheckable
             multiple
             treeDefaultExpandAll
             @change="onDepartmentChange"
@@ -127,6 +128,10 @@ export default {
       const { form: { setFieldsValue } } = this
       this.id = record.id
       this.range = record.data_range
+      if (this.range === 2) {
+        this.show = true
+      }
+      this.getDepartments()
       this.getRolePermissions(this.id)
       this.getPermissions(record.parent_id > 0 ? { role_id: record.parent_id } : {})
       this.$nextTick(() => {
@@ -145,6 +150,10 @@ export default {
         const permissions = res.data.permissions
         permissions.map(item => {
           this.permissionids.push(item.id)
+        })
+        const departments = res.data.departments
+        departments.map(item => {
+          this.department_ids.push(String(item.id))
         })
       })
     },
@@ -199,6 +208,8 @@ export default {
       this.confirmLoading = false
       this.parent_id = 0
       this.permissionids = []
+      this.department_ids = []
+      this.show = false
       this.form.resetFields()
     },
     refresh (message) {
