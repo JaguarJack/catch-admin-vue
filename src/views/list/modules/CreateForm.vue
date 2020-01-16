@@ -69,7 +69,6 @@ export default {
       this.confirmLoading = true
       validateFields((errors, values) => {
         if (!errors) {
-          console.log('values', values)
           setTimeout(() => {
             this.visible = false
             this.confirmLoading = false

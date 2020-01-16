@@ -25,7 +25,6 @@ export default {
       }
       this.closeThat(val)
     }).$on('rename', ({ key, name }) => {
-      console.log('rename', key, name)
       try {
         const item = this.pages.find(item => item.path === key)
         item.meta.customTitle = name

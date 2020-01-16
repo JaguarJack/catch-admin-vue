@@ -11,8 +11,6 @@
         </a-col>
         <a-col :span="8">
           <head-info title="GITEE" content="8/24" :center="false" :bordered="false"/>
-          <svg :xmlns='svg' version="1.1">
-          </svg>
         </a-col>
         <a-col :span="8">
           <head-info title="项目数" content="2,223" :center="false" />
