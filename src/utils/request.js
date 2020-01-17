@@ -63,16 +63,16 @@ service.interceptors.response.use((response) => {
           message: response.data.message
         })
       }, 1000)
-    }
-    // 权限拦截
-    if (response.data.code === 10003) {
+    } else if (response.data.code === 10003) {
       notification.error({
         message: response.data.message
       })
+    } else {
+      return Promise.reject(new Error(response.data.message) || 'Error')
     }
-    return Promise.reject(new Error(response.data.message) || 'Error')
+  } else {
+    return response.data
   }
-  return response.data
 }, err)
 
 const installer = {
