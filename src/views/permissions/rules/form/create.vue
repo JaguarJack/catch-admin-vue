@@ -44,6 +44,15 @@
           <a-input allowClear v-decorator="['route', {rules: [{required: true, min: 2, message: '请输入至少3个字符！'}]}]" />
         </a-form-item>
         <a-form-item
+          label="模块"
+          type="text"
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          v-if="module_show"
+        >
+          <a-input allowClear v-decorator="['module', {rules: [{required: true, min: 2, message: '请输入至少3个字符！'}]}]" />
+        </a-form-item>
+        <a-form-item
           label="菜单标识"
           type="text"
           :labelCol="labelCol"
@@ -119,6 +128,7 @@ export default {
       typeValue: 2,
       form: this.$form.createForm(this),
       sort: 1,
+      module_show: true,
       icons
     }
   },
@@ -133,17 +143,20 @@ export default {
       const { form: { setFieldsValue } } = this
       this.id = record.id
       this.$nextTick(() => {
-        setFieldsValue(pick(record, ['permission_name', 'route', 'permission_mark', 'method', 'type', 'sort', 'icon']))
+        setFieldsValue(pick(record, ['permission_name', 'route', 'module', 'permission_mark', 'method', 'type', 'sort', 'icon']))
       })
       this.methodValue = record.method
       this.typeValue = record.type
       this.sort = record.sort
-      console.log(record.sort)
+      if (record.parent_id > 0) {
+        this.module_show = false
+      }
     },
     addSon (record) {
       this.visible = true
       this.title = '新增子菜单 (' + record.permission_name + ')'
       this.parent_id = record.id
+      this.module_show = false
     },
     handleSubmit () {
       const { form: { validateFields } } = this
