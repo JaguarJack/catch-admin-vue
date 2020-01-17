@@ -8,7 +8,7 @@ import router from '@/router'
 
 // 创建 axios 实例
 const service = axios.create({
-  baseURL: 'http://api.catchadmin.com/',
+  baseURL: process.env.VUE_APP_API_BASE_URL, // api base_url
   timeout: 6000, // 请求超时时间
   headers: {
     'X-Requested-with': 'XMLHttpRequest'
