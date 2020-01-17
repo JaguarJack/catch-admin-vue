@@ -17,26 +17,13 @@ const service = axios.create({
 
 const err = (error) => {
   if (error.response) {
-    const data = error.response.data
     const token = Vue.ls.get(ACCESS_TOKEN)
-    if (error.response.status === 403) {
-      notification.error({
-        message: 'Forbidden',
-        description: data.message
+    if (token) {
+      store.dispatch('Logout').then(() => {
+        setTimeout(() => {
+          window.location.reload()
+        }, 1500)
       })
-    }
-    if (error.response.status === 401 && !(data.result && data.result.isLogin)) {
-      notification.error({
-        message: 'Unauthorized',
-        description: 'Authorization verification failed'
-      })
-      if (token) {
-        store.dispatch('Logout').then(() => {
-          setTimeout(() => {
-            window.location.reload()
-          }, 1500)
-        })
-      }
     }
   }
   return Promise.reject(error)
@@ -63,13 +50,12 @@ service.interceptors.response.use((response) => {
           message: response.data.message
         })
       }, 1000)
-    } else if (response.data.code === 10003) {
+    } else {
       notification.error({
         message: response.data.message
       })
-    } else {
-      return Promise.reject(new Error(response.data.message) || 'Error')
     }
+    return Promise.reject(new Error('error'))
   } else {
     return response.data
   }
