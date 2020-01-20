@@ -16,10 +16,10 @@
             <a-input
               size="large"
               type="text"
-              placeholder="账户: admin"
+              placeholder="账户: admin@gmail.com"
               v-decorator="[
                 'email',
-                {rules: [{ required: true, message: '请输入或邮箱地址' }, { validator: handleUsernameOrEmail }], validateTrigger: 'change'}
+                {rules: [{ required: true, message: '请输入邮箱地址' }, { validator: handleEmail }], validateTrigger: 'blur'}
               ]"
             >
               <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
@@ -31,7 +31,7 @@
               size="large"
               type="password"
               autocomplete="false"
-              placeholder="密码: admin or ant.design"
+              placeholder="密码: admin"
               v-decorator="[
                 'password',
                 {rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur'}
@@ -87,13 +87,10 @@ export default {
   methods: {
     ...mapActions(['Login', 'Logout']),
     // handler
-    handleUsernameOrEmail (rule, value, callback) {
-      const { state } = this
+    handleEmail (rule, value, callback) {
       const regex = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/
-      if (regex.test(value)) {
-        state.loginType = 0
-      } else {
-        state.loginType = 1
+      if (!regex.test(value)) {
+        callback(new Error('邮箱地址不正确'))
       }
       callback()
     },

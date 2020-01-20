@@ -128,7 +128,7 @@ export default {
       ],
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
-        return this.$http.get('/role', {
+        return this.$http.get('/roles', {
           params: Object.assign(parameter, this.queryParam)
         }).then(res => {
           return res.result
