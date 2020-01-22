@@ -53,7 +53,7 @@
           <a-input allowClear v-decorator="['module', {rules: [{required: true, min: 2, message: '请输入至少3个字符！'}]}]" />
         </a-form-item>
         <a-form-item
-          label="菜单标识"
+          label="权限标识"
           type="text"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
