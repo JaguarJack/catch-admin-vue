@@ -55,7 +55,7 @@ export const asyncRouterMap = [
             name: 'rules',
             hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
             component: () => import('@/views/permissions/rules/rules'),
-            meta: { title: '菜单管理', keepAlive: true, permission: [ 'permission' ] }
+            meta: { title: '菜单管理', keepAlive: true, permission: [ 'rule' ] }
           },
           {
             path: '/permissions/departments',
