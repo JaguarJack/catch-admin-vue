@@ -107,6 +107,13 @@ export const asyncRouterMap = [
                 meta: { title: '操作日志', keepAlive: true, system: [ 'operateLog/index' ] }
               }
             ]
+          },
+          {
+            path: '/system/attachments',
+            name: 'attachments',
+            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
+            component: () => import('@/views/system/attachments/index'),
+            meta: { title: '附件管理', keepAlive: true, system: [ 'attachments' ] }
           }
         ]
       }

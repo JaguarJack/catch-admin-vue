@@ -113,7 +113,6 @@ export default {
           loginParams.password = values.password
           Login(loginParams)
             .then((res) => this.loginSuccess(res))
-            .catch(err => this.requestFailed(err))
             .finally(() => {
               state.loginBtn = false
             })
