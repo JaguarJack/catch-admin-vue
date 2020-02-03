@@ -50,6 +50,12 @@
       :rowSelection="options.rowSelection"
       showPagination="auto"
     >
+      <span slot="status" slot-scope="text,record">
+        <template>
+          <a-switch checkedChildren="启用" :value="record.id" unCheckedChildren="禁用" @change="onSwitchClick" v-if="text === 1"/>
+          <a-switch checkedChildren="启用" v-else :value="record.id" unCheckedChildren="禁用" @change="onSwitchClick"/>
+        </template>
+      </span>
       <span slot="action" slot-scope="text, record">
         <template>
           <a @click="handleEdit(record)">编辑</a>
@@ -90,7 +96,8 @@ export default {
         {
           title: '状态',
           dataIndex: 'status',
-          customRender: this.renderStatus
+          scopedSlots: { customRender: 'status' }
+          // customRender: this.renderStatus
         },
         {
           title: '创建时间',
@@ -173,7 +180,10 @@ export default {
       })
     },
     multiAble () {
-      swtichStatus(this.selectedRowKeys.join(',')).then((res) => {
+      this.onSwitchStatus(this.selectedRowKeys.join(','))
+    },
+    onSwitchStatus (id) {
+      swtichStatus(id).then((res) => {
         this.$notification['success']({
           message: res.message,
           duration: 4
@@ -181,6 +191,13 @@ export default {
         this.onSelectChange([], [])
         this.handleOk()
       })
+    },
+    onSwitchClick (checked, event) {
+      let id = event.target.value
+      if (!id) {
+        id = event.target.offsetParent.value
+      }
+      this.onSwitchStatus(id)
     },
     onSelectChange (selectedRowKeys, selectedRows) {
       this.selectedRowKeys = selectedRowKeys
