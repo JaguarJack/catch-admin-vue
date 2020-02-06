@@ -21,8 +21,7 @@
       :bordered="true"
       :columns="columns"
       :data="loadData"
-      :alert="options.alert"
-      :rowSelection="options.rowSelection"
+      :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
       showPagination="auto"
     >
       <img slot="url" slot-scope="text" :src="text"/>
@@ -104,15 +103,6 @@ export default {
           .then(res => {
             return res
           })
-      },
-      selectTables: [],
-      // custom table alert & rowSelection
-      options: {
-        alert: { show: false, clear: () => { this.selectTables = [] } },
-        rowSelection: {
-          selectedRowKeys: this.selectedRowKeys,
-          onChange: this.onSelectChange
-        }
       }
     }
   },
@@ -140,7 +130,6 @@ export default {
       this.$refs.table.refresh(true)
     },
     multiDel () {
-      console.log(this.selectedRowKeys)
       this.$confirm({
         title: '确定批量删除吗?',
         okText: '确定',

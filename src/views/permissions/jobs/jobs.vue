@@ -44,8 +44,7 @@
       :bordered="true"
       :columns="columns"
       :data="loadData"
-      :alert="options.alert"
-      :rowSelection="options.rowSelection"
+      :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
       showPagination="auto"
     >
       <span slot="action" slot-scope="text, record">
@@ -109,15 +108,7 @@ export default {
             return res
           })
       },
-      selectedRowKeys: [],
-      // custom table alert & rowSelection
-      options: {
-        alert: { show: true, clear: () => { this.selectedRowKeys = [] } },
-        rowSelection: {
-          selectedRowKeys: this.selectedRowKeys,
-          onChange: this.onSelectChange
-        }
-      }
+      selectedRowKeys: []
     }
   },
   created () {
