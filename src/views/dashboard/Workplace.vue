@@ -1,7 +1,7 @@
 <template>
   <page-view :avatar="avatar" :title="false">
     <div slot="headerContent">
-      <div class="title">{{ timeFix }}，{{ user.name }}<span class="welcome-text">，{{ welcome }}</span></div>
+      <div class="title">{{ timeFix }}，{{ user.username }}<span class="welcome-text">，{{ welcome }}</span></div>
       <div>欢迎使用 CatchAdmin 后台管理</div>
     </div>
     <div slot="extra">

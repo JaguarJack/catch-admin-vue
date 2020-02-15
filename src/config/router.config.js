@@ -90,21 +90,22 @@ export const asyncRouterMap = [
           {
             path: '/system/log',
             name: 'log',
-            meta: { title: '日志管理', keepAlive: true, permission: [ 'log' ] },
+            component: PageView,
+            meta: { title: '日志管理', permission: [ 'log' ] },
             children: [
               {
                 path: '/system/log/login',
                 name: 'loginLog',
                 hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
                 component: () => import('@/views/system/log/login'),
-                meta: { title: '登录日志', keepAlive: true, system: [ 'loginLog/index' ] }
+                meta: { title: '登录日志', permission: ['loginLog/index'] }
               },
               {
                 path: '/system/log/operate',
                 name: 'operateLog',
                 hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
                 component: () => import('@/views/system/log/operate'),
-                meta: { title: '操作日志', keepAlive: true, system: [ 'operateLog/index' ] }
+                meta: { title: '操作日志', system: [ 'operateLog/index' ] }
               }
             ]
           },

@@ -51,7 +51,13 @@
     >
       <span slot="status" slot-scope="text,record">
         <template>
-          <a-switch checkedChildren="启用" :value="record.id" unCheckedChildren="禁用" @change="onSwitchClick" v-if="text === 1"/>
+          <a-switch
+            checkedChildren="启用"
+            :value="record.id"
+            unCheckedChildren="禁用"
+            @change="onSwitchClick"
+            v-if="text === 1"
+            defaultChecked/>
           <a-switch checkedChildren="启用" v-else :value="record.id" unCheckedChildren="禁用" @change="onSwitchClick"/>
         </template>
       </span>
