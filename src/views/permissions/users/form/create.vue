@@ -1,7 +1,7 @@
 <template>
   <a-modal
     :title="title"
-    :width="640"
+    :width="650"
     :visible="visible"
     :confirmLoading="confirmLoading"
     @ok="handleSubmit"
@@ -9,86 +9,108 @@
   >
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
-        <a-form-item
-          label="用户名"
-          type="text"
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-        >
-          <a-input allowClear v-decorator="['username', {rules: [{required: true, min: 3, message: '请输入至少3个字符！'}]}]" />
-        </a-form-item>
-        <a-form-item
-          label="邮箱"
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-        >
-          <a-input allowClear v-decorator="['email', {rules: [{ required: true, validator: handleEmail }]}]" />
-        </a-form-item>
-        <a-form-item
-          label="密码"
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-        >
-          <a-input allowClear allotype="password" v-decorator="['password', {rules: [{required: password_required, min: 5, message: '请输入密码'}]}]" />
-        </a-form-item>
-        <a-form-item
-          label="确认密码"
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-        >
-          <a-input allowClear type="password" v-decorator="['passwordConfirm', {rules: [{required: password_required, min: 5, message: '请确认密码'}]}]" />
-        </a-form-item>
-        <a-form-item
-          label="角色"
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-        >
-          <a-tree-select
-            style="width: 320px"
-            :dropdownStyle="{ maxHeight: '400px', overflow: 'auto' }"
-            :treeData="roles"
-            multiple
-            placeholder="请选择角色"
-            allowClear
-            treeDefaultExpandAll
-            @change="onChange"
-            v-decorator="['roles', {initialValue: roleids},{rules: [{required: true, message: '请选择角色'}]}]"
-          >
-          </a-tree-select>
-        </a-form-item>
-        <a-form-item
-          label="部门"
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-        >
-          <a-tree-select
-            style="width: 320px"
-            :dropdownStyle="{ maxHeight: '400px', overflow: 'auto' }"
-            :treeData="department.tree"
-            placeholder="请选择部门"
-            allowClear
-            treeDefaultExpandAll
-            @select="onDepartmentSelect"
-            v-decorator="['department_id', {initialValue: department.has},{rules: [{required: true, message: '请选择部门'}]}]"
-          >
-          </a-tree-select>
-        </a-form-item>
-        <a-form-item
-          label="岗位"
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-        >
-          <a-select
-            mode="multiple"
-            treeCheckable
-            style="width: 100%"
-            @change="handleJobsChange"
-            placeholder="请选择岗位"
-            v-decorator="['jobs', {initialValue: job.has},{rules: [{required: true, message: '请选择岗位'}]}]"
-          >
-            <a-select-option v-for="i in this.job.list" :key="i.id">{{ i.job_name }}</a-select-option>
-          </a-select>
-        </a-form-item>
+        <a-row :gutter="0">
+          <a-col :span="14">
+            <a-form-item
+              label="用户名"
+              type="text"
+              :labelCol="labelCol"
+              :wrapperCol="wrapperCol"
+            >
+              <a-input allowClear v-decorator="['username', {rules: [{required: true, min: 3, message: '请输入至少3个字符！'}]}]" />
+            </a-form-item>
+          </a-col>
+          <a-col :span="8">
+            <a-form-item
+              label="角色"
+              :labelCol="labelCol"
+              :wrapperCol="wrapperCol"
+            >
+              <a-tree-select
+                style="width: 200px"
+                :dropdownStyle="{ maxHeight: '400px', overflow: 'auto' }"
+                :treeData="roles"
+                multiple
+                placeholder="请选择角色"
+                allowClear
+                treeDefaultExpandAll
+                @change="onChange"
+                v-decorator="['roles', {initialValue: roleids},{rules: [{required: true, message: '请选择角色'}]}]"
+              >
+              </a-tree-select>
+            </a-form-item>
+          </a-col>
+        </a-row>
+        <a-row :gutter="0">
+          <a-col :span="14">
+            <a-form-item
+              label="邮箱"
+              :labelCol="labelCol"
+              :wrapperCol="wrapperCol"
+            >
+              <a-input allowClear v-decorator="['email', {rules: [{ required: true, validator: handleEmail }]}]" />
+            </a-form-item>
+          </a-col>
+          <a-col :span="8">
+            <a-form-item
+              label="部门"
+              :labelCol="labelCol"
+              :wrapperCol="wrapperCol"
+            >
+              <a-tree-select
+                style="width: 200px"
+                :dropdownStyle="{ maxHeight: '400px', overflow: 'auto' }"
+                :treeData="department.tree"
+                placeholder="请选择部门"
+                allowClear
+                treeDefaultExpandAll
+                @select="onDepartmentSelect"
+                v-decorator="['department_id', {initialValue: department.has},{rules: [{required: true, message: '请选择部门'}]}]"
+              >
+              </a-tree-select>
+            </a-form-item>
+          </a-col>
+        </a-row>
+        <a-row :gutter="0">
+          <a-col :span="14">
+            <a-form-item
+              label="密码"
+              :labelCol="labelCol"
+              :wrapperCol="wrapperCol"
+            >
+              <a-input allowClear allotype="password" v-decorator="['password', {rules: [{required: password_required, min: 5, message: '请输入密码'}]}]" />
+            </a-form-item>
+          </a-col>
+          <a-col :span="8">
+            <a-form-item
+              label="岗位"
+              :labelCol="labelCol"
+              :wrapperCol="wrapperCol"
+            >
+              <a-select
+                mode="multiple"
+                treeCheckable
+                style="width: 200px"
+                @change="handleJobsChange"
+                placeholder="请选择岗位"
+                v-decorator="['jobs', {initialValue: job.has},{rules: [{required: true, message: '请选择岗位'}]}]"
+              >
+                <a-select-option v-for="i in this.job.list" :key="i.id">{{ i.job_name }}</a-select-option>
+              </a-select>
+            </a-form-item>
+          </a-col>
+        </a-row>
+        <a-row :gutter="0">
+          <a-col :span="14">
+            <a-form-item
+              label="确认密码"
+              :labelCol="labelCol"
+              :wrapperCol="wrapperCol"
+            >
+              <a-input allowClear type="password" v-decorator="['passwordConfirm', {rules: [{required: password_required, min: 5, message: '请确认密码'}]}]" />
+            </a-form-item>
+          </a-col>
+        </a-row>
       </a-form>
     </a-spin>
   </a-modal>
