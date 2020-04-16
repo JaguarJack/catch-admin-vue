@@ -1,17 +1,8 @@
 <template>
   <a-card :bordered="false">
-    <div class="table-page-search-wrapper">
-      <a-form layout="inline">
-        <a-row :gutter="48">
-          <a-col :md="4" :sm="24">
-            <a-button icon="sync" style="margin-left: 8px" @click="resetSearchForm()">重置</a-button>
-          </a-col>
-        </a-row>
-      </a-form>
-    </div>
-
-    <div class="table-operator" v-if="selectedRowKeys.length > 0">
-      <a-button type="primary" icon="safety" @click="multiDel()">删除</a-button>
+    <div class="table-operator">
+      <a-button icon="sync"  type="primary" @click="resetSearchForm()">刷新</a-button>
+      <a-button  icon="safety" @click="multiDel()" v-if="selectedRowKeys.length > 0">删除</a-button>
     </div>
 
     <s-table
