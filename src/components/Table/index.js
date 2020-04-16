@@ -119,11 +119,11 @@ export default {
      * 如果参数为 true, 则强制刷新到第一页
      * @param Boolean bool
      */
-    refresh (bool = false) {
+    refresh (bool = false, params = {}) {
       bool && (this.localPagination = Object.assign({}, {
         current: 1, pageSize: this.pageSize
       }))
-      this.loadData()
+      this.loadData({}, params)
     },
     /**
      * 加载数据方法
@@ -172,7 +172,6 @@ export default {
           // 这里用于判断接口是否有返回 r.totalCount 且 this.showPagination = true 且 pageNo 和 pageSize 存在 且 totalCount 小于等于 pageNo * pageSize 的大小
           // 当情况满足时，表示数据不满足分页大小，关闭 table 分页功能
           try {
-            console.log(this.localPagination)
             if ((['auto', true].includes(this.showPagination) && r.totalCount <= (r.pageNo * this.localPagination.pageSize))) {
               this.localPagination.hideOnSinglePage = true
             }
