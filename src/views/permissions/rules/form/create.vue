@@ -2,7 +2,7 @@
   <div>
     <a-modal
       :title="title"
-      :width="640"
+      :width="740"
       :visible="visible"
       :confirmLoading="confirmLoading"
       @ok="handleSubmit"
@@ -10,85 +10,137 @@
     >
       <a-spin :spinning="confirmLoading">
         <a-form :form="form">
-          <a-form-item
-            label="菜单名称"
-            type="text"
-            :labelCol="labelCol"
-            :wrapperCol="wrapperCol"
-          >
-            <a-input allowClear v-decorator="['permission_name', {rules: [{required: true, min: 2, message: '请输入至少3个字符！'}]}]" />
-          </a-form-item>
-          <a-form-item
-            label="菜单图标"
-            type="text"
-            :labelCol="labelCol"
-            :wrapperCol="wrapperCol"
-          >
-            <a-input v-decorator="['icon']" @click="selectIcon" />
-          </a-form-item>
-          <a-form-item
-            label="菜单路由"
-            type="text"
-            :labelCol="labelCol"
-            :wrapperCol="wrapperCol"
-          >
-            <a-input allowClear v-decorator="['route', {rules: [{required: true, min: 2, message: '请输入至少3个字符！'}]}]" />
-          </a-form-item>
-          <a-form-item
-            label="模块"
-            type="text"
-            :labelCol="labelCol"
-            :wrapperCol="wrapperCol"
-            v-if="module_show"
-          >
-            <a-input allowClear v-decorator="['module', {rules: [{required: true, min: 2, message: '请输入至少3个字符！'}]}]" />
-          </a-form-item>
-          <a-form-item
-            label="权限标识"
-            type="text"
-            :labelCol="labelCol"
-            :wrapperCol="wrapperCol"
-            :filterOption="filterOption"
-          >
-            <a-input allowClear v-decorator="['permission_mark',{rules: [{required: true, min: 2, message: '请输入至少3个字符！'}]}]" />
-          </a-form-item>
-          <a-form-item
-            :label-col="labelCol"
-            :wrapper-col="wrapperCol"
-            label="请求方法"
-          >
-            <a-select v-decorator="['method',{initialValue:methodValue},{rules: [{required: true}]}]">
-              <a-select-option value="get">
-                get
-              </a-select-option>
-              <a-select-option value="post">
-                post
-              </a-select-option>
-              <a-select-option value="put">
-                put
-              </a-select-option>
-              <a-select-option value="delete">
-                delete
-              </a-select-option>
-            </a-select>
-          </a-form-item>
-          <a-form-item
-            :label-col="labelCol"
-            :wrapper-col="wrapperCol"
-            label="类型"
-          >
-            <a-radio-group buttonStyle="solid" v-decorator="['type',{initialValue: typeValue},{rules: [{required: true}]}]">
-              <a-radio-button :value="1">菜单</a-radio-button>
-              <a-radio-button :value="2">按钮</a-radio-button>
-            </a-radio-group>
-          </a-form-item>
-          <a-form-item
-            :label-col="labelCol"
-            :wrapper-col="wrapperCol"
-            label="排序"
-          >
-            <a-input-number :min="1" v-decorator="['sort', {initialValue: sort}]" />
-          </a-form-item>
+          <a-row>
+            <a-col :span="12">
+              <a-form-item
+                :label-col="labelCol"
+                :wrapper-col="wrapperCol"
+                label="类型"
+              >
+                <a-radio-group :disabled="disabled" buttonStyle="solid" @change="hide" v-decorator="['type',{initialValue: typeValue},{rules: [{required: true}]}]">
+                  <a-radio-button :value="1">菜单</a-radio-button>
+                  <a-radio-button :value="2">按钮</a-radio-button>
+                </a-radio-group>
+              </a-form-item>
+            </a-col>
+          </a-row>
+          <a-row :gutter="0">
+            <a-col :span="12">
+              <a-form-item
+                label="菜单名称"
+                type="text"
+                :labelCol="labelCol"
+                :wrapperCol="wrapperCol"
+              >
+                <a-input allowClear v-decorator="['permission_name', {rules: [{required: true, min: 2, message: '请输入菜单名称, 至少2个字符！'}]}]" />
+              </a-form-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-item
+                label="权限标识"
+                type="text"
+                :labelCol="labelCol"
+                :wrapperCol="wrapperCol"
+                :filterOption="filterOption"
+              >
+                <a-input allowClear v-decorator="['permission_mark',{rules: [{required: true, min: 2, message: '请输入权限标识, 至少2个字符！'}]}]" />
+              </a-form-item>
+            </a-col>
+          </a-row>
+          <a-row :gutter="0" v-if="show">
+            <a-col :span="12">
+              <a-form-item
+                label="模块"
+                type="text"
+                :labelCol="labelCol"
+                :wrapperCol="wrapperCol"
+              >
+                <a-input allowClear v-decorator="['module', {rules: [{required: true, min: 2, message: '请输入模块, 至少2个字符！'}]}]" />
+              </a-form-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-item
+                label="菜单图标"
+                type="text"
+                :labelCol="labelCol"
+                :wrapperCol="wrapperCol"
+              >
+                <a-input v-decorator="['icon']" @click="selectIcon" />
+              </a-form-item>
+            </a-col>
+          </a-row>
+          <a-row :gutter="0" v-if="show">
+            <a-col :span="12">
+              <a-form-item
+                label="菜单Path"
+                type="text"
+                :labelCol="labelCol"
+                :wrapperCol="wrapperCol"
+              >
+                <a-input allowClear v-decorator="['route', {rules: [{required: true, min: 2, message: '请输入菜单路由, 至少2个字符！'}]}]" />
+              </a-form-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-item
+                :label-col="labelCol"
+                :wrapper-col="wrapperCol"
+                label="组件名称"
+              >
+                <a-select v-decorator="['component', {initialValue:componentValue}, {rules: [{required: true}]}]">
+                  <a-select-opt-group v-for="(item, key) in components" :key="key" :label="key">
+                    <a-select-option v-for="(v, k) in item" :key="k" :value="v">{{ v }}</a-select-option>
+                  </a-select-opt-group>
+                </a-select>
+              </a-form-item>
+            </a-col>
+          </a-row>
+          <a-row :gutter="0" >
+            <a-col :span="12" v-if="show">
+              <a-form-item
+                label="Redirect"
+                type="text"
+                :labelCol="labelCol"
+                :wrapperCol="wrapperCol"
+              >
+                <a-input allowClear v-decorator="['redirect', {initialValue: redirect}]" />
+              </a-form-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-item
+                :label-col="labelCol"
+                :wrapper-col="wrapperCol"
+                label="排序"
+              >
+                <a-input-number :min="1" v-decorator="['sort', {initialValue: sort}]" />
+              </a-form-item>
+            </a-col>
+          </a-row>
+          <a-row :gutter="0" v-if="show">
+            <a-col :span="12">
+              <a-form-item
+                :label-col="labelCol"
+                :wrapper-col="wrapperCol"
+                label="KeepAlive"
+              >
+                <a-radio-group buttonStyle="solid" v-decorator="['keepalive', {initialValue: keepalive},{rules: [{required: true}]}]">
+                  <a-radio-button :value="1">是</a-radio-button>
+                  <a-radio-button :value="2">否</a-radio-button>
+                </a-radio-group>
+              </a-form-item>
+            </a-col>
+            <a-col :span="12">
+              <a-form-item
+                :label-col="labelCol"
+                :wrapper-col="wrapperCol"
+                label="隐藏子菜单"
+              >
+                <a-radio-group buttonStyle="solid" v-decorator="['hide_children_in_menu',{initialValue: hideChildrenInMenu},{rules: [{required: true}]}]">
+                  <a-radio-button :value="1">是</a-radio-button>
+                  <a-radio-button :value="2">否</a-radio-button>
+                </a-radio-group>
+              </a-form-item>
+            </a-col>
+          </a-row>
         </a-form>
       </a-spin>
     </a-modal>
@@ -102,6 +154,8 @@
 import { store, update } from '@/api/permission'
 import pick from 'lodash.pick'
 import IconSelector from '@/components/IconSelector'
+import { httpMethods } from '@/enums/data/httpMethods'
+import { components } from '@/enums/data/components'
 
 export default {
   components: {
@@ -122,13 +176,19 @@ export default {
       confirmLoading: false,
       id: null,
       parent_id: 0,
-      methodValue: 'GET',
-      typeValue: 2,
+      typeValue: 1,
       form: this.$form.createForm(this),
       sort: 1,
-      module_show: true,
       currentSelectedIcon: '',
-      iconVisible: false
+      iconVisible: false,
+      httpMethods: httpMethods,
+      components: components,
+      keepalive: 1, // 是
+      componentValue: '',
+      redirect: '',
+      hideChildrenInMenu: 2,
+      show: true,
+      disabled: false, // 类型选择
     }
   },
   methods: {
@@ -136,36 +196,34 @@ export default {
       this.iconVisible = true
     },
     handleIconChange (icon) {
-      this.$message.info(<span>选中图标 <code>{icon}</code></span>)
+      // this.$message.info(<span>选中图标 <code>{icon}</code></span>)
       this.form.setFieldsValue({
         icon: icon
       })
       this.iconVisible = false
     },
     add () {
-      this.visible = true
+      this.visible = this.disabled = true
       this.title = '新增菜单'
     },
     edit (record) {
-      this.visible = true
+      this.visible = this.disabled = true
+      this.show = record.type === 1
       this.title = '编辑菜单'
       const { form: { setFieldsValue } } = this
       this.id = record.id
       this.$nextTick(() => {
-        setFieldsValue(pick(record, ['permission_name', 'route', 'module', 'permission_mark', 'method', 'type', 'sort', 'icon']))
+        setFieldsValue(pick(record, ['permission_name', 'route', 'module', 'permission_mark', 'method', 'type', 'keepalive','sort', 'icon']))
       })
-      this.methodValue = record.method
       this.typeValue = record.type
       this.sort = record.sort
-      if (record.parent_id > 0) {
-        this.module_show = false
-      }
+      this.componentValue = record.component
+      this.redirect = record.redirect
     },
     addSon (record) {
-      this.visible = true
+      this.visible = this.disabled = true
       this.title = '新增子菜单 (' + record.permission_name + ')'
       this.parent_id = record.id
-      this.module_show = false
     },
     handleSubmit () {
       const { form: { validateFields } } = this
@@ -204,8 +262,7 @@ export default {
       this.id = null
       this.confirmLoading = false
       this.parent_id = 0
-      this.methodValue = 'GET'
-      this.typeValue = 2
+      this.typeValue = 1
       this.sort = 1
       this.form.resetFields()
     },
@@ -221,6 +278,9 @@ export default {
       })
       this.handleCancel()
       this.$parent.$parent.handleOk()
+    },
+    hide (e) {
+      this.show = e.target.value === 1
     }
   }
 }

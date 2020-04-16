@@ -24,11 +24,23 @@
       ref="table"
       size="default"
       rowKey="id"
-      :bordered="true"
       :columns="columns"
+      :defaultExpandedRowKeys="expandedKeys"
       :data="loadData"
       :showPagination="false"
     >
+      <span slot="actions" slot-scope="text, record">
+        <a-popover title="操作" trigger="click" v-for="(action, index) in record.actionList" :key="index">
+          <template slot="content">
+            <p>权限标识: {{ record.permission_mark }}</p>
+            <p>
+              <a-button type="primary" size="small" @click="handleEdit(action)"><a-icon type="edit" /> 编辑</a-button>
+              <a-button type="danger" size="small" @click="handleDel(action)"><a-icon type="delete" /> 删除</a-button>
+            </p>
+          </template>
+          <a-tag>{{ action.permission_name }}</a-tag>
+        </a-popover>
+      </span>
       <span slot="action" slot-scope="text, record">
         <template>
           <a @click="handleEdit(record)">编辑</a>
@@ -51,6 +63,7 @@
 import { STable } from '@/components'
 import CreatePermission from './form/create'
 import { getPermissionList, del } from '@/api/permission'
+import { expandKeys } from '@/utils/util'
 
 export default {
   name: 'Permissions',
@@ -62,28 +75,26 @@ export default {
     return {
       // 查询参数
       queryParam: {},
+      expandedKeys: [], // 展开ID
       // 表头
       columns: [
         {
           title: '菜单名称',
-          dataIndex: 'permission_name'
+          dataIndex: 'permission_name',
+          width: '200px'
         },
         {
-          title: '菜单路由',
+          title: '路由path',
           dataIndex: 'route'
         },
         {
-          title: '菜单标识',
+          title: '权限标识',
           dataIndex: 'permission_mark'
         },
         {
-          title: '请求方法',
-          dataIndex: 'method'
-        },
-        {
-          title: '类型',
-          dataIndex: 'type',
-          customRender: this.renderType
+          title: '可操作权限',
+          dataIndex: 'actions',
+          scopedSlots: { customRender: 'actions' }
         },
         {
           title: '创建时间',
@@ -93,7 +104,7 @@ export default {
         {
           title: '操作',
           dataIndex: 'action',
-          width: '150px',
+          width: '120px',
           scopedSlots: { customRender: 'action' }
         }
       ],
@@ -101,6 +112,7 @@ export default {
       loadData: parameter => {
         return getPermissionList(Object.assign(parameter, this.queryParam))
           .then(res => {
+            expandKeys(res.data, this.expandedKeys)
             return res
           })
       }
@@ -144,9 +156,6 @@ export default {
     resetSearchForm () {
       this.queryParam = {}
       this.handleOk()
-    },
-    renderType (value, row, index) {
-      return value === 1 ? <a-button type="normal" size="small">菜单</a-button> : <a-button type="danger" size="small">按钮</a-button>
     }
   }
 }
