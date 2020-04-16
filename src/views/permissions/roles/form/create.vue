@@ -1,7 +1,7 @@
 <template>
   <a-modal
     :title="title"
-    :width="640"
+    :width="800"
     :visible="visible"
     :confirmLoading="confirmLoading"
     @ok="handleSubmit"
@@ -111,7 +111,7 @@ export default {
         { id: 4, text: '本部门数据权限' },
         { id: 5, text: '部门以及以下数据权限' }
       ],
-      range: 0,
+      range: 1,
       departments: [],
       department_ids: []
     }
