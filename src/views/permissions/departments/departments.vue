@@ -33,6 +33,7 @@
       :bordered="true"
       :columns="columns"
       :data="loadData"
+      :defaultExpandedRowKeys="expandedKeys"
       :showPagination="false"
     >
       <span slot="action" slot-scope="text, record">
@@ -57,6 +58,7 @@
 import { STable } from '@/components'
 import CreateDepartment from './form/create'
 import { getDepartmentList, del } from '@/api/departments'
+import { expandKeys } from '@/utils/util'
 
 export default {
   name: 'Departments',
@@ -68,6 +70,7 @@ export default {
     return {
       // 查询参数
       queryParam: {},
+      expandedKeys: [],
       // 表头
       columns: [
         {
@@ -99,6 +102,7 @@ export default {
       loadData: parameter => {
         return getDepartmentList(Object.assign(parameter, this.queryParam))
           .then(res => {
+            expandKeys(res.data, this.expandedKeys)
             return res
           })
       }
