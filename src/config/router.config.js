@@ -3,122 +3,12 @@ import { UserLayout, BasicLayout, RouteView, BlankLayout, PageView } from '@/lay
 import { bxAnaalyse } from '@/core/icons'
 
 export const asyncRouterMap = [
-
   {
     path: '/',
     name: 'index',
     component: BasicLayout,
     meta: { title: '首页' },
     redirect: '/dashboard/workplace',
-    children: [
-      // dashboard
-      {
-        path: '/dashboard',
-        name: 'dashboard',
-        redirect: '/dashboard/workplace',
-        component: RouteView,
-        meta: { title: '仪表盘', keepAlive: true, icon: bxAnaalyse, permission: [ 'dashboard' ] },
-        children: [
-          {
-            path: '/dashboard/workplace',
-            name: 'Workplace',
-            component: () => import('@/views/dashboard/Workplace'),
-            meta: { title: '工作台', keepAlive: true, permission: [ 'dashboard' ] }
-          }
-        ]
-      },
-
-      // permissions
-      {
-        path: '/permissions',
-        name: 'permissions',
-        component: PageView,
-        redirect: '/permissions',
-        meta: { title: '权限管理', icon: 'table', permission: [ 'permission' ] },
-        children: [
-          {
-            path: '/permissions/users',
-            name: 'users',
-            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/permissions/users/users'),
-            meta: { title: '用户管理', keepAlive: true, permission: [ 'user' ] }
-          },
-          {
-            path: '/permissions/roles',
-            name: 'roles',
-            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/permissions/roles/roles'),
-            meta: { title: '角色管理', keepAlive: true, permission: [ 'role' ] }
-          },
-          {
-            path: '/permissions/rules',
-            name: 'rules',
-            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/permissions/rules/rules'),
-            meta: { title: '菜单管理', keepAlive: true, permission: [ 'rule' ] }
-          },
-          {
-            path: '/permissions/departments',
-            name: 'departments',
-            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/permissions/departments/departments'),
-            meta: { title: '部门管理', keepAlive: true, permission: [ 'departments' ] }
-          },
-          {
-            path: '/permissions/jobs',
-            name: 'jobs',
-            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/permissions/jobs/jobs'),
-            meta: { title: '岗位管理', keepAlive: true, permission: [ 'jobs' ] }
-          }
-        ]
-      },
-      {
-        path: '/system',
-        name: 'system',
-        component: PageView,
-        redirect: '/system',
-        meta: { title: '系统管理', icon: 'table', system: [ 'system' ] },
-        children: [
-          {
-            path: '/system/database',
-            name: 'database',
-            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/system/database/index'),
-            meta: { title: '数据字典', keepAlive: true, system: [ 'database' ] }
-          },
-          {
-            path: '/system/log',
-            name: 'log',
-            component: PageView,
-            meta: { title: '日志管理', permission: [ 'log' ] },
-            children: [
-              {
-                path: '/system/log/login',
-                name: 'loginLog',
-                hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-                component: () => import('@/views/system/log/login'),
-                meta: { title: '登录日志', permission: ['loginLog/index'] }
-              },
-              {
-                path: '/system/log/operate',
-                name: 'operateLog',
-                hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-                component: () => import('@/views/system/log/operate'),
-                meta: { title: '操作日志', system: [ 'operateLog/index' ] }
-              }
-            ]
-          },
-          {
-            path: '/system/attachments',
-            name: 'attachments',
-            hideChildrenInMenu: true, // 强制显示 MenuItem 而不是 SubMenu
-            component: () => import('@/views/system/attachments/index'),
-            meta: { title: '附件管理', keepAlive: true, system: [ 'attachments' ] }
-          }
-        ]
-      }
-    ]
   },
   {
     path: '*', redirect: '/404', hidden: true
@@ -139,7 +29,7 @@ export const constantRouterMap = [
       {
         path: 'login',
         name: 'login',
-        component: () => import(/* webpackChunkName: "user" */ '@/views/user/Login')
+        component: () => import(/* webpackChunkName: "user" */ '@/views/user/Login'),
       },
       {
         path: 'register',

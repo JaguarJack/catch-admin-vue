@@ -1,4 +1,5 @@
 import { asyncRouterMap, constantRouterMap } from '@/config/router.config'
+import components from '@/config/componentsMap'
 
 /**
  * 过滤账户是否拥有某一个权限，并将菜单从加载列表移除
@@ -9,16 +10,11 @@ import { asyncRouterMap, constantRouterMap } from '@/config/router.config'
  */
 function hasPermission (permission, route) {
   if (route.meta && route.meta.permission) {
-    let flag = false
+    // let a = components
+    // console.log(a)
     for (let i = 0, len = permission.length; i < len; i++) {
-      flag = route.meta.permission.includes(permission[i].route)
-      if (flag) {
-        route.meta.icon = permission[i].icon
-        route.meta.title = permission[i].title
-        return true
-      }
     }
-    return false
+    return true
   }
   return true
 }
@@ -58,6 +54,43 @@ function filterAsyncRouter (routerMap, permissions) {
   return accessedRouters
 }
 
+function treePermissions (permissions, $pid = 0) {
+  let routes = []
+  for (const permission of permissions) {
+    if ($pid === permission.parent_id) {
+        let p = {};
+        p.path = permission.route
+        p.name = permission.title
+        if (permission.redirect) {
+          p.redirect = permission.redirect
+        }
+        p.component = components[permission.component]
+        p.meta = {}
+        p.meta.title = permission.title
+        p.meta.icon = permission.icon
+        if (permission.keepAlive === 1) {
+          p.meta.keepAlive = true
+        }
+       const children = treePermissions(permissions, permission.id)
+       if (children.length) {
+        p.children = children
+       }
+       routes.push(p)
+    }
+  }
+  return routes
+}
+
+function filterThenGetMenus (permissions) {
+   const menus = [];
+   for (const permission of permissions) {
+     if (permission.type === 1) {
+       menus.push(permission)
+     }
+   }
+   return menus
+}
+
 const permission = {
   state: {
     routers: constantRouterMap,
@@ -73,8 +106,11 @@ const permission = {
     GenerateRoutes ({ commit }, data) {
       return new Promise(resolve => {
         const { permissions } = data
-        const accessedRouters = filterAsyncRouter(asyncRouterMap, permissions)
-        commit('SET_ROUTERS', accessedRouters)
+        console.log(typeof data)
+        // let permissions = []
+        asyncRouterMap[0].children = treePermissions(filterThenGetMenus(permissions))
+        console.log(asyncRouterMap)
+        commit('SET_ROUTERS', asyncRouterMap)
         resolve()
       })
     }

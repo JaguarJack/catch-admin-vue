@@ -7,25 +7,27 @@ import '@/components/NProgress/nprogress.less' // progress bar custom style
 import notification from 'ant-design-vue/es/notification'
 import { setDocumentTitle, domTitle } from '@/utils/domUtil'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
+const whiteList = ['login', 'register', 'registerResult'] // no redirect whitelist
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const whiteList = ['login', 'register', 'registerResult'] // no redirect whitelist
 const defaultRoutePath = '/dashboard/workplace'
 
 router.beforeEach((to, from, next) => {
   NProgress.start() // start progress bar
   to.meta && (typeof to.meta.title !== 'undefined' && setDocumentTitle(`${to.meta.title} - ${domTitle}`))
   if (Vue.ls.get(ACCESS_TOKEN)) {
-    /* has token */
+    /* 登陆后 如果进入登陆页面 重定向到首页 */
     if (to.path === '/user/login') {
       next({ path: defaultRoutePath })
       NProgress.done()
     } else {
+      // 如果没有获取到角色 再次获取用户信息
       if (store.getters.roles.length === 0) {
-        store
-          .dispatch('GetInfo')
+        // store dispatch 经过 action 一节概念：https://vuex.vuejs.org/zh/guide/actions.html
+        store.dispatch('GetInfo')
           .then(res => {
+            // GetInfo 方法会将接口的返回数据 resolve 过来, 具体可查看 Promise 概念
             const permissions = res.data && res.data.permissions
             store.dispatch('GenerateRoutes', { permissions }).then(() => {
               // 根据roles权限生成可访问的路由表
