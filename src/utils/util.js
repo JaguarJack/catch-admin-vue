@@ -65,3 +65,12 @@ export function removeLoadingAnimate (id = '', timeout = 1500) {
     document.body.removeChild(document.getElementById(id))
   }, timeout)
 }
+
+export function expandKeys (data, keys = []) {
+  data.map(item => {
+    keys.push(item.id)
+    if (item.children !== undefined) {
+      expandKeys(item.children, keys)
+    }
+  })
+}

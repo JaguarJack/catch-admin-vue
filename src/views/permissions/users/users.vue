@@ -49,91 +49,88 @@
       :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
       showPagination="auto"
     >
-      <span slot="status" slot-scope="text,record">
-        <template>
-          <a-switch
+      <span slot="status" sltch
             checkedChildren="启用"
             :value="record.id"
             unCheckedChildren="禁用"
             @change="onSwitchClick"
             v-if="text === 1"
             defaultChecked/>
-          <a-switch checkedChildren="启用" v-else :value="record.id" unCheckedChildren="禁用" @change="onSwitchClick"/>
-        </template>
-      </span>
-      <span slot="action" slot-scope="text, record">
+      <a-switch checkedChildren="启用" v-else :value="record.id" unCheckedChildren="禁用" @change="onSwitchClick"/>
+</template>
+</span>
+<span slot="action" slot-scope="text, record">
         <template>
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical" />
           <a @click="handleDel(record)">删除</a>
         </template>
       </span>
-    </s-table>
-    <create-user ref="userModal" @ok="handleOk" />
-  </a-card>
+</s-table>
+<create-user ref="userModal" @ok="handleOk" />
+</a-card>
 </template>
 
 <script>
-import { STable } from '@/components'
-import CreateUser from './form/create'
-import { swtichStatus, del, getUserList } from '@/api/user'
+  import { STable } from '@/components'
+  import CreateUser from './form/create'
+  import { swtichStatus, del, getUserList } from '@/api/user'
 
-export default {
-  name: 'Users',
-  components: {
-    STable,
-    CreateUser
-  },
-  data () {
-    return {
-      // 查询参数
-      queryParam: {},
-      // 表头
-      columns: [
-        {
-          title: '用户名',
-          dataIndex: 'username'
-        },
-        {
-          title: '邮箱',
-          dataIndex: 'email'
-        },
-        {
-          title: '状态',
-          dataIndex: 'status',
-          scopedSlots: { customRender: 'status' }
-          // customRender: this.renderStatus
-        },
-        {
-          title: '创建时间',
-          dataIndex: 'created_at',
-          sorter: true
-        },
-        {
-          title: '操作',
-          dataIndex: 'action',
-          width: '150px',
-          scopedSlots: { customRender: 'action' }
-        }
-      ],
-      // 加载数据方法 必须为 Promise 对象
-      loadData: parameter => {
-        return getUserList(Object.assign(parameter, this.queryParam))
-          .then(res => {
-            return res
-          })
-      },
-      selectedRowKeys: []
-    }
-  },
-  created () {
-    // this.tableOption()
-  },
-  methods: {
-    renderStatus (value, row, index) {
-      return value === 1 ? <a-button type="normal" size="small">正常</a-button> : <a-button type="danger" size="small">禁用</a-button>
+  export default {
+    name: 'Users',
+    components: {
+      STable,
+      CreateUser
     },
-    handleEdit (record) {
+    data () {
+      return {
+        // 查询参数
+        queryParam: {},
+        // 表头
+        columns: [
+          {
+            title: '用户名',
+            dataIndex: 'username'
+          },
+          {
+            title: '邮箱',
+            dataIndex: 'email'
+          },
+          {
+            title: '状态',
+            dataIndex: 'status',
+            scopedSlots: { customRender: 'status' }
+            // customRender: this.renderStatus
+          },
+          {
+            title: '创建时间',
+            dataIndex: 'created_at',
+            sorter: true
+          },
+          {
+            title: '操作',
+            dataIndex: 'action',
+            width: '150px',
+            scopedSlots: { customRender: 'action' }
+          }
+        ],
+        // 加载数据方法 必须为 Promise 对象
+        loadData: parameter => {
+          return getUserList(Object.assign(parameter, this.queryParam))
+                  .then(res => {
+                    return res
+                  })
+        },
+        selectedRowKeys: []
+      }
+    },
+    created () {
+      // this.tableOption()
+    },
+    methods: {
+      ot-scope="text,record">
+        <template>
+          <a-swi    handleEdit (record) {
       this.$refs.userModal.edit(record)
     },
     handleDel (record) {
