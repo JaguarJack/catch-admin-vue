@@ -106,10 +106,8 @@ const permission = {
     GenerateRoutes ({ commit }, data) {
       return new Promise(resolve => {
         const { permissions } = data
-        console.log(typeof data)
         // let permissions = []
         asyncRouterMap[0].children = treePermissions(filterThenGetMenus(permissions))
-        console.log(asyncRouterMap)
         commit('SET_ROUTERS', asyncRouterMap)
         resolve()
       })
