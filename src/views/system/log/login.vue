@@ -1,49 +1,29 @@
 <template>
   <a-card :bordered="false">
-    <div class="table-page-search-wrapper">
-      <a-form layout="inline">
-        <a-row :gutter="48">
-          <a-col :md="4" :sm="24">
-            <a-input allowClear v-model="queryParam.tablename" placeholder="请输入表名"/>
-          </a-col>
-          <a-col :md="4" :sm="24">
-            <a-select allowClear v-model="queryParam.engine" placeholder="请选择引擎" default-value="0">
-              <a-select-option value="MyISAM">MyISAM</a-select-option>
-              <a-select-option value="InnoDB">InnoDB</a-select-option>
-            </a-select>
-          </a-col>
-          <a-col :md="4" :sm="24">
-            <span class="table-page-search-submitButtons">
-              <a-button icon="search" type="primary" @click="$refs.table.refresh(true)">查询</a-button>
-              <a-button icon="sync" style="margin-left: 8px" @click="resetSearchForm()">重置</a-button>
-            </span>
-          </a-col>
-        </a-row>
-      </a-form>
+    <div class="table-operator">
+      <a-button type="primary" icon="delete" @click="clear()">清空</a-button>
     </div>
-
-    <div class="table-operator" v-if="selectTables.length > 0">
-      <a-button type="primary" icon="safety" @click="optimizeTables()">优化</a-button>
-      <a-button type="primary" icon="database" @click="backupTables">备份</a-button>
-    </div>
-
     <s-table
       ref="table"
       size="default"
-      rowKey="name"
+      rowKey="id"
       :bordered="true"
       :columns="columns"
       :data="loadData"
-      :rowSelection="{ selectedRowKeys: selectTables, onChange: onSelectChange }"
+      :rowSelection="{ selectedRowKeys: selectTables }"
       showPagination="auto"
     >
+      <span slot="login_at" slot-scope="text, record">
+         {{ toDate(record.login_at) }}
+      </span>
     </s-table>
   </a-card>
 </template>
 
 <script>
 import { STable } from '@/components'
-import { getTables, optimize, backup } from '@/api/database'
+import { loginLogList, emptyLoginLog } from '@/api/log'
+import { timestampToDate } from '@/utils/date'
 
 export default {
   name: 'Database',
@@ -57,52 +37,32 @@ export default {
       // 表头
       columns: [
         {
-          title: '表名',
-          dataIndex: 'name'
+          title: '登陆用户',
+          dataIndex: 'login_name'
         },
         {
-          title: '表引擎',
-          dataIndex: 'engine'
+          title: '登陆IP',
+          dataIndex: 'login_ip'
         },
         {
-          title: '字符集',
-          dataIndex: 'collation'
+          title: '客户端',
+          dataIndex: 'browser'
         },
         {
-          title: '数据行数',
-          dataIndex: 'rows',
+          title: '系统',
+          dataIndex: 'os',
           sorter: true
         },
         {
-          title: '索引大小',
-          dataIndex: 'index_length',
+          title: '登陆时间',
+          dataIndex: 'login_at',
+          scopedSlots: { customRender: 'login_at' },
           sorter: true
-        },
-        {
-          title: '数据大小',
-          dataIndex: 'data_length',
-          sorter: true
-        },
-        {
-          title: '表注释',
-          dataIndex: 'comment',
-          sorter: true
-        },
-        {
-          title: '创建时间',
-          dataIndex: 'create_time',
-          sorter: true
-        },
-        {
-          title: '操作',
-          dataIndex: 'action',
-          width: '70px',
-          scopedSlots: { customRender: 'action' }
         }
       ],
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
-        return getTables(Object.assign(parameter, this.queryParam))
+        return loginLogList(Object.assign(parameter, this.queryParam))
           .then(res => {
             return res
           })
@@ -111,35 +71,28 @@ export default {
     }
   },
   methods: {
-    optimizeTables () {
-      optimize({ data: this.selectTables }).then(res => {
-        this.$notification['success']({
-          message: res.message,
-          duration: 4
-        })
-        this.selectTables = []
-        this.selectedRowKeys = []
-      })
-    },
-    backupTables () {
-      backup({ data: this.selectTables }).then(res => {
-        this.$notification['success']({
-          message: res.message,
-          duration: 4
-        })
-        this.selectTables = []
-        this.selectedRowKeys = []
-      })
-    },
     handleOk () {
       this.$refs.table.refresh(true)
     },
-    onSelectChange (selectedRowKeys, selectedRows) {
-      this.selectTables = selectedRowKeys
+    clear() {
+      this.$confirm({
+        title: '确定清空全部日志吗?',
+        okText: '确定',
+        okType: 'danger',
+        cancelText: '取消',
+        onOk: () => {
+          emptyLoginLog().then((res) => {
+            this.$notification['success']({
+              message: res.message,
+              duration: 4
+            })
+            this.handleOk()
+          }).catch(err => this.failed(err))
+        }
+      })
     },
-    resetSearchForm () {
-      this.queryParam = {}
-      this.handleOk()
+    toDate (timestamp) {
+        return timestampToDate(timestamp * 1000)
     }
   }
 }
