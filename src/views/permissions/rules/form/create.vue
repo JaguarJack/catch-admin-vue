@@ -86,7 +86,7 @@
                 :wrapper-col="wrapperCol"
                 label="组件名称"
               >
-                <a-select v-decorator="['component', {initialValue:componentValue}, {rules: [{required: true}]}]">
+                <a-select allowClear placeholder="选择组件" v-decorator="['component', {initialValue:componentValue}, {rules: [{required: true}]}]">
                   <a-select-opt-group v-for="(item, key) in components" :key="key" :label="key">
                     <a-select-option v-for="(v, k) in item" :key="k" :value="v">{{ v }}</a-select-option>
                   </a-select-opt-group>
@@ -203,7 +203,8 @@ export default {
       this.iconVisible = false
     },
     add () {
-      this.visible = this.disabled = true
+      this.visible = true
+      this.show = true
       this.title = '新增菜单'
     },
     edit (record) {
@@ -223,7 +224,7 @@ export default {
     },
     addSon (record) {
       this.visible = true
-      this.disabled = false
+      this.show = true
       this.title = '新增子菜单 (' + record.permission_name + ')'
       this.parent_id = record.id
     },
@@ -233,6 +234,9 @@ export default {
         validateFields((errors, values) => {
           if (!errors) {
             this.confirmLoading = true
+            if (values.component === undefined) {
+              values.component = ''
+            }
             update(this.id, values).then((res) => {
               this.refresh(res.message)
             }).catch(err => this.failed(err))
