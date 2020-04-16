@@ -1,11 +1,8 @@
-import Enum from '@/enums/enum.js'
+import { Enum } from '@/enums/enum.js'
 
-const HttpMethods = {
-    get: 'get',
-    post: 'post',
-    put: 'put',
-    delete: 'delete',
-}
-
-export new Enum(HttpMethods)
-
+export const httpMethods = new Enum({
+  get: 'get',
+  post: 'post',
+  put: 'put',
+  delete: 'delete'
+})
