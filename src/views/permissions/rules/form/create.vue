@@ -207,7 +207,8 @@ export default {
       this.title = '新增菜单'
     },
     edit (record) {
-      this.visible = this.disabled = true
+      this.visible = true
+      this.disabled = false
       this.show = record.type === 1
       this.title = '编辑菜单'
       const { form: { setFieldsValue } } = this
@@ -221,7 +222,8 @@ export default {
       this.redirect = record.redirect
     },
     addSon (record) {
-      this.visible = this.disabled = true
+      this.visible = true
+      this.disabled = false
       this.title = '新增子菜单 (' + record.permission_name + ')'
       this.parent_id = record.id
     },
