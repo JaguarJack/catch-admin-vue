@@ -2,6 +2,7 @@
     <a-card :bordered="false">
         <div class="table-operator">
             <a-button type="primary" icon="delete" @click="clear()">清空</a-button>
+            <a-button icon="sync" @click="handleOk()">刷新</a-button>
         </div>
         <s-table
                 ref="table"
@@ -12,9 +13,17 @@
                 :data="loadData"
                 showPagination="auto"
         >
-      <span slot="created_at" slot-scope="text, record">
-         {{ toDate(record.created_at) }}
-      </span>
+            <span slot="created_at" slot-scope="text, record">
+                {{ toDate(record.created_at) }}
+            </span>
+            <span slot="params" slot-scope="text, record">
+                <a-tooltip placement="top">
+                    <template slot="title">
+                        <span>{{ record.params }}</span>
+                    </template>
+                    <a-button size="small" type="primary">查看</a-button>
+                </a-tooltip>
+            </span>
         </s-table>
     </a-card>
 </template>
@@ -52,10 +61,13 @@
             dataIndex: 'route',
           },
           {
+            title: '请求方式',
+            dataIndex: 'method'
+          },
+          {
             title: '参数',
             dataIndex: 'params',
-            width: 100,
-            ellipsis: true
+            scopedSlots: { customRender: 'params' },
           },
           {
             title: '操作时间',

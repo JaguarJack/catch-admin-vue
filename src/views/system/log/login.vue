@@ -2,6 +2,7 @@
   <a-card :bordered="false">
     <div class="table-operator">
       <a-button type="primary" icon="delete" @click="clear()">清空</a-button>
+      <a-button icon="sync" @click="handleOk()">刷新</a-button>
     </div>
     <s-table
       ref="table"
