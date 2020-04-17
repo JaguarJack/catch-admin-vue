@@ -5,9 +5,7 @@
         <s-tree
           :rowKey="(record) => record.data.id"
           :dataSource="orgTree"
-          :expandedKeys="expandedKeys"
-          :defaultExpandAll="true"
-          :autoExpandParent="true"
+          :openKeys="expandedKeys"
           @click="handleClick"
         >
         </s-tree>
@@ -149,6 +147,7 @@ export default {
   created () {
     getDepartmentList().then(res => {
       expandKeys(res.data, this.expandedKeys)
+      console.log(this.expandedKeys)
       this.orgTree = res.data
     })
   },
