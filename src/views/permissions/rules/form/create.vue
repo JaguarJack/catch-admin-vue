@@ -227,6 +227,10 @@ export default {
       this.show = true
       this.title = '新增子菜单 (' + record.permission_name + ')'
       this.parent_id = record.id
+      const { form: { setFieldsValue } } = this
+      this.$nextTick(() => {
+          setFieldsValue(pick(record, [ 'module']))
+      })
     },
     handleSubmit () {
       const { form: { validateFields } } = this
