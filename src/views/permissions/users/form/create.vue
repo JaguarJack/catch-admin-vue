@@ -100,17 +100,6 @@
             </a-form-item>
           </a-col>
         </a-row>
-        <a-row :gutter="0">
-          <a-col :span="14">
-            <a-form-item
-              label="确认密码"
-              :labelCol="labelCol"
-              :wrapperCol="wrapperCol"
-            >
-              <a-input allowClear type="password" v-decorator="['passwordConfirm', {rules: [{required: password_required, min: 5, message: '请确认密码'}]}]" />
-            </a-form-item>
-          </a-col>
-        </a-row>
       </a-form>
     </a-spin>
   </a-modal>
