@@ -30,7 +30,7 @@
       :showPagination="false"
     >
       <span slot="actions" slot-scope="text, record">
-        <a-popover title="操作" trigger="click" v-for="(action, index) in record.actionList" :key="index">
+        <a-popover title="操作" trigger="click" v-for="(action, index) in record.children" :key="index">
           <template slot="content">
             <p>权限标识: {{ record.permission_mark }}</p>
             <p>
