@@ -30,7 +30,10 @@
                 </a-form-item>
                 <a-form-item label="is_cname" type="text" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-tooltip placement="right" title="oss.is_cname">
-                        <a-input placeholder="is_cname" allowClear  v-decorator="['oss.is_cname']"/>
+                        <a-radio-group name="oss.is_cname" v-decorator="['oss.is_cname', {initialValue: 0}]">
+                            <a-radio :value="1">是</a-radio>
+                            <a-radio :value="0">否</a-radio>
+                        </a-radio-group>
                     </a-tooltip>
                 </a-form-item>
                 <a-divider orientation="left">七牛云配置</a-divider>
@@ -71,7 +74,7 @@
                     </a-tooltip>
                 </a-form-item>
                 <a-form-item label="secret_key" type="text" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-tooltip placement="secret_key" title="qcloud.secret_key">
+                    <a-tooltip placement="right" title="qcloud.secret_key">
                         <a-input placeholder="secret_key" allowClear  v-decorator="['qcloud.secret_key']"/>
                     </a-tooltip>
                 </a-form-item>
@@ -87,12 +90,12 @@
                 </a-form-item>
                 <a-form-item label="timeout" type="text" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-tooltip placement="right" title="qcloud.timeout">
-                        <a-input placeholder="timeout" allowClear  v-decorator="['qcloud.timeout']"/>
+                        <a-input placeholder="timeout" allowClear  v-decorator="['qcloud.timeout', {initialValue: 60}]"/>
                     </a-tooltip>
                 </a-form-item>
                 <a-form-item label="connect_timeout" type="text" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-tooltip placement="right" title="qcloud.connect_timeout">
-                        <a-input placeholder="connect_timeout" allowClear  v-decorator="['qcloud.connect_timeout']"/>
+                        <a-input placeholder="connect_timeout" allowClear  v-decorator="['qcloud.connect_timeout', {initialValue: 60}]"/>
                     </a-tooltip>
                 </a-form-item>
                 <a-form-item label="cdn" type="text" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -107,7 +110,10 @@
                 </a-form-item>
                 <a-form-item label="read_from_cdn" type="text" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-tooltip placement="right" title="qcloud.read_from_cdn">
-                        <a-input placeholder="read_from_cdn" allowClear  v-decorator="['qcloud.read_from_cdn']"/>
+                        <a-radio-group name="qcloud.read_from_cdn" v-decorator="['qcloud.read_from_cdn', {initialValue: 0}]">
+                            <a-radio :value="1">是</a-radio>
+                            <a-radio :value="0">否</a-radio>
+                        </a-radio-group>
                     </a-tooltip>
                 </a-form-item>
 
@@ -142,6 +148,7 @@ import { resetConfig } from '@/utils/util'
       this.$emit('show', res => {
         let initialData = resetConfig(res.data)
         const { form: { setFieldsValue } } = this
+        initialData['oss.is_cname'] = parseInt(initialData['oss.is_cname'])
         this.$nextTick(() => {
           setFieldsValue(pick(initialData, Object.keys(initialData)))
         })
