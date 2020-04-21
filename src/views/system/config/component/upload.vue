@@ -149,6 +149,7 @@ import { resetConfig } from '@/utils/util'
         let initialData = resetConfig(res.data)
         const { form: { setFieldsValue } } = this
         initialData['oss.is_cname'] = parseInt(initialData['oss.is_cname'])
+        initialData['qcloud.read_from_cdn'] = parseInt(initialData['qcloud.read_from_cdn'])
         this.$nextTick(() => {
           setFieldsValue(pick(initialData, Object.keys(initialData)))
         })
