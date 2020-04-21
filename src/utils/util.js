@@ -74,3 +74,24 @@ export function expandKeys (data, keys = []) {
     }
   })
 }
+
+/**
+ * 重组配置数据
+ *
+ * @param basic
+ * @returns {{}}
+ */
+export function resetConfig (basic) {
+  let initialData = {}
+  for (const key in basic) {
+    if (basic[key] instanceof Object) {
+      for (const k in  basic[key]) {
+        initialData[key + '.' + k] = basic[key][k]
+      }
+    } else {
+      initialData[key] = basic[key]
+    }
+  }
+
+  return initialData
+}
