@@ -17,4 +17,5 @@ export default {
   attachment: () => import('@/views/system/attachments/index'),
   departments: () => import('@/views/permissions/departments/departments'),
   jobs: () => import('@/views/permissions/jobs/jobs'),
+  config: () => import('@/views/system/config'),
 }
