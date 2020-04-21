@@ -18,6 +18,7 @@ export const components = new Enum({
     'database',
     'loginLog',
     'operateLog',
-    'attachment'
+    'attachment',
+    'config'
   ]
 })
