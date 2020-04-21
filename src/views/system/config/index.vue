@@ -69,7 +69,7 @@ export default {
         title: '新增配置',
         components: {
           'upload': () => import('./component/upload.vue'),
-          'basis': () => import('./component/basic')
+          'basis': () => import('./component/basis')
         },
         componentValue: ''
       };
