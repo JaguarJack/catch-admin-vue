@@ -171,10 +171,10 @@ export default {
     },
     handleSubmit () {
       const { form: { validateFields } } = this
-      this.confirmLoading = true
       if (this.id) {
         validateFields((errors, values) => {
           if (!errors) {
+            this.confirmLoading = true
             values['permissions'] = this.permissionids
             update(this.id, values).then((res) => {
               this.refresh(res.message)
@@ -184,6 +184,7 @@ export default {
       } else {
         validateFields((errors, values) => {
           if (!errors) {
+            this.confirmLoading = true
             values['permissions'] = this.permissionids
             if (this.parent_id > 0) {
               values['parent_id'] = this.parent_id
