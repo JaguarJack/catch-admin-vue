@@ -33,7 +33,7 @@
             checkable
             checkStrictly
             :treeData="permissions"
-            @check="this.onCheck"
+            @check="onCheck"
             :checkedKeys="permissionids"
           >
           </a-tree>
@@ -113,7 +113,8 @@ export default {
       ],
       range: 1,
       departments: [],
-      department_ids: []
+      department_ids: [],
+      permissionTreeIds: [] // 树状权限ID
     }
   },
   methods: {
@@ -244,8 +245,21 @@ export default {
     },
     onCheck (checkedKeys, info) {
       const data = info.node.dataRef
-      const ids = []
+      console.log(info)
+      console.log(checkedKeys)
+      let ids = []
       ids.push(data.id)
+      console.log(this.permissionids)
+      if (data.level) {
+         const levelIds = data.level.split('-')
+         for (const item in levelIds) {
+           const id = parseInt(levelIds[item])
+           if (this.permissionids.indexOf(id) === -1) {
+             ids.push(id)
+           }
+         }
+      }
+      console.log(ids)
       if (data.hasOwnProperty('children')) {
         this.getAllLeaf(data.children, ids)
       }
