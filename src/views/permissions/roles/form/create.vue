@@ -245,11 +245,8 @@ export default {
     },
     onCheck (checkedKeys, info) {
       const data = info.node.dataRef
-      console.log(info)
-      console.log(checkedKeys)
       let ids = []
       ids.push(data.id)
-      console.log(this.permissionids)
       if (data.level) {
          const levelIds = data.level.split('-')
          for (const item in levelIds) {
@@ -259,7 +256,6 @@ export default {
            }
          }
       }
-      console.log(ids)
       if (data.hasOwnProperty('children')) {
         this.getAllLeaf(data.children, ids)
       }
