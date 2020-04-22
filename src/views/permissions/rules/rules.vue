@@ -30,7 +30,7 @@
       :showPagination="false"
     >
       <span slot="actions" slot-scope="text, record">
-        <a-popover title="操作" trigger="click" v-for="(action, index) in record.children" :key="index">
+        <a-popover title="操作" trigger="click" v-for="(action, index) in record.actionList" :key="index">
           <template slot="content">
             <p>权限标识: {{ record.permission_mark }}</p>
             <p>
@@ -110,6 +110,7 @@ export default {
       ],
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
+        this.queryParam.actionList = 'actionList';
         return getPermissionList(Object.assign(parameter, this.queryParam))
           .then(res => {
             expandKeys(res.data, this.expandedKeys)
