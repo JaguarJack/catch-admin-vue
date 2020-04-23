@@ -151,11 +151,12 @@
 </template>
 
 <script>
-import { store, update } from '@/api/permission'
+import { store as add, update } from '@/api/permission'
 import pick from 'lodash.pick'
 import IconSelector from '@/components/IconSelector'
 import { httpMethods } from '@/enums/data/httpMethods'
 import { components } from '@/enums/data/components'
+import { refreshMenus } from '@/utils/util'
 
 export default {
   components: {
@@ -243,6 +244,7 @@ export default {
             }
             update(this.id, values).then((res) => {
               this.refresh(res.message)
+              refreshMenus()
             }).catch(err => this.failed(err))
           }
         })
@@ -253,8 +255,9 @@ export default {
             if (this.parent_id > 0) {
               values['parent_id'] = this.parent_id
             }
-            store(values).then((res) => {
+            add(values).then((res) => {
               this.refresh(res.message)
+              refreshMenus()
             }).catch(err => this.failed(err))
           }
         })
@@ -291,6 +294,9 @@ export default {
     },
     hide (e) {
       this.show = e.target.value === 1
+    },
+    refreshMenu () {
+
     }
   }
 }

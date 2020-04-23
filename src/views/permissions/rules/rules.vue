@@ -64,6 +64,7 @@ import { STable } from '@/components'
 import CreatePermission from './form/create'
 import { getPermissionList, del } from '@/api/permission'
 import { expandKeys } from '@/utils/util'
+import { refreshMenus } from '@/utils/util'
 
 export default {
   name: 'Permissions',
@@ -139,6 +140,7 @@ export default {
               duration: 4
             })
             this.handleOk()
+            refreshMenus()
           }).catch(err => this.failed(err))
         },
         onCancel () {}

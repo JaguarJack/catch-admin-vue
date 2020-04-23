@@ -112,6 +112,7 @@ import { getRoleList } from '@/api/role'
 import pick from 'lodash.pick'
 import { getAllJobs } from '@/api/jobs'
 import { getDepartmentList } from '@/api/departments'
+import { refreshMenus } from '@/utils/util'
 
 export default {
   data () {
@@ -242,6 +243,7 @@ export default {
             values['department_id'] = this.department.id
             update(this.id, values).then((res) => {
               this.refresh(res.message)
+              refreshMenus()
             }).catch(err => this.failed(err))
           }
         })
@@ -253,6 +255,7 @@ export default {
             this.confirmLoading = true
             store(values).then((res) => {
               this.refresh(res.message)
+              refreshMenus()
             }).catch(err => this.failed(err))
           }
         })

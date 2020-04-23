@@ -83,6 +83,7 @@ import { store, update, read } from '@/api/role'
 import pick from 'lodash.pick'
 import { getPermissionList } from '@/api/permission'
 import { getDepartmentList } from '@/api/departments'
+import { refreshMenus } from '@/utils/util'
 
 export default {
   data () {
@@ -179,6 +180,7 @@ export default {
             values['permissions'] = this.permissionids
             update(this.id, values).then((res) => {
               this.refresh(res.message)
+              refreshMenus()
             }).catch(err => this.failed(err))
           }
         })
@@ -192,6 +194,7 @@ export default {
             }
             store(values).then((res) => {
               this.refresh(res.message)
+              refreshMenus()
             }).catch(err => this.failed(err))
           }
         })
