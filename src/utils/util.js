@@ -1,3 +1,6 @@
+import {getInfo } from '@/api/login'
+import store from '@/store'
+
 export function timeFix () {
   const time = new Date()
   const hour = time.getHours()
@@ -94,4 +97,14 @@ export function resetConfig (basic) {
   }
 
   return initialData
+}
+
+/**
+ * 刷新菜单
+ */
+export function refreshMenus () {
+  getInfo().then(res => {
+    const permissions = res.data && res.data.permissions
+    store.dispatch('GetLatestRoutes', { permissions }).then(r => {})
+  })
 }
