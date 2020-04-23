@@ -86,13 +86,13 @@ export default {
     return {
       production: config.production,
       collapsed: false,
-      menus: []
+      // menus: []
     }
   },
   computed: {
     ...mapState({
       // 动态主路由
-      mainMenu: state => state.permission.addRouters
+      menus: state => state.permission.addRouters.find(item => item.path === '/').children
     }),
     contentPaddingLeft () {
       if (!this.fixSidebar || this.isMobile()) {
@@ -111,7 +111,7 @@ export default {
   },
   created () {
     // this.menus = asyncRouterMap.find((item) => item.path === '/').children
-    this.menus = this.mainMenu.find(item => item.path === '/').children
+    // this.menus = this.mainMenu.find(item => item.path === '/').children
     this.collapsed = !this.sidebarOpened
   },
   mounted () {
