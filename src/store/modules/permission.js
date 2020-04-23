@@ -68,7 +68,7 @@ function treePermissions (permissions, $pid = 0) {
         p.meta = {}
         p.meta.title = permission.title
         p.meta.icon = permission.icon
-        if (permission.keepAlive === 1) {
+        if (permission.keepalive === 1) {
           p.meta.keepAlive = true
         }
        const children = treePermissions(permissions, permission.id)
@@ -108,6 +108,7 @@ const permission = {
         const { permissions } = data
         // let permissions = []
         asyncRouterMap[0].children = treePermissions(filterThenGetMenus(permissions))
+        console.log(asyncRouterMap)
         commit('SET_ROUTERS', asyncRouterMap)
         resolve()
       })
