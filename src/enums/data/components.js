@@ -19,6 +19,7 @@ export const components = new Enum({
     'loginLog',
     'operateLog',
     'attachment',
-    'config'
+    'config',
+    'generate'
   ]
 })

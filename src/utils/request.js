@@ -18,7 +18,7 @@ const service = axios.create({
 const err = (error) => {
   if (error.response) {
     const token = Vue.ls.get(ACCESS_TOKEN)
-    if (token) {
+    if (! token) {
       store.dispatch('Logout').then(() => {
         setTimeout(() => {
           window.location.reload()
