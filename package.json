@@ -50,10 +50,12 @@
     "eslint": "^5.16.0",
     "eslint-plugin-html": "^5.0.0",
     "eslint-plugin-vue": "^5.2.3",
+    "highlight.js": "^10.0.1",
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
     "opencollective": "^1.0.3",
     "opencollective-postinstall": "^2.0.2",
+    "vue-highlight.js": "^3.1.0",
     "vue-svg-icon-loader": "^2.1.1",
     "vue-template-compiler": "^2.6.10",
     "webpack-theme-color-replacer": "^1.2.17"
