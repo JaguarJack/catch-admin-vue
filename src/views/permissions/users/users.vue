@@ -104,7 +104,7 @@ export default {
     return {
       // 查询参数
       queryParam: {},
-      expandedKeys: [],
+      expandedKeys: ["item_0"],
       // 表头
       columns: [
         {

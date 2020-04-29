@@ -27,12 +27,12 @@
           <a-row :gutter="0">
             <a-col :span="12">
               <a-form-item
-                label="菜单名称"
+                :label="name"
                 type="text"
                 :labelCol="labelCol"
                 :wrapperCol="wrapperCol"
               >
-                <a-input allowClear v-decorator="['permission_name', {rules: [{required: true, min: 2, message: '请输入菜单名称, 至少2个字符！'}]}]" />
+                <a-input allowClear v-decorator="['permission_name', {rules: [{required: true, min: 2, message: '请输入名称, 至少2个字符！'}]}]" />
               </a-form-item>
             </a-col>
             <a-col :span="12">
@@ -178,6 +178,7 @@ export default {
       id: null,
       parent_id: 0,
       typeValue: 1,
+      name: '菜单名称',
       form: this.$form.createForm(this),
       sort: 1,
       currentSelectedIcon: '',
@@ -294,6 +295,7 @@ export default {
     },
     hide (e) {
       this.show = e.target.value === 1
+      this.name = e.target.value === 1 ? '菜单名称' : '按钮名称'
     },
     refreshMenu () {
 

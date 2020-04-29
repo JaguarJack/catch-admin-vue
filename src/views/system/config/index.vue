@@ -88,7 +88,6 @@ export default {
         const { form: { validateFields } } = this
         validateFields((errors, values) => {
           if (!errors) {
-            this.confirmLoading = true
             store(values).then(res => {
               this.$message.success(res.message)
               this.handleCancel()
