@@ -21,9 +21,9 @@ export default {
   generate: () => import('@/views/system/generate'),
   // cms 配置
   // 分类
-  category: () => import('@/views/cms/category'),
+ // category: () => import('@/views/cms/category'),
   // 文章
-  article: () => import('@/views/cms/article'),
+ // article: () => import('@/views/cms/article'),
   // 友情链接
-  friendLink: () => import('@/views/cms/friendLink')
+ // friendLink: () => import('@/views/cms/friendLink')
 }
