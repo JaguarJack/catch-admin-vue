@@ -126,9 +126,7 @@
     },
     methods: {
       addField () {
-        console.log(this.column())
         this.data.push(this.column())
-        console.log(this.data)
       },
       column () {
         return {
@@ -149,7 +147,6 @@
              break;
            }
         }
-        console.log(this.data)
       },
       deleteField (index) {
         this.data = this.data.filter(function (value, key) {
