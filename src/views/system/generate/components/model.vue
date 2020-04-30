@@ -105,22 +105,11 @@
   ];
 
   // column 信息
-  const column = {
-    'field': '',
-    'type': '',
-    'length': 0,
-    'nullable': false,
-    'index': '',
-    'default': '',
-    'comment': '',
-    'unsigned': false,
-  }
-
   export default {
     name: 'model',
     data() {
       return {
-        data: [column],
+        data: [this.column()],
         columns,
         mysqlTypes,
         indexes: [
@@ -137,10 +126,30 @@
     },
     methods: {
       addField () {
-        this.data.push(column)
+        console.log(this.column())
+        this.data.push(this.column())
+        console.log(this.data)
+      },
+      column () {
+        return {
+          'field': '',
+          'type': '',
+          'length': 0,
+          'nullable': false,
+          'index': '',
+          'default': '',
+          'comment': '',
+          'unsigned': false,
+        }
       },
       setValue (value, key, field) {
-        this.data[key][field] = value
+        for (const k in this.data) {
+           if (parseInt(key) === parseInt(k)) {
+              this.data[parseInt(k)][field] = value
+             break;
+           }
+        }
+        console.log(this.data)
       },
       deleteField (index) {
         this.data = this.data.filter(function (value, key) {
