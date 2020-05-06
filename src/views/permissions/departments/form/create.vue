@@ -118,25 +118,18 @@ export default {
           this.confirmLoading = true
           if (this.id) {
             update(this.id, values).then((res) => {
-              this.refresh(res.message)
-            }).catch(err => this.failed(err))
+              this.refresh(res)
+            })
           } else {
             if (this.parent_id > 0) {
               values['parent_id'] = this.parent_id
             }
             store(values).then((res) => {
-              this.refresh(res.message)
-            }).catch(err => this.failed(err))
+              this.refresh(res)
+            })
           }
         }
       })
-    },
-    failed (errors) {
-      this.$notification['error']({
-        message: errors.message,
-        duration: 4
-      })
-      this.handleCancel()
     },
     handleCancel () {
       this.visible = false
@@ -152,11 +145,8 @@ export default {
         option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0
       )
     },
-    refresh (message) {
-      this.$notification['success']({
-        message: message,
-        duration: 4
-      })
+    refresh (res) {
+      this.toast(res)
       this.handleCancel()
       this.$parent.$parent.handleOk()
     }

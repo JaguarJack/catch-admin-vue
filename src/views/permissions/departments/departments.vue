@@ -123,25 +123,15 @@ export default {
         cancelText: '取消',
         onOk: () => {
           del(record.id).then((res) => {
-            this.$notification['success']({
-              message: res.message,
-              duration: 4
-            })
+            this.toast(res)
             this.handleOk()
-          }).catch(err => this.failed(err))
+          })
         },
         onCancel () {}
       })
     },
     handleOk () {
       this.$refs.table.refresh(true)
-    },
-    failed (errors) {
-      this.$notification['error']({
-        message: errors.message,
-        duration: 4
-      })
-      this.handleCancel()
     },
     resetSearchForm () {
       this.queryParam = {}
