@@ -179,9 +179,9 @@ export default {
             this.confirmLoading = true
             values['permissions'] = this.permissionids
             update(this.id, values).then((res) => {
-              this.refresh(res.message)
+              this.refresh(res)
               refreshMenus()
-            }).catch(err => this.failed(err))
+            })
           }
         })
       } else {
@@ -193,9 +193,9 @@ export default {
               values['parent_id'] = this.parent_id
             }
             store(values).then((res) => {
-              this.refresh(res.message)
+              this.refresh(res)
               refreshMenus()
-            }).catch(err => this.failed(err))
+            })
           }
         })
       }
@@ -217,11 +217,8 @@ export default {
       this.show = false
       this.form.resetFields()
     },
-    refresh (message) {
-      this.$notification['success']({
-        message: message,
-        duration: 4
-      })
+    refresh (res) {
+      this.toast(res)
       this.handleCancel()
       this.$parent.$parent.handleOk()
     },
