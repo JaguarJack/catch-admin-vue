@@ -1,3 +1,5 @@
+import { axios } from '@/utils/request'
+
 const VueAxios = {
   vm: {},
   // eslint-disable-next-line no-unused-vars
@@ -22,8 +24,32 @@ const VueAxios = {
         }
       },
       $http: {
-        get: function get () {
-          return instance
+        get: function get (url, params) {
+          return instance({
+            url: url,
+            method: 'get',
+            params: params
+          })
+        },
+        post: function post (url, data) {
+          return instance({
+            url: url,
+            method: 'post',
+            data: data
+          })
+        },
+        put: function put(url, data) {
+          return instance({
+            url: url,
+            method: 'put',
+            data: data
+          })
+        },
+        del: function del(url) {
+          return instance({
+            url: url,
+            method: 'delete'
+          })
         }
       }
     })

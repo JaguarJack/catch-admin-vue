@@ -15,18 +15,22 @@ const service = axios.create({
   }
 })
 
+// token 不存在 直接返回到登陆页面
 const err = (error) => {
   if (error.response) {
     const token = Vue.ls.get(ACCESS_TOKEN)
     if (! token) {
-      store.dispatch('Logout').then(() => {
-        setTimeout(() => {
-          window.location.reload()
-        }, 1500)
+      notification.error({
+        message: '登陆失效，请重新登陆',
       })
+
+      setTimeout(() => {
+        router.push({ path: '/user/login' })
+        window.location.reload()
+      }, 1500)
     }
   }
-  return Promise.reject(error)
+  return Promise.resolve(error)
 }
 
 // request interceptor
@@ -50,12 +54,8 @@ service.interceptors.response.use((response) => {
           message: response.data.message
         })
       }, 1000)
-    } else {
-      notification.error({
-        message: response.data.message
-      })
     }
-    return Promise.reject(new Error('error'))
+    return Promise.resolve(response.data)
   } else {
     return response.data
   }
