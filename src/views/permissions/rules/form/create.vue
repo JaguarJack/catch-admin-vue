@@ -244,7 +244,7 @@ export default {
               values.component = ''
             }
             update(this.id, values).then((res) => {
-              this.refresh(res.message)
+              this.refresh(res)
               refreshMenus()
             }).catch(err => this.failed(err))
           }
@@ -257,19 +257,12 @@ export default {
               values['parent_id'] = this.parent_id
             }
             add(values).then((res) => {
-              this.refresh(res.message)
+              this.refresh(res)
               refreshMenus()
             }).catch(err => this.failed(err))
           }
         })
       }
-    },
-    failed (errors) {
-      this.$notification['error']({
-        message: errors.message,
-        duration: 4
-      })
-      this.handleCancel()
     },
     handleCancel () {
       this.visible = false
@@ -285,11 +278,8 @@ export default {
         option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0
       )
     },
-    refresh (message) {
-      this.$notification['success']({
-        message: message,
-        duration: 4
-      })
+    refresh (res) {
+      this.toast(res)
       this.handleCancel()
       this.$parent.$parent.handleOk()
     },
