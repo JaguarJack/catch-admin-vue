@@ -124,22 +124,18 @@ export default {
       })
     },
     loginSuccess (res) {
-      this.$router.push({ path: '/' })
-      // 延迟 1 秒显示欢迎信息
-      setTimeout(() => {
-        this.$notification.success({
-          message: '欢迎',
-          description: `${timeFix()}，欢迎回来`
-        })
-      }, 1000)
+      this.toast(res)
+      if (res.code === 10000) {
+        this.$router.push({ path: '/' })
+        // 延迟 1 秒显示欢迎信息
+        setTimeout(() => {
+          this.$notification.success({
+            message: '欢迎',
+            description: `${timeFix()}，欢迎回来`
+          })
+        }, 1000)
+      }
       this.isLoginError = false
-    },
-    requestFailed (err) {
-      this.isLoginError = true
-      this.$notification['error']({
-        message: err.message,
-        duration: 4
-      })
     }
   }
 }
