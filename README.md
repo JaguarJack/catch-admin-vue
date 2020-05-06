@@ -1,8 +1,8 @@
 English | [简体中文](./README.zh-CN.md)
 
-<h1 align="center">Ant Design Pro Vue</h1>
+<h1 align="center">CatchAdmin 后台管理系统</h1>
 <div align="center">
-An out-of-box UI solution for enterprise applications as a Vue boilerplate. based on  <a href="https://vuecomponent.github.io/ant-design-vue/docs/vue/introduce-cn/" target="_blank">Ant Design of Vue</a>
+base on Ant design pro vue 
 </div>
 
 <div align="center">
@@ -13,11 +13,10 @@ An out-of-box UI solution for enterprise applications as a Vue boilerplate. base
 
 </div>
 
-- Preview: https://preview.pro.loacg.com
-- Home Page: https://pro.loacg.com
-- Documentation: https://pro.loacg.com/docs/getting-started
-- ChangeLog: https://pro.loacg.com/docs/changelog
-- FAQ: https://pro.loacg.com/docs/faq
+- 文档: http://doc.catchadmin.com
+- BBS: http://bbs.catchadmin.com
+- 后端地址: https://github.com/yanwenwu/catch-admin
+- 演示地址: http://vue.catchadmin.com
 
 Overview
 ----
@@ -46,12 +45,12 @@ Overview
 > Note:  [Yarn](https://yarnpkg.com/) package management is recommended, the exact same version loaded with the demo site of this project (yarn.lock) . but you can also use npm
 
 
-### Project setup
+### 项目安装
 
 - Clone repo
 ```bash
-git clone https://github.com/sendya/ant-design-pro-vue.git
-cd ant-design-pro-vue
+git clone https://github.com/yanwenwu/catch-admin-vue.git
+cd catch-admin-vue
 ```
 
 - Install dependencies
@@ -101,32 +100,4 @@ Modern browsers and IE10.
 | --- | --- | --- | --- | --- |
 | IE10, Edge | last 2 versions | last 2 versions | last 2 versions | last 2 versions |
 
-
-## Contributors
-
-This project exists thanks to all the people who contribute. 
-<a href="https://github.com/sendya/ant-design-pro-vue/graphs/contributors"><img src="https://opencollective.com/ant-design-pro-vue/contributors.svg?width=890&button=false" /></a>
-
-
-## Backers
-
-Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/ant-design-pro-vue#backer)]
-
-<a href="https://opencollective.com/ant-design-pro-vue#backers" target="_blank"><img src="https://opencollective.com/ant-design-pro-vue/backers.svg?width=890"></a>
-
-
-## Sponsors
-
-Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/ant-design-pro-vue#sponsor)]
-
-<a href="https://opencollective.com/ant-design-pro-vue/sponsor/0/website" target="_blank"><img src="https://opencollective.com/ant-design-pro-vue/sponsor/0/avatar.svg"></a>
-<a href="https://opencollective.com/ant-design-pro-vue/sponsor/1/website" target="_blank"><img src="https://opencollective.com/ant-design-pro-vue/sponsor/1/avatar.svg"></a>
-<a href="https://opencollective.com/ant-design-pro-vue/sponsor/2/website" target="_blank"><img src="https://opencollective.com/ant-design-pro-vue/sponsor/2/avatar.svg"></a>
-<a href="https://opencollective.com/ant-design-pro-vue/sponsor/3/website" target="_blank"><img src="https://opencollective.com/ant-design-pro-vue/sponsor/3/avatar.svg"></a>
-<a href="https://opencollective.com/ant-design-pro-vue/sponsor/4/website" target="_blank"><img src="https://opencollective.com/ant-design-pro-vue/sponsor/4/avatar.svg"></a>
-<a href="https://opencollective.com/ant-design-pro-vue/sponsor/5/website" target="_blank"><img src="https://opencollective.com/ant-design-pro-vue/sponsor/5/avatar.svg"></a>
-<a href="https://opencollective.com/ant-design-pro-vue/sponsor/6/website" target="_blank"><img src="https://opencollective.com/ant-design-pro-vue/sponsor/6/avatar.svg"></a>
-<a href="https://opencollective.com/ant-design-pro-vue/sponsor/7/website" target="_blank"><img src="https://opencollective.com/ant-design-pro-vue/sponsor/7/avatar.svg"></a>
-<a href="https://opencollective.com/ant-design-pro-vue/sponsor/8/website" target="_blank"><img src="https://opencollective.com/ant-design-pro-vue/sponsor/8/avatar.svg"></a>
-<a href="https://opencollective.com/ant-design-pro-vue/sponsor/9/website" target="_blank"><img src="https://opencollective.com/ant-design-pro-vue/sponsor/9/avatar.svg"></a>
-
+欢迎提交建议。
