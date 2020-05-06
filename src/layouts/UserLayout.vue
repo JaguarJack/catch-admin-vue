@@ -5,11 +5,11 @@
         <div class="header">
           <a href="/">
             <img src="~@/assets/logo.svg" class="logo" alt="logo">
-            <span class="title">Ant Design</span>
+            <span class="title">CatchAdmin</span>
           </a>
         </div>
         <div class="desc">
-          Ant Design 是西湖区最具影响力的 Web 设计规范
+          CatchAdmin 模块化开发后台管理系统
         </div>
       </div>
 
@@ -17,9 +17,9 @@
 
       <div class="footer">
         <div class="links">
-          <a href="_self">帮助</a>
-          <a href="_self">隐私</a>
-          <a href="_self">条款</a>
+          <a href="http://doc.catchadmin.com/" target="_blank">文档</a>
+          <a href="https://github.com/yanwenwu/catch-admin-vue" target="_blank">地址</a>
+          <a href="http://vue.catchadmin.com" target="_blank">官网演示</a>
         </div>
         <div class="copyright">
           Copyright &copy; 2017～2019 CatchAdmin 开发
