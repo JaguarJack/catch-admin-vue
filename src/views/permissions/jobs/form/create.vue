@@ -94,12 +94,12 @@ export default {
           this.confirmLoading = true
           if (this.id) {
             update(this.id, values).then((res) => {
-              this.refresh(res.message)
-            }).catch(err => this.failed(err))
+              this.refresh(res)
+            })
           } else {
             store(values).then((res) => {
-              this.refresh(res.message)
-            }).catch(err => this.failed(err))
+              this.refresh(res)
+            })
           }
         }
       })
@@ -120,11 +120,8 @@ export default {
       this.sort = 1
       this.status = 1
     },
-    refresh (message) {
-      this.$notification['success']({
-        message: message,
-        duration: 4
-      })
+    refresh (res) {
+      this.toast(res)
       this.handleCancel()
       this.$parent.$parent.handleOk()
     },
