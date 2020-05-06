@@ -121,22 +121,14 @@ export default {
   methods: {
     optimizeTables () {
       optimize({ data: this.selectTables }).then(res => {
-        this.$notification['success']({
-          message: res.message,
-          duration: 4
-        })
+        this.toast(res)
         this.selectTables = []
-        this.selectedRowKeys = []
       })
     },
     backupTables () {
       backup({ data: this.selectTables }).then(res => {
-        this.$notification['success']({
-          message: res.message,
-          duration: 4
-        })
+        this.toast(res)
         this.selectTables = []
-        this.selectedRowKeys = []
       })
     },
     handleOk () {

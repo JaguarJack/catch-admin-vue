@@ -89,7 +89,7 @@ export default {
         validateFields((errors, values) => {
           if (!errors) {
             store(values).then(res => {
-              this.$message.success(res.message)
+              this.toast(res)
               this.handleCancel()
               this.activeKey = parseInt(res.data.id)
             })

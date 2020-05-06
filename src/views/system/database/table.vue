@@ -72,7 +72,6 @@ export default {
       this.visible = true
       read(name).then(res => {
         this.fields = res.data
-        console.log(this.fields)
       })
     },
     handleCancel () {

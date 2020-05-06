@@ -128,10 +128,7 @@ export default {
         cancelText: '取消',
         onOk: () => {
           del(this.selectedRowKeys.join(',')).then((res) => {
-            this.$notification['success']({
-              message: res.message,
-              duration: 4
-            })
+            this.toast(res)
             this.selectedRowKeys = []
             this.handleOk()
           })

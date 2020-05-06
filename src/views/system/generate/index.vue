@@ -63,7 +63,7 @@
            },
            submit () {
              generate({'data': JSON.stringify(this.getData())}).then(res => {
-
+                this.toast(res)
              })
           },
           preview (type) {
