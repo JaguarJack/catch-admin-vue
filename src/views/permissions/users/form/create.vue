@@ -242,9 +242,9 @@ export default {
             values['jobs'] = this.job.ids
             values['department_id'] = this.department.id
             update(this.id, values).then((res) => {
-              this.refresh(res.message)
+              this.refresh(res)
               refreshMenus()
-            }).catch(err => this.failed(err))
+            })
           }
         })
       } else {
@@ -254,19 +254,12 @@ export default {
             values['department_id'] = this.department.id
             this.confirmLoading = true
             store(values).then((res) => {
-              this.refresh(res.message)
+              this.refresh(res)
               refreshMenus()
-            }).catch(err => this.failed(err))
+            })
           }
         })
       }
-    },
-    failed (errors) {
-      this.$notification['error']({
-        message: errors.message,
-        duration: 4
-      })
-      this.handleCancel()
     },
     handleCancel () {
       this.id = null
@@ -279,11 +272,8 @@ export default {
       this.job.has = []
       this.department.has = []
     },
-    refresh (message) {
-      this.$notification['success']({
-        message: message,
-        duration: 4
-      })
+    refresh (res) {
+      this.toast(res)
       this.handleCancel()
       this.$parent.$parent.handleOk()
     },
@@ -291,7 +281,6 @@ export default {
       this.roleids = value
     },
     onDepartmentSelect (value, node, extra) {
-      console.log(node)
       if (node.dataRef.parent_id === 0 || node.dataRef.children && node.dataRef.children.length > 0) {
         this.$message.error('不允许选择父节点')
         this.$nextTick(() => {

@@ -3,8 +3,8 @@
     <a-row :gutter="8">
       <a-col :span="5">
         <s-tree
-          :rowKey="(record) => record.data.id"
-          :dataSource="orgTree"
+          :rowKey="(record) => record.data.key"
+          :dataSource="departments"
           :openKeys="expandedKeys"
           @click="handleClick"
         >
@@ -104,7 +104,7 @@ export default {
     return {
       // 查询参数
       queryParam: {},
-      expandedKeys: ["item_0"],
+      expandedKeys: [],
       // 表头
       columns: [
         {
@@ -141,14 +141,19 @@ export default {
           })
       },
       selectedRowKeys: [],
-      orgTree: []
+      departments: []
     }
   },
   created () {
     getDepartmentList().then(res => {
-      expandKeys(res.data, this.expandedKeys)
+      const departments = this.addKey(res.data)
+      const keys = []
+      expandKeys(departments, keys)
+      keys.sort().map(item => {
+        this.expandedKeys.push(String(item))
+      })
       console.log(this.expandedKeys)
-      this.orgTree = res.data
+      this.departments = departments
     })
   },
   methods: {
@@ -163,10 +168,7 @@ export default {
         cancelText: '取消',
         onOk: () => {
           del(record.id).then((res) => {
-            this.$notification['success']({
-              message: res.message,
-              duration: 4
-            })
+            this.toast(res)
             this.handleOk()
           })
         },
@@ -184,10 +186,7 @@ export default {
         cancelText: '取消',
         onOk: () => {
           del(this.selectedRowKeys.join(',')).then((res) => {
-            this.$notification['success']({
-              message: res.message,
-              duration: 4
-            })
+            this.toast(res)
             this.selectedRowKeys = []
             this.handleOk()
           })
@@ -200,10 +199,7 @@ export default {
     },
     onSwitchStatus (id) {
       swtichStatus(id).then((res) => {
-        this.$notification['success']({
-          message: res.message,
-          duration: 4
-        })
+        this.toast(res)
         this.onSelectChange([], [])
         this.handleOk()
       })
@@ -225,6 +221,15 @@ export default {
     handleClick (e) {
       this.queryParam.department_id = e.key
       this.$refs.table.refresh(true, this.queryParam)
+    },
+    addKey (departments) {
+      departments.map(item => {
+        item.key = String(item.id)
+        if (item.children !== undefined) {
+          this.addKey(item.children)
+        }
+      })
+      return departments
     }
   }
 }
