@@ -32,7 +32,7 @@
       <span slot="actions" slot-scope="text, record">
         <a-popover title="操作" trigger="click" v-for="(action, index) in record.actionList" :key="index">
           <template slot="content">
-            <p>权限标识: {{ record.permission_mark }}</p>
+            <p>权限标识: {{ action.permission_mark }}</p>
             <p>
               <a-button type="primary" size="small" @click="handleEdit(action)"><a-icon type="edit" /> 编辑</a-button>
               <a-button type="danger" size="small" @click="handleDel(action)"><a-icon type="delete" /> 删除</a-button>
