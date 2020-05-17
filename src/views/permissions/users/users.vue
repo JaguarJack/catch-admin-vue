@@ -41,7 +41,7 @@
             <a-menu slot="overlay">
               <a-menu-item @click="multiDel()"><a-icon type="delete"/>删除</a-menu-item>
               <!-- lock | unlock -->
-              <a-menu-item @click="multiAble()"><a-icon type="lock"/>启用/禁用</a-menu-item>
+              <!--<a-menu-item @click="multiAble()"><a-icon type="lock"/>启用/禁用</a-menu-item>-->
             </a-menu>
           <a-button style="margin-left: 8px">
             批量操作 <a-icon type="down" />
@@ -62,13 +62,13 @@
       <span slot="status" slot-scope="text,record">
         <template>
           <a-switch
-            checkedChildren="启用"
+            checked-children="启用"
             :value="record.id"
-            unCheckedChildren="禁用"
+            un-checked-children="禁用d"
             @change="onSwitchClick"
-            v-if="text === 1"
-            defaultChecked/>
-          <a-switch checkedChildren="启用" v-else :value="record.id" unCheckedChildren="禁用" @change="onSwitchClick"/>
+            v-if="record.status === 9"
+            default-checked/>
+          <a-switch checked-children="启用" v-else :value="record.id" un-checked-children="禁用" @change="onSwitchClick"/>
         </template>
       </span>
       <span slot="action" slot-scope="text, record">
@@ -141,6 +141,7 @@ export default {
           })
       },
       selectedRowKeys: [],
+      selectedRows: [],
       departments: []
     }
   },
@@ -212,7 +213,9 @@ export default {
       this.onSwitchStatus(id)
     },
     onSelectChange (selectedRowKeys, selectedRows) {
+      // console.log(selectedRowKeys)
       this.selectedRowKeys = selectedRowKeys
+      this.selectedRows = selectedRows
     },
     resetSearchForm () {
       this.queryParam = {}
