@@ -54,6 +54,19 @@ function filterThenGetMenus (permissions) {
    return menus
 }
 
+/**
+ * default router
+ * 
+ * you set set here
+ * 
+ */
+const defaultRoute = [{
+        path: '/dashboard/workplace',
+        name: 'dashboard',
+        component: () => import('@/views/dashboard/Workplace'),
+        meta: { title: '主页', keepAlive: true, icon: 'home' }
+}]
+
 const permission = {
   state: {
     routers: constantRouterMap,
@@ -69,7 +82,7 @@ const permission = {
     GenerateRoutes ({ commit }, data) {
       return new Promise(resolve => {
         const { permissions } = data
-        asyncRouterMap[0].children = asyncRouterMap[0].children.concat(treePermissions(filterThenGetMenus(permissions)))
+        asyncRouterMap[0].children = defaultRoute.concat(treePermissions(filterThenGetMenus(permissions)))
         // asyncRouterMap[0].children.push(treePermissions(filterThenGetMenus(permissions)))
         commit('SET_ROUTERS', asyncRouterMap)
         resolve()
@@ -77,7 +90,7 @@ const permission = {
     },
     GetLatestRoutes ({commit}, data) {
       const { permissions } = data
-      asyncRouterMap[0].children = asyncRouterMap[0].children.concat(treePermissions(filterThenGetMenus(permissions)))
+      asyncRouterMap[0].children = defaultRoute.concat(treePermissions(filterThenGetMenus(permissions)))
       commit('SET_ROUTERS', asyncRouterMap)
     }
   }
