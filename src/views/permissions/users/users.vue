@@ -64,9 +64,9 @@
           <a-switch
             checked-children="启用"
             :value="record.id"
-            un-checked-children="禁用d"
+            un-checked-children="禁用"
             @change="onSwitchClick"
-            v-if="record.status === 9"
+            v-if="record.status === 1"
             default-checked/>
           <a-switch checked-children="启用" v-else :value="record.id" un-checked-children="禁用" @change="onSwitchClick"/>
         </template>
