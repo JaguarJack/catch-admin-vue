@@ -7,24 +7,7 @@ export const asyncRouterMap = [
     name: 'index',
     component: BasicLayout,
     meta: { title: '首页' },
-    redirect: '/dashboard/workplace',
-    children: [
-      // dashboard
-      {
-        path: 'dashboard',
-        name: 'dashboard',
-        redirect: '/dashboard/workplace',
-        component: RouteView,
-        meta: { title: 'Dashboard', keepAlive: true, icon: 'home' },
-        children: [
-          {
-            path: '/dashboard/workplace',
-            name: 'Workplace',
-            component: () => import('@/views/dashboard/Workplace'),
-            meta: { title: '主页', keepAlive: true }
-          },
-        ]
-      }]
+    redirect: '/dashboard/workplace'
   },
   {
     path: '*', redirect: '/404', hidden: true
