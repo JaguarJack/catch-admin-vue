@@ -17,9 +17,21 @@ import store from '@/store'
 const action = Vue.directive('action', {
   inserted: function (el, binding, vnode) {
     const actionName = binding.arg
-    const roles = store.getters.roles
+    // const roles = store.getters.roles
+    const permissions = store.getters.userInfo.permissions
+    // console.log(permissions)
+    // console.log(roles)
+    // console.log(actionName)
+
+    permissions.forEach(p => {
+      if (p && p.permission_mark !== actionName) {
+        el.parentNode && el.parentNode.removeChild(el) || (el.style.display = 'none')
+      }
+    })
+    /**
     const elVal = vnode.context.$route.meta.permission
     const permissionId = elVal instanceof String && [elVal] || elVal
+    console.log(elVal)
     roles.permissions.forEach(p => {
       if (!permissionId.includes(p.permissionId)) {
         return
@@ -28,6 +40,7 @@ const action = Vue.directive('action', {
         el.parentNode && el.parentNode.removeChild(el) || (el.style.display = 'none')
       }
     })
+    */
   }
 })
 
