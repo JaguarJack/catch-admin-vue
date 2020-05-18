@@ -45,15 +45,30 @@ service.interceptors.request.use(config => {
 // response interceptor
 service.interceptors.response.use((response) => {
   if (response.data.code !== 10000) {
-    // 登录失效
+    // 登录失败
     if (response.data.code === 10001) {
+      Vue.ls.remove(ACCESS_TOKEN)
       router.push({ path: '/user/login' })
-      // 延迟 1 秒显示欢迎信息
+      // 延迟 1 秒显示错误信息
       setTimeout(() => {
         notification.error({
           message: response.data.message
         })
       }, 1000)
+    }
+    // 登录过期 刷新 token 重新请求
+    if (response.data.code === 10006) {
+      return service({
+        url: 'refresh/token',
+        method: 'post'
+      }).then(res => {
+        const token = res.data.token
+        Vue.ls.set(ACCESS_TOKEN, token, 7 * 24 * 60 * 60 * 1000)
+        store.commit('SET_TOKEN', token)
+        const config = response.config
+        config.headers['authorization'] = 'Bearer ' + token // 让每个请求携带自定义 token 请根据实际情况自行修改
+        return service(config)
+      })
     }
     return Promise.resolve(response.data)
   } else {
