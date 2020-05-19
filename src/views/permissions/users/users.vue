@@ -43,43 +43,43 @@
               <!-- lock | unlock -->
               <!--<a-menu-item @click="multiAble()"><a-icon type="lock"/>启用/禁用</a-menu-item>-->
             </a-menu>
-          <a-button style="margin-left: 8px">
-            批量操作 <a-icon type="down" />
-          </a-button>
+            <a-button style="margin-left: 8px">
+              批量操作 <a-icon type="down" />
+            </a-button>
           </a-dropdown>
-      </div>
+        </div>
 
-    <s-table
-      ref="table"
-      size="default"
-      rowKey="id"
-      :bordered="true"
-      :columns="columns"
-      :data="loadData"
-      :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
-      showPagination="auto"
-    >
-      <span slot="status" slot-scope="text,record">
-        <template>
-          <a-switch
-            checked-children="启用"
-            :value="record.id"
-            un-checked-children="禁用"
-            @change="onSwitchClick"
-            v-if="record.status === 1"
-            default-checked/>
-          <a-switch checked-children="启用" v-else :value="record.id" un-checked-children="禁用" @change="onSwitchClick"/>
-        </template>
-      </span>
-      <span slot="action" slot-scope="text, record">
-        <template>
-          <a @click="handleEdit(record)">编辑</a>
-          <a-divider type="vertical" />
-          <a @click="handleDel(record)">删除</a>
-        </template>
-      </span>
-    </s-table>
-    </a-col>
+        <s-table
+          ref="table"
+          size="default"
+          rowKey="id"
+          :bordered="true"
+          :columns="columns"
+          :data="loadData"
+          :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
+          showPagination="auto"
+        >
+          <span slot="status" slot-scope="text,record">
+            <template>
+              <a-switch
+                checked-children="启用"
+                :value="record.id"
+                un-checked-children="禁用"
+                @change="onSwitchClick"
+                v-if="record.status === 1"
+                default-checked/>
+              <a-switch checked-children="启用" v-else :value="record.id" un-checked-children="禁用" @change="onSwitchClick"/>
+            </template>
+          </span>
+          <span slot="action" slot-scope="text, record">
+            <template>
+              <a @click="handleEdit(record)">编辑</a>
+              <a-divider type="vertical" />
+              <a @click="handleDel(record)">删除</a>
+            </template>
+          </span>
+        </s-table>
+      </a-col>
     </a-row>
     <create-user ref="userModal" @ok="handleOk" />
   </a-card>
@@ -153,7 +153,7 @@ export default {
       keys.sort().map(item => {
         this.expandedKeys.push(String(item))
       })
-      console.log(this.expandedKeys)
+      this.expandedKeys = ['1']
       this.departments = departments
     })
   },

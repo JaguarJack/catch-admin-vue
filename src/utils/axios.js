@@ -17,39 +17,42 @@ const VueAxios = {
 
     Vue.axios = instance
 
-    Object.defineProperties(Vue.prototype, {
-      axios: {
-        get: function get () {
-          return instance
-        }
-      },
-      $http: {
-        get: function get (url, params) {
+    Object.defineProperty(Vue.prototype, '$http', {
+      value: {
+        get: function (url, params) {
           return instance({
             url: url,
             method: 'get',
             params: params
           })
         },
-        post: function post (url, data) {
+        post: function (url, data) {
           return instance({
             url: url,
             method: 'post',
             data: data
           })
         },
-        put: function put(url, data) {
+        put: function (url, data) {
           return instance({
             url: url,
             method: 'put',
             data: data
           })
         },
-        del: function del(url) {
+        delete: function (url) {
           return instance({
             url: url,
             method: 'delete'
           })
+        }
+      }
+    })
+
+    Object.defineProperties(Vue.prototype, {
+      axios: {
+        get: function get () {
+          return instance
         }
       }
     })

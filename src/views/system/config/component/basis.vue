@@ -65,25 +65,25 @@
 </template>
 
 <script>
-import { store,show } from '@/api/config'
+import { store, show } from '@/api/config'
 import pick from 'lodash.pick'
-import moment from 'moment';
+import moment from 'moment'
 import { resetConfig } from '@/utils/util'
 
 export default {
    name: 'basic',
    data () {
-     return {
-        labelCol: {
-           xs: { span: 24 },
-           sm: { span: 3 }
-        },
-        wrapperCol: {
-           xs: { span: 24 },
-           sm: { span: 10 }
-        },
-        form: this.$form.createForm(this),
-     }
+      return {
+      labelCol: {
+         xs: { span: 24 },
+         sm: { span: 3 }
+      },
+      wrapperCol: {
+         xs: { span: 24 },
+         sm: { span: 10 }
+      },
+      form: this.$form.createForm(this)
+      }
    },
    created () {
       this.$emit('show', res => {
@@ -96,17 +96,17 @@ export default {
       })
    },
    methods: {
-      moment,
-      submit () {
-         const { form: { validateFields } } = this
-         validateFields((errors, values) => {
-            // 时间格式化
-            values.site.start_at = moment(values.site.start_at).format('YYYY-MM-DD')
-            if (!errors) {
-               this.$emit('store', values)
-            }
-         })
+     moment,
+     submit () {
+      const { form: { validateFields } } = this
+      validateFields((errors, values) => {
+      // 时间格式化
+      values.site.start_at = moment(values.site.start_at).format('YYYY-MM-DD')
+      if (!errors) {
+        this.$emit('store', values)
       }
+      })
+     }
    }
 }
 </script>

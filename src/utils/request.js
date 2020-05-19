@@ -42,6 +42,11 @@ service.interceptors.request.use(config => {
   return config
 }, err)
 
+// 是否再刷新
+let refreshing = false
+// 请求队列
+let requests = []
+
 // response interceptor
 service.interceptors.response.use((response) => {
   if (response.data.code !== 10000) {
@@ -58,18 +63,35 @@ service.interceptors.response.use((response) => {
     }
     // 登录过期 刷新 token 重新请求
     if (response.data.code === 10006) {
-      return service({
-        url: 'refresh/token',
-        method: 'post'
-      }).then(res => {
-        const token = res.data.token
-        Vue.ls.set(ACCESS_TOKEN, token, 7 * 24 * 60 * 60 * 1000)
-        store.commit('SET_TOKEN', token)
-        const config = response.config
-        config.headers['authorization'] = 'Bearer ' + token // 让每个请求携带自定义 token 请根据实际情况自行修改
-        return service(config)
-      })
+      const config = response.config
+      if (!refreshing) {
+        refreshing = true
+        return service({
+          url: 'refresh/token',
+          method: 'post'
+        }).then(res => {
+          const token = res.data.token
+          Vue.ls.set(ACCESS_TOKEN, token, 7 * 24 * 60 * 60 * 1000)
+          store.commit('SET_TOKEN', token)
+          config.headers['authorization'] = 'Bearer ' + token // 让每个请求携带自定义 token 请根据实际情况自行修改
+          // 请求出队列
+          requests.forEach(cb => cb(token))
+          requests = []
+          return service(config)
+        }).catch(res => {}).finally(() => {
+          refreshing = false
+        })
+      } else {
+        return new Promise((resolve) => {
+        // 将resolve放进队列，用一个函数形式来保存，等token刷新后直接执行
+          requests.push((token) => {
+            config.headers['authorization'] = 'Bearer ' + Vue.ls.get(ACCESS_TOKEN) // 让每个请求携带自定义 token 请根据实际情况自行修改
+            resolve(service(config))
+          })
+        })
+      }
     }
+
     return Promise.resolve(response.data)
   } else {
     return response.data

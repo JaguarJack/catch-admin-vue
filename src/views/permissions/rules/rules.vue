@@ -41,6 +41,18 @@
           <a-tag>{{ action.permission_name }}</a-tag>
         </a-popover>
       </span>
+      <span slot="status" slot-scope="text,record">
+        <template>
+          <a-switch
+            checked-children="显示"
+            :value="record.id"
+            un-checked-children="隐藏"
+            @change="onShow"
+            v-if="record.status === 1"
+            default-checked/>
+          <a-switch checked-children="显示" v-else :value="record.id" un-checked-children="隐藏" @change="onShow"/>
+        </template>
+      </span>
       <span slot="action" slot-scope="text, record">
         <template>
           <a @click="handleEdit(record)">编辑</a>
@@ -98,6 +110,12 @@ export default {
           scopedSlots: { customRender: 'actions' }
         },
         {
+          title: '状态',
+          dataIndex: 'status',
+          scopedSlots: { customRender: 'status' }
+          // customRender: this.renderStatus
+        },
+        {
           title: '创建时间',
           dataIndex: 'created_at',
           sorter: true
@@ -126,6 +144,15 @@ export default {
     },
     handleAddSon (record) {
       this.$refs.permissionModal.addSon(record)
+    },
+    onShow (checked, event) {
+      let id = event.target.value
+      if (!id) {
+        id = event.target.offsetParent.value
+      }
+      this.$http.put('/permissions/show/' + id).then(res => {
+        this.$message.success(res.message)
+      })
     },
     handleDel (record) {
       this.$confirm({
