@@ -48,9 +48,8 @@
             :value="record.id"
             un-checked-children="隐藏"
             @change="onShow"
-            v-if="record.status === 1"
+            :checked="checkStatus(record.status)"
             default-checked/>
-          <a-switch checked-children="显示" v-else :value="record.id" un-checked-children="隐藏" @change="onShow"/>
         </template>
       </span>
       <span slot="action" slot-scope="text, record">
@@ -152,7 +151,12 @@ export default {
       }
       this.$http.put('/permissions/show/' + id).then(res => {
         this.$message.success(res.message)
+        this.handleOk()
+        refreshMenus()
       })
+    },
+    checkStatus (status) {
+      return status === 1
     },
     handleDel (record) {
       this.$confirm({

@@ -231,7 +231,7 @@ export default {
       this.parent_id = record.id
       const { form: { setFieldsValue } } = this
       this.$nextTick(() => {
-          setFieldsValue(pick(record, [ 'module']))
+        setFieldsValue(pick(record, [ 'module']))
       })
     },
     handleSubmit () {

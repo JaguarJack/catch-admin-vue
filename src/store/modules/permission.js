@@ -47,7 +47,8 @@ function treePermissions (permissions, $pid = 0) {
 function filterThenGetMenus (permissions) {
    const menus = [];
    for (const permission of permissions) {
-     if (permission.type === 1) {
+     if (permission.type === 1 && permission.status === 1) {
+       console.log(permission)
        menus.push(permission)
      }
    }
