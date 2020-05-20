@@ -109,7 +109,7 @@ export default {
         // 都给子菜单增加一个 hidden 属性
         // 用来给刷新页面时， selectedKeys 做控制用
         menu.children.forEach(item => {
-          item.meta = Object.assign(item.meta, { hidden: true })
+          item.meta = Object.assign(item.meta, { hidden: item.meta.hidden })
         })
       }
 
@@ -125,7 +125,12 @@ export default {
     renderSubMenu (menu) {
       const itemArr = []
       if (!menu.hideChildrenInMenu) {
-        menu.children.forEach(item => itemArr.push(this.renderItem(item)))
+        menu.children.forEach(item => {
+          // 隐藏菜单
+          if (!item.meta.hidden) {
+            itemArr.push(this.renderItem(item))
+          }
+        })
       }
       return (
         <SubMenu {...{ key: menu.path }}>
@@ -165,7 +170,7 @@ export default {
     }
 
     const menuTree = menu.map(item => {
-      if (item.hidden) {
+      if (item.meta.hidden) {
         return null
       }
       return this.renderItem(item)

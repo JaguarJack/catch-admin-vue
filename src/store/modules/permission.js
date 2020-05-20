@@ -34,25 +34,26 @@ function treePermissions (permissions, $pid = 0) {
         if (permission.keepalive === 1) {
           p.meta.keepAlive = true
         }
-       const children = treePermissions(permissions, permission.id)
-       if (children.length) {
+        // 隐藏OR显示
+        p.meta.hidden = permission.status === 1 ? false : true
+      const children = treePermissions(permissions, permission.id)
+      if (children.length) {
         p.children = children
-       }
-       routes.push(p)
+      }
+      routes.push(p)
     }
   }
   return routes
 }
 
 function filterThenGetMenus (permissions) {
-   const menus = [];
-   for (const permission of permissions) {
-     if (permission.type === 1 && permission.status === 1) {
-       console.log(permission)
-       menus.push(permission)
-     }
-   }
-   return menus
+  const menus = [];
+  for (const permission of permissions) {
+    if (permission.type === 1) {
+      menus.push(permission)
+    }
+  }
+  return menus
 }
 
 /**
