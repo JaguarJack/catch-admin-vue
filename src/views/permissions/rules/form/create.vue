@@ -86,10 +86,10 @@
                 :wrapper-col="wrapperCol"
                 label="组件名称"
               >
-                <a-select allowClear placeholder="选择组件" v-decorator="['component', {initialValue:componentValue}, {rules: [{required: true}]}]">
-                  <a-select-opt-group v-for="(item, key) in components" :key="key" :label="key">
-                    <a-select-option v-for="(v, k) in item" :key="k" :value="v">{{ v }}</a-select-option>
-                  </a-select-opt-group>
+                <a-select show-search allowClear placeholder="选择组件" v-decorator="['component', {initialValue:componentValue}, {rules: [{required: true}]}]">
+                  <a-select-option v-for="(item, key) in components" :key="key" :value="key" :label="key">
+                    {{ key }}
+                  </a-select-option>
                 </a-select>
               </a-form-item>
             </a-col>
@@ -155,7 +155,7 @@ import { store as add, update } from '@/api/permission'
 import pick from 'lodash.pick'
 import IconSelector from '@/components/IconSelector'
 import { httpMethods } from '@/enums/data/httpMethods'
-import { components } from '@/enums/data/components'
+import componentsMap  from '@/config/componentsMap'
 import { refreshMenus } from '@/utils/util'
 
 export default {
@@ -184,7 +184,7 @@ export default {
       currentSelectedIcon: '',
       iconVisible: false,
       httpMethods: httpMethods,
-      components: components,
+      components: componentsMap,
       keepalive: 1, // 是
       componentValue: '',
       redirect: '',
