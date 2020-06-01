@@ -148,8 +148,9 @@ import { resetConfig } from '@/utils/util'
       this.$emit('show', res => {
         let initialData = resetConfig(res.data)
         const { form: { setFieldsValue } } = this
-        initialData['oss.is_cname'] = parseInt(initialData['oss.is_cname'])
-        initialData['qcloud.read_from_cdn'] = parseInt(initialData['qcloud.read_from_cdn'])
+        console.log(initialData['oss.is_cname'] === undefined)
+        initialData['oss.is_cname'] = initialData['oss.is_cname']=== undefined ? 0: parseInt(initialData['oss.is_cname'])
+        initialData['qcloud.read_from_cdn'] = initialData['qcloud.read_from_cdn'] === undefined ? 0: parseInt(initialData['qcloud.read_from_cdn'])
         this.$nextTick(() => {
           setFieldsValue(pick(initialData, Object.keys(initialData)))
         })
