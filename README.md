@@ -1,5 +1,3 @@
-English | [简体中文](./README.zh-CN.md)
-
 <h1 align="center">CatchAdmin 后台管理系统</h1>
 <div align="center">
 base on Ant design pro vue 
