@@ -16,6 +16,7 @@
                 :label-col="labelCol"
                 :wrapper-col="wrapperCol"
                 label="类型"
+                v-if="this.showType"
               >
                 <a-radio-group :disabled="disabled" buttonStyle="solid" @change="hide" v-decorator="['type',{initialValue: typeValue},{rules: [{required: true}]}]">
                   <a-radio-button :value="1">菜单</a-radio-button>
@@ -196,7 +197,8 @@ export default {
       show: true,
       disabled: false, // 类型选择
       permissionMarkValue: '',
-      methods: []
+      methods: [],
+      showType: true
     }
   },
   methods: {
@@ -210,10 +212,11 @@ export default {
       })
       this.iconVisible = false
     },
-    add () {
+    add (showType = true) {
       this.visible = true
       this.show = true
       this.title = '新增菜单'
+      this.showType = showType
     },
     edit (rec) {
       const record = rec
@@ -280,7 +283,6 @@ export default {
         })
       } else {
         validateFields((errors, values) => {
-          console.log(values)
           if (!errors) {
             this.confirmLoading = true
             if (this.parent_id > 0) {
@@ -309,6 +311,7 @@ export default {
       this.permissionMarkValue = ''
       this.form.resetFields()
       this.methods = []
+      this.showType = true
     },
     permissionMarkChange(values) {
       if (values.type === 2 && this.permissionMarkValue) {

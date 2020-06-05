@@ -17,7 +17,7 @@
     </div>
 
     <div class="table-operator">
-      <a-button type="primary" icon="plus" @click="$refs.permissionModal.add()">新建</a-button>
+      <a-button type="primary" icon="plus" @click="$refs.permissionModal.add(false)">新建</a-button>
     </div>
 
     <s-table
