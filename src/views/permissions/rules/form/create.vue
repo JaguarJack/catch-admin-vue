@@ -43,7 +43,11 @@
                 :wrapperCol="wrapperCol"
                 :filterOption="filterOption"
               >
-                <a-input allowClear v-decorator="['permission_mark',{rules: [{required: true, min: 2, message: '请输入权限标识, 至少2个字符！'}]}]" />
+                <span v-if="!this.show">{{ this.permissionMarkValue }}</span>
+                <a-input-group v-if="!this.show" addonBefore="123" compact style="width: 60%;margin-left: 3px">
+                  <a-auto-complete :data-source="methods"  placeholder="method" v-decorator="['permission_mark',{rules: [{required: true, min: 2, message: '请输入权限标识 至少两个字符'}]}]" />
+                </a-input-group>
+                <a-input v-else placeholder="格式controller@method" allowClear v-decorator="['permission_mark',{rules: [{required: true, min: 2, message: '请输入权限标识 至少两个字符'}]}]" />
               </a-form-item>
             </a-col>
           </a-row>
@@ -191,6 +195,8 @@ export default {
       hideChildrenInMenu: 2,
       show: true,
       disabled: false, // 类型选择
+      permissionMarkValue: '',
+      methods: []
     }
   },
   methods: {
@@ -209,15 +215,34 @@ export default {
       this.show = true
       this.title = '新增菜单'
     },
-    edit (record) {
+    edit (rec) {
+      const record = rec
       this.visible = true
       this.disabled = false
       this.show = record.type === 1
       this.title = '编辑菜单'
       const { form: { setFieldsValue } } = this
       this.id = record.id
+      // permission_mark
+      let permissionMark = record.permission_mark
+      if (!this.show) {
+          this.getMethods(record.parent_id)
+          const mark = record.permission_mark.split('@')
+          this.permissionMarkValue = mark[0] + '@'
+          permissionMark = mark[1]
+      }
       this.$nextTick(() => {
-        setFieldsValue(pick(record, ['permission_name', 'route', 'module', 'permission_mark', 'method', 'type', 'keepalive','sort', 'icon']))
+        setFieldsValue(pick({
+          permission_name: record.permission_name,
+          route: record.route,
+          module: record.module,
+          permission_mark: permissionMark,
+          method: record.method,
+          type: record.type,
+          keepalive: record.keepalive,
+          sort: record.sort,
+          icon: record.icon
+        }, ['permission_name', 'route', 'module', 'permission_mark', 'method', 'type', 'keepalive','sort', 'icon']))
       })
       this.typeValue = record.type
       this.sort = record.sort
@@ -226,9 +251,12 @@ export default {
     },
     addSon (record) {
       this.visible = true
-      this.show = true
+      this.show = !record.parent_id
+      this.getMethods(record.id)
+      this.typeValue = record.parent_id ? 2 : 1
       this.title = '新增子菜单 (' + record.permission_name + ')'
       this.parent_id = record.id
+      this.permissionMarkValue = record.permission_mark.split('@')[0] + '@'
       const { form: { setFieldsValue } } = this
       this.$nextTick(() => {
         setFieldsValue(pick(record, [ 'module']))
@@ -238,12 +266,13 @@ export default {
       const { form: { validateFields } } = this
       if (this.id) {
         validateFields((errors, values) => {
+          console.log(values)
           if (!errors) {
             this.confirmLoading = true
             if (values.component === undefined) {
               values.component = ''
             }
-            update(this.id, values).then((res) => {
+            update(this.id, this.permissionMarkChange(values)).then((res) => {
               this.refresh(res)
               refreshMenus()
             }).catch(err => this.failed(err))
@@ -251,18 +280,24 @@ export default {
         })
       } else {
         validateFields((errors, values) => {
+          console.log(values)
           if (!errors) {
             this.confirmLoading = true
             if (this.parent_id > 0) {
               values['parent_id'] = this.parent_id
             }
-            add(values).then((res) => {
+            add(this.permissionMarkChange(values)).then((res) => {
               this.refresh(res)
               refreshMenus()
             }).catch(err => this.failed(err))
           }
         })
       }
+    },
+    getMethods(id) {
+      this.$http.get('controller/methods/'+id).then((res) => {
+          this.methods = res.data
+      })
     },
     handleCancel () {
       this.visible = false
@@ -271,7 +306,15 @@ export default {
       this.parent_id = 0
       this.typeValue = 1
       this.sort = 1
+      this.permissionMarkValue = ''
       this.form.resetFields()
+      this.methods = []
+    },
+    permissionMarkChange(values) {
+      if (values.type === 2 && this.permissionMarkValue) {
+          values.permission_mark = this.permissionMarkValue + values.permission_mark
+      }
+      return values
     },
     filterOption (input, option) {
       return (
@@ -286,9 +329,6 @@ export default {
     hide (e) {
       this.show = e.target.value === 1
       this.name = e.target.value === 1 ? '菜单名称' : '按钮名称'
-    },
-    refreshMenu () {
-
     }
   }
 }

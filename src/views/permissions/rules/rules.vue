@@ -44,9 +44,9 @@
       <span slot="status" slot-scope="text,record">
         <template>
           <a-switch
-            checked-children="显示"
+            checked-children="ON"
             :value="record.id"
-            un-checked-children="隐藏"
+            un-checked-children="OFF"
             @change="onShow"
             :checked="checkStatus(record.status)"
             default-checked/>
