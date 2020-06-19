@@ -99,7 +99,7 @@
           okType: 'danger',
           cancelText: '取消',
           onOk: () => {
-            this.$http.delete('sensitive/word',record.id).then((res) => {
+            this.$http.delete('sensitive/word/'+record.id).then((res) => {
               this.toast(res)
               this.handleOk()
             })
