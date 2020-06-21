@@ -28,6 +28,11 @@ export default {
   menus: () => import('@/views/wechat/menus'),
   sensitiveWord: () => import('@/views/system/sensitiveWord'),
 
+  // 微信用户
+  wechatUsers: () => import('@/views/wechat/users'),
+  // 微信用户标签
+  wechatTags: () => import('@/views/wechat/tags'),
+
   // 友情链接
  // friendLink: () => import('@/views/cms/friendLink')
 }
