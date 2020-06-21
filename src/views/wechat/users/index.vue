@@ -25,6 +25,7 @@
                             <span class="table-page-search-submitButtons">
                              <a-button icon="search" type="primary" @click="$refs.table.refresh(true)">查询</a-button>
                              <a-button icon="sync" style="margin-left: 8px" @click="resetSearchForm">重置</a-button>
+                            <a-button icon="sync" style="margin-left: 8px" @click="sync" :loading="syncLoading">同步粉丝</a-button>
                             </span>
                         </a-col>
                     </a-row>
@@ -51,9 +52,7 @@
             <a-avatar :src="record.avatar" />  {{ record.nickname }}
         </span>
         <span slot="area" slot-scope="text, record">
-            <a-tag>{{ record.country }}</a-tag>
-            <a-tag>{{ record.province }}</a-tag>
-            <a-tag v-if="record.city">{{ record.city }}</a-tag>
+            <a-tag>{{ record.country }} {{ record.province }} {{ record.city ? record.city : ''}}</a-tag>
         </span>
         <span slot="screen" slot-scope="text, record">
             {{ screen[record.subscribe_scene]}}
@@ -77,9 +76,15 @@
             <a-badge status="processing" text="是" v-if="record.subscribe === 1"/>
             <a-badge status="default" text="否" v-else/>
         </span>
+        <span slot="taglist" slot-scope="text, record">
+            <div v-if="record.tags !== null">
+                <a-tag  v-for="item in record.tags.split(',')">{{ item }}</a-tag>
+            </div>
+            <span v-else>/</span>
+        </span>
         <span slot="option" slot-scope="text, record">
             <a-tag color="blue" @click="showRemarkForm(record)">备注</a-tag>
-            <a-tag color="green">打标签</a-tag>
+            <a-tag color="green" @click="showTagForm(record)">打标签</a-tag>
         </span>
     </s-table>
     <a-modal title="备注" :width="650" :visible="remarkVisible" :confirmLoading="confirmLoading" @ok="remarkSubmit" @cancel="modalCancel">
@@ -90,10 +95,14 @@
         </a-form>
     </a-modal>
 
-    <a-modal title="标签" :width="650" :visible="tagVisible" :confirmLoading="confirmLoading" @ok="tagSubmit" @cancel="modalCancel">
-        <a-form :form="remarkForm">
-            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="备注">
-                <a-input allowClear v-decorator="['remark', {rules: [{required: true, min:1, max:30, message: '请输入备注, 最大输入三十个字符！'}]}]" />
+    <a-modal title="打标签" :width="650" :visible="tagVisible" :confirmLoading="confirmLoading" @ok="tagSubmit" @cancel="modalCancel">
+        <a-form :form="tagForm">
+            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="标签">
+                <a-select mode="tags" style="width: 100%" v-decorator="['tag', {initialValue: hasTags},{rules: [{required: true, message: '请选择标签'}]}]" @change="selectTags">
+                    <a-select-option v-for="item in tags"  :key="item.id" :value="item.name">
+                        {{ item.name }}
+                    </a-select-option>
+                </a-select>
             </a-form-item>
         </a-form>
     </a-modal>
@@ -123,9 +132,13 @@
         },
         confirmLoading: false,
         remarkVisible: false,
+        syncLoading: false,
         remarkForm: this.$form.createForm(this),
         tagVisible: false,
         tagForm: this.$form.createForm(this),
+        tags:[],
+        tagNames: [],
+        hasTags: [],
         id: null,
         screen: {
           'ADD_SCENE_SEARCH':'公众号搜索',
@@ -157,7 +170,7 @@
           },
           {
             title: '标签',
-            dataIndex: 'taglist',
+            scopedSlots: { customRender: 'taglist' },
             width:120
           },
           {
@@ -200,9 +213,10 @@
         ],
         // 加载数据方法 必须为 Promise 对象
         loadData: parameter => {
-          return this.$http.get('wechat/official/users', Object.assign(parameter, this.queryParam) ).then(res => {
-                return res
-            })
+          return this.$http.get('wechat/official/users', Object.assign(parameter, this.queryParam) )
+                           .then(res => {
+                                return res
+                            })
         },
       }
     },
@@ -216,6 +230,14 @@
       onChange(date, dateString) {
         this.queryParam.start_at = dateString[0]
         this.queryParam.end_at = dateString[1]
+      },
+      sync () {
+        this.syncLoading = true
+        this.$http.get('wechat/official/users/sync').then(res => {
+            this.toast(res)
+            this.syncLoading = false
+            this.handleOk()
+        })
       },
       resetSearchForm() {
          this.queryParam = {}
@@ -249,12 +271,28 @@
             }
         })
       },
+      showTagForm(record) {
+        this.$http.get('wechat/official/tags?all=all').then(res => {
+          this.tags = res.data
+        })
+        this.id = record.id
+        this.tagVisible = true
+        this.hasTags = record.tags !== null ? record.tags.split(',') : []
+      },
+      selectTags (value) {
+        this.tagNames = value
+      },
       tagSubmit () {
-
+        this.$http.put('wechat/official/users/tag/'+this.id, {'tag': this.tagNames.join(',')}).then(res => {
+            this.toast(res)
+            this.handleOk()
+            this.modalCancel()
+        })
       },
       modalCancel () {
         this.remarkVisible = this.tagVisible = false
         this.id = null
+        this.tagNames = []
         this.remarkForm.resetFields()
         this.tagForm.resetFields()
       }
