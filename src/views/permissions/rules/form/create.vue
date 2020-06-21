@@ -269,7 +269,6 @@ export default {
       const { form: { validateFields } } = this
       if (this.id) {
         validateFields((errors, values) => {
-          console.log(values)
           if (!errors) {
             this.confirmLoading = true
             if (values.component === undefined) {
