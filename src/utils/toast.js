@@ -7,3 +7,4 @@ export function toast (res, duration = 2) {
       message.error(res.message, duration)
     }
 }
+
