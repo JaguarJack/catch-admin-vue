@@ -36,20 +36,20 @@
                         <a-row>
                             <a-col :span="width" v-for="(item, key) in this.menus">
                                 <div v-if="item && item.name === '+'" @click="add">{{ item.name }}</div>
-                                <a-popover trigger="click" v-else>
+                                <a-popover v-else :mouseLeaveDelay=10>
                                     <template slot="content">
                                         <div v-for="(v, k) in item.sub_button" class="sub_button">
-                                            <div class="absolute2" @click="del(k+'/'+key)">
+                                            <!--<div class="absolute2" @click="del(k+'/'+key)" v-if="v && v.name !== '+'">
                                                 <a-icon type="close-square" />
-                                            </div>
+                                            </div>-->
                                             <span v-if="v && v.name === '+'" @click="add(key)">{{ v.name }}</span>
-                                            <span v-else>{{ v.name }}</span>
+                                            <span v-else @click="edit(k+'/'+key)">{{ v.name }}</span>
                                         </div>
                                     </template>
-                                    <div >
-                                        <div class="absolute" @click="del(key)">
+                                    <div  @click="edit(key)">
+                                        <!--<div class="absolute" @click="del(key)">
                                             <a-icon type="close-square" />
-                                        </div>
+                                        </div>-->
                                         {{ item.name }}
                                     </div>
                                 </a-popover>
@@ -77,6 +77,9 @@
       del(key) {
         this.$emit('del', key)
       },
+      edit(key) {
+        this.$emit('edit', key)
+      },
       current () {
         const date = new Date
         return date.getHours() + ' : ' + date.getMinutes()
@@ -87,7 +90,6 @@
 
 <style lang="css" scoped>
     .wechat {
-        margin: 0 auto;
         border: 1px solid #666;
         height: 100%;
     }
@@ -109,7 +111,7 @@
         text-align: center;
     }
     .wechat .body {
-        height: 300px;
+        height: 400px;
         background-color: #F8F8F8;
     }
     .wechat .footer {
@@ -172,7 +174,7 @@
             max-width: 800px;
         }
         .wechat {
-            width: 38%;
+            width: 100%;
         }
     }
 </style>
