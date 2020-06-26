@@ -69,6 +69,8 @@
 </template>
 
 <script>
+  import pick from 'lodash.pick'
+
   export default {
     name: 'create',
     data() {
@@ -101,28 +103,69 @@
           'location_select': '弹出地理位置选择器',
           'media_id': '下发消息（除文本消息)',
           'view_limited': '跳转图文消息'
-        }
+        },
+        parent_id: 0,
+        id: null,
       }
     },
     methods: {
-      add(key) {
+      add(id) {
+        if (id !== null) {
+          this.parent_id = id
+        }
         this.visible = true
+      },
+      edit(data) {
+        this.visible = true
+        this.id = data.id
+        this.handleFormShow(data.type)
+        const { form: { setFieldsValue } } = this
+        if (data.type === 'view') {
+          this.$nextTick(() => {
+            setFieldsValue(pick(data, ['name', 'type', 'url']))
+          })
+        } else if (data.type === 'miniprogram') {
+          this.$nextTick(() => {
+            setFieldsValue(pick(data, ['name', 'type', 'miniprogram_link', 'miniprogram_appid', 'miniprogram_page']))
+          })
+        } else {
+          this.$nextTick(() => {
+            setFieldsValue(pick(data, ['name', 'type']))
+          })
+        }
       },
       handleSubmit() {
         const { form: { validateFields } } = this
         validateFields((errors, values) => {
           if (!errors) {
-            this.$emit('add', values)
-            this.handleCancel()
+            if (this.id !== null) {
+              this.$http.put('wechat/official/menus/' + this.id, values).then(res => {
+                this.toast(res)
+                this.handleCancel()
+              })
+            } else {
+              values.parent_id = this.parent_id
+              this.$http.post('wechat/official/menus', values).then(res => {
+                this.toast(res)
+                this.handleCancel()
+              })
+            }
           }
         })
       },
 
       handleCancel() {
         this.visible = false
+        this.id = null
+        this.form.resetFields()
+        this.$emit('refresh')
+        this.show.miniprogram = this.show.view = false
       },
 
       handleSelect(value, option) {
+        this.handleFormShow(value)
+      },
+      handleFormShow(value) {
         if (value === 'view') {
           this.show.view = true
           this.show.miniprogram = false
