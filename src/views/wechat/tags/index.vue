@@ -26,7 +26,7 @@
             showPagination="auto"
         >
          <span slot="option" slot-scope="text, record">
-            <a-tag color="green" @click="showTagForm(record)">更新</a-tag>
+             <a-tag color="green" @click="showTagForm(record)">更新</a-tag>
              <a-tag color="red" @click="deleteTag(record)">删除</a-tag>
         </span>
         </s-table>
@@ -109,6 +109,7 @@
          this.syncLoading = true
          this.$http.get('wechat/official/tags/sync').then(res => {
              this.toast(res)
+             this.handleOk()
              this.syncLoading = false
          })
       },
