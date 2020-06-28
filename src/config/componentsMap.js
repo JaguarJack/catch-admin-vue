@@ -33,6 +33,7 @@ export default {
   // 微信用户标签
   wechatTags: () => import('@/views/wechat/tags'),
   wechatGraphic:() => import('@/views/wechat/graphic'),
+  wechatReply:() => import('@/views/wechat/reply')
   // 友情链接
  // friendLink: () => import('@/views/cms/friendLink')
 }
