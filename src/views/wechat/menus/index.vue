@@ -1,4 +1,5 @@
 <template>
+    <page-view>
     <a-card :bordered="false">
         <a-row :gutter="8">
             <a-col :span="18">
@@ -28,9 +29,6 @@
                         <a-tag color="green" @click="edit(record)">更新</a-tag>
                         <a-tag color="red" @click="del(record.id)">删除</a-tag>
                     </span>
-                    <span slot="createdAt" slot-scope="text, record">
-                        {{ date(record.created_at) }}
-                    </span>
                 </s-table>
 
             </a-col>
@@ -40,17 +38,18 @@
         </a-row>
         <create-menu ref="menuModel" @refresh="refresh"/>
     </a-card>
+    </page-view>
 </template>
 
 <script>
   import CreateMenu from './create'
   import { STable } from '@/components'
   import { expandKeys } from '@/utils/util'
-  import { timestampToDate } from '@/utils/date'
+  import PageView from '@/layouts/PageView'
 
   export default {
     name: 'index',
-    components: { CreateMenu, STable },
+    components: { PageView, CreateMenu, STable },
     data() {
       return {
         expandedKeys: [], // 展开ID
@@ -65,10 +64,6 @@
           {
             title: '类型',
             scopedSlots: { customRender: 'type' },
-          },
-          {
-            title: '创建事件',
-            scopedSlots: { customRender: 'createdAt' },
           },
           {
             title: '操作',
@@ -111,9 +106,6 @@
             this.toast(res)
             this.refresh()
          })
-      },
-      date (timestamp) {
-         return timestampToDate(timestamp)
       },
       refresh() {
         this.$refs.table.refresh(true)

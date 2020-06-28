@@ -32,7 +32,7 @@ export default {
   wechatUsers: () => import('@/views/wechat/users'),
   // 微信用户标签
   wechatTags: () => import('@/views/wechat/tags'),
-
+  wechatGraphic:() => import('@/views/wechat/graphic'),
   // 友情链接
  // friendLink: () => import('@/views/cms/friendLink')
 }

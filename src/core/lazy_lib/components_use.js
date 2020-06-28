@@ -49,7 +49,8 @@ import {
   notification,
   TreeSelect,
   Tree,
-  AutoComplete
+  AutoComplete,
+  Pagination
 } from 'ant-design-vue'
 // import VueCropper from 'vue-cropper'
 
@@ -95,6 +96,7 @@ Vue.use(notification)
 Vue.use(TreeSelect)
 Vue.use(Tree)
 Vue.use(AutoComplete)
+Vue.use(Pagination)
 
 Vue.prototype.$confirm = Modal.confirm
 Vue.prototype.$message = message
