@@ -11,7 +11,7 @@
         >
             <a-row>
                 <a-col :span="6" >
-                    <a-card hoverable style="width: 300px;margin-top: 5px;" v-for="(item, key) in articles">
+                    <a-card hoverable style="width: 300px;margin-top: 5px;" v-for="(item, key) in articles" :key="key">
                         <img slot="cover" :src="item.cover" @click="selectArticle(key)"/>
                         <template slot="actions" class="ant-card-actions">
                             <a-icon key="delete" type="delete" @click="delArticle(key)"/>
