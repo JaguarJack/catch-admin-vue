@@ -14,9 +14,15 @@
                             <a-select-option v-for="(item, key) in types" :value="key" :key="key" >{{ item }}</a-select-option>
                         </a-select>
                     </a-col>
-                    <a-col :md="6" :sm="24">
-                        <a-range-picker  :placeholder="['开始时间', '结束时间']"/>
+                    <a-col :md="4" :sm="24">
+                        <a-select allowClear v-model="queryParam.status" placeholder="状态" default-value="1">
+                            <a-select-option value="1">启用</a-select-option>
+                            <a-select-option value="2">禁用</a-select-option>
+                        </a-select>
                     </a-col>
+                    <!--<a-col :md="6" :sm="24">
+                        <a-range-picker  :placeholder="['开始时间', '结束时间']"/>
+                    </a-col>-->
                     <a-col :md="4" :sm="24">
                         <span class="table-page-search-submitButtons">
                           <a-button icon="search" type="primary" @click="$refs.table.refresh(true)">查询</a-button>
@@ -41,6 +47,9 @@
          </span>
          <span slot="type" slot-scope="text, record">
             {{ types[record.type] }}
+         </span>
+         <span slot="option" slot-scope="text, record">
+             <a-tag color="red" @click="deleteRule(record)">删除</a-tag>
          </span>
          <span slot="status" slot-scope="text, record">
             <template>
@@ -163,7 +172,7 @@
           ruleTypeValue: '3',
           keywordsShow: false,
           titleShow: false,
-          contentShow: false,
+          contentShow: true,
           uploadImageShow: false,
           mediaList: [],
           imageList: [],
@@ -211,7 +220,7 @@
           },
           {
             title: '操作',
-            scopedSlots: { customRender: 'rule_type' },
+            scopedSlots: { customRender: 'option' },
           },
         ],
         loadData: parameter => {
@@ -264,7 +273,16 @@
         if (!id) {
           id = event.target.offsetParent.value
         }
-        // this.onSwitchStatus(id)
+        this.$http.put('/wechat/official/reply/enable/'+id).then(res => {
+          this.toast(res)
+          this.handleOk()
+        })
+      },
+      deleteRule(record) {
+         this.$http.delete('/wechat/official/reply/'+record.id).then(res => {
+            this.toast(res)
+            this.handleOk()
+         })
       },
       handleTypeChange (v, option) {
         this.form.titleShow = v === '4' || v === '5'
@@ -308,9 +326,9 @@
         }
         let isLtSize = false;
         if (this.createForm.getFieldValue('type') === '3') {
-          isLtSize = file.size / 1024 / 1024 < 10;
+          isLtSize = file.size / 1024 / 1024 < 5;
           if (!isLtSize) {
-            this.$message.error('最大支持 10MB!');
+            this.$message.error('最大支持 5MB!');
           }
         } else {
           isLtSize = file.size / 1024 < 64;
