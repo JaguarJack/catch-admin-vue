@@ -15,7 +15,7 @@
       :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
       showPagination="auto"
     >
-      <img slot="url" slot-scope="text" :src="text"/>
+      <img slot="url" slot-scope="text" :src="text" style="width: 100px"/>
       <a slot="file_ext" slot-scope="text" @click="searchFileExt(text)" >{{ text }}</a>
       <a slot="mime_type" slot-scope="text" @click="searchMimeType(text)" >{{ text }}</a>
       <a slot="driver" slot-scope="text" @click="searchDriver(text)" >{{ text }}</a>
