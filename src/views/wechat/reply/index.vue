@@ -152,8 +152,8 @@
         },
         createForm: this.$form.createForm(this),
         form: {
-          fileAction: process.env.VUE_APP_API_BASE_URL + '/upload/file',
-          imageAction: process.env.VUE_APP_API_BASE_URL + '/upload/image',
+          fileAction: process.env.VUE_APP_API_BASE_URL + '/wechat/official/upload/file',
+          imageAction: process.env.VUE_APP_API_BASE_URL + '/wechat/official/upload/image',
           visible: false,
           confirmLoading: false,
           headers: {
