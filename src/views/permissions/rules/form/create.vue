@@ -45,7 +45,7 @@
                 :filterOption="filterOption"
               >
                 <span v-if="!this.show">{{ this.permissionMarkValue }}</span>
-                <a-input-group v-if="!this.show" addonBefore="123" compact style="width: 60%;margin-left: 3px">
+                <a-input-group v-if="!this.show"  compact style="width: 60%;margin-left: 3px">
                   <a-auto-complete :data-source="methods"  placeholder="method" v-decorator="['permission_mark',{rules: [{required: true, min: 2, message: '请输入权限标识 至少两个字符'}]}]" />
                 </a-input-group>
                 <a-input v-else placeholder="格式controller@method" allowClear v-decorator="['permission_mark',{rules: [{required: true, min: 2, message: '请输入权限标识 至少两个字符'}]}]" />
