@@ -161,6 +161,7 @@
         handleCancel() {
             this.visible = false
             this.id = null
+            this.$refs.quillEditor.syncContent('请输入内容')
             this.articles = [{
               title: '',
               author: '',
@@ -174,7 +175,6 @@
               content: '',
             }
             this.selectKey = 0
-          // this.$refs.quillEditor.syncContent('请输入内容')
         },
       handleChange(info) {
         if (info.file.status === 'uploading') {
