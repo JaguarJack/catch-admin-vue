@@ -42,7 +42,7 @@
             </a-button-group>
             <a-button-group style="margin-left: 5px;">
                 <a-button><a-checkbox :checked="extra.soft_delete" @change="setSoftDelete"></a-checkbox></a-button>
-                <a-button>delete_at</a-button>
+                <a-button>deleted_at</a-button>
             </a-button-group>
             <a-select defaultValue="InnoDB" style="width: 12%;margin-left: 5px;" @change="e => setExtra(e, 'engine')">
                 <a-select-option value="InnoDB">InnoDB</a-select-option>
