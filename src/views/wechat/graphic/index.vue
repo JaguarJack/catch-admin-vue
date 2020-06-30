@@ -83,7 +83,7 @@
       },
       del(id) {
         this.$confirm({
-          title: '确定批量文章吗?',
+          title: '确定删除改图文吗?',
           okText: '确定',
           okType: 'danger',
           cancelText: '取消',

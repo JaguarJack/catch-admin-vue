@@ -12,12 +12,12 @@
             <a-row>
                 <a-col :span="6" >
                     <a-card hoverable style="width: 300px;margin-top: 5px;" v-for="(item, key) in articles" :key="key">
-                        <img slot="cover" :src="item.cover" @click="selectArticle(key)"/>
+                        <img slot="cover" v-if="item.cover" :src="item.cover" @click="selectArticle(key)"/>
+                        <img slot="cover" v-else src="@/assets/graphic_default.jpeg" @click="selectArticle(key)"/>
                         <template slot="actions" class="ant-card-actions">
                             <a-icon key="delete" type="delete" @click="delArticle(key)"/>
                         </template>
-                        <a-card-meta :title="item.title" description="新增加图文" @click="selectArticle(key)">
-                        </a-card-meta>
+                        <a-card-meta :title="item.title"  @click="selectArticle(key)"/>
                     </a-card>
                     <a-button  type="primary" style="width: 82%;margin-top: 10px" @click="addArticle">
                         <a-icon type="plus" /> 新增文章
@@ -139,6 +139,11 @@
              this.articles = this.articles.filter(function (item, key) {
                return key !== k
              })
+            // 选中其实一个
+             const key = this.articles[k] === undefined ? k -1 : k;
+             this.article = this.articles[key]
+             this.$refs.quillEditor.syncContent(this.article.content)
+             this.selectKey = key
            }
         },
         addArticle() {
@@ -168,7 +173,8 @@
               cover: '',
               content: '',
             }
-          this.$refs.quillEditor.syncContent('请输入内容')
+            this.selectKey = 0
+          // this.$refs.quillEditor.syncContent('请输入内容')
         },
       handleChange(info) {
         if (info.file.status === 'uploading') {
@@ -182,35 +188,41 @@
       },
       handleSubmit() {
         const len = this.articles.length;
+        let status = true
         for (let i=0;i<len;i++) {
             if (this.articles[i].title.length < 1) {
               this.$message.error('第' + (i+1) + '篇文章标题没有填写')
+              status = false
               break;
             }
             if (this.articles[i].author.length < 1) {
                 this.$message.error('第' + (i+1) + '篇文章作者没有填写')
+                status = false
                 break;
             }
             if (this.articles[i].cover.length < 1) {
                 this.$message.error('第' + (i+1) + '篇文章封面没有上传')
+                status = false
                 break;
             }
             if (this.articles[i].content.length < 1) {
                 this.$message.error('第' + (i+1) + '篇文章内容没有填写')
+                status = false
                 break;
             }
-            if (this.id === null) {
-              this.$http.post('wechat/official/graphic', { articles: this.articles }).then(res => {
-                 this.toast(res)
-              })
-            } else {
-              console.log(this.articles)
-              this.$http.put('wechat/official/graphic/'+this.id, { articles: this.articles }).then(res => {
-                    this.toast(res)
-                    this.handleCancel()
-              })
-            }
-            this.$emit('refresh')
+        }
+        if (status) {
+          if (this.id === null) {
+            this.$http.post('wechat/official/graphic', { articles: this.articles }).then(res => {
+              this.toast(res)
+            })
+          } else {
+            this.$http.put('wechat/official/graphic/' + this.id, { articles: this.articles }).then(res => {
+              this.toast(res)
+              this.handleCancel()
+            })
+          }
+          this.$emit('refresh')
         }
 
       },
