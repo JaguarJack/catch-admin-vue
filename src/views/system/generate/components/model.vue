@@ -44,6 +44,10 @@
                 <a-button><a-checkbox :checked="extra.soft_delete" @change="setSoftDelete"></a-checkbox></a-button>
                 <a-button>deleted_at</a-button>
             </a-button-group>
+            <a-button-group style="margin-left: 5px;">
+                <a-button><a-checkbox :checked="extra.creator_id" @change="setCreatorId"></a-checkbox></a-button>
+                <a-button>creator_id</a-button>
+            </a-button-group>
             <a-select defaultValue="InnoDB" style="width: 12%;margin-left: 5px;" @change="e => setExtra(e, 'engine')">
                 <a-select-option value="InnoDB">InnoDB</a-select-option>
                 <a-select-option value="MyISAM">MyISAM</a-select-option>
@@ -119,6 +123,7 @@
           'primary_key': 'id',
           'created_at': true,
           'soft_delete': true,
+          'creator_id': true,
           'engine': 'Innodb',
           'comment': ''
         }
@@ -158,6 +163,9 @@
       },
       setSoftDelete (e) {
         this.extra.soft_delete = e.target.checked
+      },
+      setCreatorId(e) {
+        this.extra.creator_id = e.target.checked
       },
       setExtra (e, field) {
         this.extra[field] = e
