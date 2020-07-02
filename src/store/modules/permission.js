@@ -34,8 +34,14 @@ function treePermissions (permissions, $pid = 0) {
         if (permission.keepalive === 1) {
           p.meta.keepAlive = true
         }
+        // 隐藏子菜单
+        if (permission.hide_children_in_menu === 1) {
+          p.hideChildrenInMenu = true
+        }
         // 隐藏OR显示
-        p.meta.hidden = permission.status === 1 ? false : true
+       if (permission.status === 2) {
+         p.meta.hidden = true
+       }
       const children = treePermissions(permissions, permission.id)
       if (children.length) {
         p.children = children
@@ -58,9 +64,9 @@ function filterThenGetMenus (permissions) {
 
 /**
  * default router
- * 
+ *
  * you set set here
- * 
+ *
  */
 const defaultRoute = [{
         path: '/dashboard/workplace',

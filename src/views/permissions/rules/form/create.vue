@@ -234,6 +234,9 @@ export default {
           this.permissionMarkValue = mark[0] + '@'
           permissionMark = mark[1]
       }
+      this.form.setFieldsValue({
+
+      })
       this.$nextTick(() => {
         setFieldsValue(pick({
           permission_name: record.permission_name,
@@ -243,9 +246,10 @@ export default {
           method: record.method,
           type: record.type,
           keepalive: record.keepalive,
+          hide_children_in_menu: record.hide_children_in_menu,
           sort: record.sort,
           icon: record.icon
-        }, ['permission_name', 'route', 'module', 'permission_mark', 'method', 'type', 'keepalive','sort', 'icon']))
+        }, ['permission_name', 'route', 'module', 'permission_mark', 'method', 'type', 'keepalive','hide_children_in_menu','sort', 'icon']))
       })
       this.typeValue = record.type
       this.sort = record.sort
