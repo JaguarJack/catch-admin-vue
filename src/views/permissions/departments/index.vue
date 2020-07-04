@@ -117,7 +117,7 @@ export default {
     },
     handleDel (record) {
       this.$confirm({
-        title: '确定删除' + record.department_name + '吗?',
+        title: '确定删除 [' + record.title + '] 部门吗?',
         okText: '确定',
         okType: 'danger',
         cancelText: '取消',
