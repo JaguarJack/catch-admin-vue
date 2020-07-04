@@ -15,7 +15,7 @@
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
         >
-          <a-input allowClear v-decorator="['title', {rules: [{required: true, min: 2, message: '请输入至少3个字符！'}]}]" />
+          <a-input allowClear v-decorator="['title', {rules: [{required: true, min: 2, max: 10, message: '部门名称至少输入2字符，最多支持10个字符'}]}]" />
         </a-form-item>
         <a-form-item
           label="部门负责人"
