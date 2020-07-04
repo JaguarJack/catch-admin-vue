@@ -20,20 +20,13 @@ export default {
   config: () => import('@/views/system/config'),
   generate: () => import('@/views/system/generate'),
   test: () => import('@/views/cms/test'),
-  // cms 配置
-  // 分类
-  category: () => import('@/views/cms/category'),
-  // 文章
   article: () => import('@/views/cms/article'),
   menus: () => import('@/views/wechat/menus'),
   sensitiveWord: () => import('@/views/system/sensitiveWord'),
-
   // 微信用户
   wechatUsers: () => import('@/views/wechat/users'),
   // 微信用户标签
   wechatTags: () => import('@/views/wechat/tags'),
   wechatGraphic:() => import('@/views/wechat/graphic'),
   wechatReply:() => import('@/views/wechat/reply')
-  // 友情链接
- // friendLink: () => import('@/views/cms/friendLink')
 }
