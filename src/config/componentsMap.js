@@ -19,8 +19,6 @@ export default {
   jobs: () => import('@/views/permissions/jobs'),
   config: () => import('@/views/system/config'),
   generate: () => import('@/views/system/generate'),
-  test: () => import('@/views/cms/test'),
-  article: () => import('@/views/cms/article'),
   menus: () => import('@/views/wechat/menus'),
   sensitiveWord: () => import('@/views/system/sensitiveWord'),
   // 微信用户
