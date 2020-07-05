@@ -148,7 +148,7 @@ export default {
     refresh (res) {
       this.toast(res)
       this.handleCancel()
-      this.$parent.$parent.handleOk()
+      this.$emit('ok')
     }
   }
 }
