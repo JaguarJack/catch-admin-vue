@@ -153,7 +153,6 @@ export default {
       keys.sort().map(item => {
         this.expandedKeys.push(String(item))
       })
-      this.expandedKeys = ['1']
       this.departments = departments
     })
   },

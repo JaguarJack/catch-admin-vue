@@ -19,6 +19,14 @@ export default {
       default: false
     }
   },
+  watch: {
+    openKeys: {
+      deep: true,
+      handler(nv, ov) {
+        this.localOpenKeys = nv
+      }
+    }
+  },
   created () {
     this.localOpenKeys = this.openKeys.slice(0)
   },
@@ -107,6 +115,7 @@ export default {
   render () {
     const { dataSource, search } = this.$props
 
+    console.log(this.localOpenKeys)
     // this.localOpenKeys = openKeys.slice(0)
     const list = dataSource.map(item => {
       return this.renderItem(item)
