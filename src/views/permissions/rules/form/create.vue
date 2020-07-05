@@ -330,7 +330,7 @@ export default {
     refresh (res) {
       this.toast(res)
       this.handleCancel()
-      this.$parent.$parent.handleOk()
+      this.$emit('ok')
     },
     hide (e) {
       this.show = e.target.value === 1
