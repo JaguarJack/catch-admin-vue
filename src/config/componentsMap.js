@@ -16,9 +16,12 @@ export default {
   operateLog: () => import('@/views/system/log/operate'),
   attachment: () => import('@/views/system/attachments'),
   departments: () => import('@/views/permissions/departments'),
+
   jobs: () => import('@/views/permissions/jobs'),
   config: () => import('@/views/system/config'),
   generate: () => import('@/views/system/generate'),
+  develop: () => import('@/views/system/develop'),
+
   menus: () => import('@/views/wechat/menus'),
   sensitiveWord: () => import('@/views/system/sensitiveWord'),
   // 微信用户
