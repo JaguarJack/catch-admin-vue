@@ -1,5 +1,40 @@
 <template>
   <a-card :bordered="false">
+    <div class="table-page-search-wrapper">
+      <a-form layout="inline">
+        <a-row :gutter="48">
+          <a-col :md="5" :sm="24">
+            <a-form-item label="操作人">
+              <a-input allowClear v-model="queryParam.creator" placeholder="请输入操作人" />
+            </a-form-item>
+          </a-col>
+          <a-col :md="5" :sm="24">
+            <a-form-item label="操作模块">
+              <a-input allowClear v-model="queryParam.module" placeholder="请输入操作模块名称" />
+            </a-form-item>
+          </a-col>
+          <a-col :md="5" :sm="24">
+            <a-form-item label="请求方式">
+              <a-select v-model="queryParam.method" placeholder="请选择" default-value="GET">
+                <a-select-option value="GET">GET</a-select-option>
+                <a-select-option value="POST">POST</a-select-option>
+                <a-select-option value="PUT">PUT</a-select-option>
+                <a-select-option value="DELETE">DELETE</a-select-option>
+              </a-select>
+            </a-form-item>
+          </a-col>
+          <a-col :md="5" :sm="24">
+            <a-range-picker @change="onChange"/>
+          </a-col>
+          <a-col :md="4" :sm="24">
+            <span class="table-page-search-submitButtons">
+              <a-button icon="search" type="primary" @click="$refs.table.refresh(true)">查询</a-button>
+              <a-button icon="sync" style="margin-left: 8px" @click="resetSearchForm()">重置</a-button>
+            </span>
+          </a-col>
+        </a-row>
+      </a-form>
+    </div>
     <div class="table-operator">
       <a-button type="primary" icon="delete" @click="clear()">清空</a-button>
       <a-button icon="sync" @click="handleOk()">刷新</a-button>
@@ -55,6 +90,10 @@ export default {
       queryParam: {},
       // 表头
       columns: [
+        {
+          title: 'ID',
+          dataIndex: 'id'
+        },
         {
           title: '操作人',
           dataIndex: 'creator'
@@ -158,6 +197,15 @@ export default {
           this.handleDeleteSelected()
         }
       }
+    },
+    resetSearchForm () {
+      this.queryParam = {}
+      this.handleOk()
+    },
+    onChange (date, dateString) {
+      dateString[0] = dateString[0] + ' 00:00:00'
+      dateString[1] = dateString[1] + ' 23:59:00'
+      this.queryParam.create_at = dateString
     }
   }
 }
