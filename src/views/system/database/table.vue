@@ -16,7 +16,6 @@
   </a-modal>
 </template>
 <script>
-import { read } from '@/api/database'
 
 export default {
   data () {
@@ -70,7 +69,7 @@ export default {
   methods: {
     add (name) {
       this.visible = true
-      read(name).then(res => {
+      this.$http.get('table/view/' +name).then(res => {
         this.fields = res.data
       })
     },
