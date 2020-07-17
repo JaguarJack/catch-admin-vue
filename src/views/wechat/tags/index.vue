@@ -9,7 +9,7 @@
                     <a-col :md="4" :sm="24">
                         <span class="table-page-search-submitButtons">
                          <a-button icon="search" type="primary" @click="handleRefresh" >查询</a-button>
-                         <a-button icon="sync" style="margin-left: 8px" @click="sync">同步微信标签</a-button>
+                         <a-button icon="sync" style="margin-left: 8px" @click="sync" :loading="syncLoading">同步微信标签</a-button>
                           <a-button type="primary" style="margin-left: 8px"  icon="plus" @click="handleSave">新增</a-button>
                         </span>
                     </a-col>
@@ -54,7 +54,7 @@
       return {
         url: 'wechat/official/tags',
         pk: 'tag_id',
-        syncLoading: true,
+        syncLoading: false,
         // 表头
         columns: [
           {
@@ -86,8 +86,8 @@
          this.syncLoading = true
          this.$http.get('wechat/official/tags/sync').then(res => {
              this.toast(res)
-             this.handleOk()
              this.syncLoading = false
+             this.handleOk()
          })
       },
     }
