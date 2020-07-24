@@ -2,20 +2,26 @@
   <a-card :bordered="false">
     <div class="table-page-search-wrapper">
       <a-form layout="inline">
-        <a-row :gutter="48">
-          <a-col :md="4" :sm="24">
-            <a-input allowClear v-model="queryParam.job_name" placeholder="请输入岗位名称"/>
+        <a-row :gutter="16">
+          <a-col :md="6" :sm="24">
+            <a-form-item label="岗位名称">
+              <a-input allowClear v-model="queryParam.job_name" placeholder="请输入岗位名称"/>
+            </a-form-item>
           </a-col>
-          <a-col :md="4" :sm="24">
-            <a-input allowClear v-model="queryParam.coding" placeholder="请输入编码"/>
+          <a-col :md="6" :sm="24">
+            <a-form-item label="岗位编码">
+              <a-input allowClear v-model="queryParam.coding" placeholder="请输入编码"/>
+            </a-form-item>
           </a-col>
-          <a-col :md="4" :sm="24">
-            <a-select allowClear v-model="queryParam.status" placeholder="请选择状态" default-value="0">
-              <a-select-option value="1">启用</a-select-option>
-              <a-select-option value="2">禁用</a-select-option>
-            </a-select>
+          <a-col :md="6" :sm="24">
+            <a-form-item label="状态">
+              <a-select allowClear v-model="queryParam.status" placeholder="请选择状态" default-value="0">
+                <a-select-option value="1">启用</a-select-option>
+                <a-select-option value="2">禁用</a-select-option>
+              </a-select>
+            </a-form-item>
           </a-col>
-          <a-col :md="4" :sm="24">
+          <a-col :md="6" :sm="24">
             <span class="table-page-search-submitButtons">
               <a-button icon="search" type="primary" @click="$refs.table.refresh(true)">查询</a-button>
               <a-button icon="sync" style="margin-left: 8px" @click="resetSearchForm()">重置</a-button>
@@ -27,11 +33,11 @@
 
     <div class="table-operator">
       <a-button type="primary" icon="plus" @click="$refs.jobModal.add()">新建</a-button>
-      <a-dropdown v-action:edit v-if="selectedRowKeys.length > 0">
+      <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
-          <a-menu-item @click="multiDel()"><a-icon type="delete"/>删除</a-menu-item>
+          <a-menu-item @click="handleMultiDel()"><a-icon type="delete"/>批量删除</a-menu-item>
         </a-menu>
-        <a-button style="margin-left: 8px">
+        <a-button>
           批量操作 <a-icon type="down" />
         </a-button>
       </a-dropdown>
@@ -41,6 +47,7 @@
       ref="table"
       size="default"
       rowKey="id"
+      :alert="true"
       :bordered="true"
       :columns="columns"
       :data="loadData"
@@ -49,13 +56,13 @@
     >
       <span slot="action" slot-scope="text, record">
         <template>
-          <a @click="handleEdit(record)">编辑</a>
+          <a @click="handleEdit(record)" class="ant-btn ant-btn-sm ant-btn-primary">编辑</a>
           <a-divider type="vertical" />
-          <a @click="handleDel(record)">删除</a>
+          <a @click="handleDel(record)" class="ant-btn ant-btn-sm ant-btn-danger">删除</a>
         </template>
       </span>
     </s-table>
-    <create-job ref="jobModal" @ok="handleOk" />
+    <create-job ref="jobModal" @ok="refreshTable" />
   </a-card>
 </template>
 
@@ -77,6 +84,12 @@ export default {
       // 表头
       columns: [
         {
+          title: 'ID',
+          dataIndex: 'id',
+          width: '60px',
+          align: 'center'
+        },
+        {
           title: '岗位名称',
           dataIndex: 'job_name'
         },
@@ -92,6 +105,11 @@ export default {
         {
           title: '创建时间',
           dataIndex: 'created_at',
+          sorter: true
+        },
+        {
+          title: '更新时间',
+          dataIndex: 'updated_at',
           sorter: true
         },
         {
@@ -116,30 +134,33 @@ export default {
   },
   methods: {
     renderStatus (value, row, index) {
-      return value === 1 ? <a-button type="normal" size="small">正常</a-button> : <a-button type="danger" size="small">禁用</a-button>
+      return value === 1 ? <a-button type="primary" size="small">正常</a-button> : <a-button type="danger" size="small">禁用</a-button>
     },
     handleEdit (record) {
       this.$refs.jobModal.edit(record)
     },
     handleDel (record) {
       this.$confirm({
-        title: '确定删除' + record.username + '吗?',
+        title: '确定删除' + record.job_name + '吗?',
         okText: '确定',
         okType: 'danger',
         cancelText: '取消',
         onOk: () => {
           del(record.id).then((res) => {
             this.toast(res)
-            this.handleOk()
+            this.refreshTable()
           })
         },
         onCancel () {}
       })
     },
-    handleOk () {
+    refreshTable () {
+      // 清空多选
+      this.$refs.table.clearSelected()
+      // refresh(true) 刷新到第一页
       this.$refs.table.refresh(true)
     },
-    multiDel () {
+    handleMultiDel () {
       this.$confirm({
         title: '确定批量删除吗?',
         okText: '确定',
@@ -148,8 +169,7 @@ export default {
         onOk: () => {
           del(this.selectedRowKeys.join(',')).then((res) => {
             this.toast(res)
-            this.selectedRowKeys = []
-            this.handleOk()
+            this.refreshTable()
           })
         },
         onCancel () {}
@@ -160,7 +180,7 @@ export default {
     },
     resetSearchForm () {
       this.queryParam = {}
-      this.handleOk()
+      this.refreshTable()
     }
   }
 }
