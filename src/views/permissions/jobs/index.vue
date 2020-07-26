@@ -27,7 +27,7 @@
 
     <div class="table-operator">
       <a-button type="primary" icon="plus" @click="$refs.jobModal.add()">新建</a-button>
-      <a-dropdown v-action:edit v-if="selectedRowKeys.length > 0">
+      <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item @click="multiDel()"><a-icon type="delete"/>删除</a-menu-item>
         </a-menu>
