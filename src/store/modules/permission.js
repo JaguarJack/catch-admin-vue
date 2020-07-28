@@ -17,13 +17,19 @@ function hasRole(roles, route) {
   }
 }
 
+function camel (snack) {
+  return snack.replace(/\_(\w)/g, function(all, letter){
+    return letter.toUpperCase();
+  });
+}
+
 function treePermissions (permissions, $pid = 0) {
   let routes = []
   for (const permission of permissions) {
     if ($pid === permission.parent_id) {
         let p = {};
         p.path = permission.route
-        p.name = permission.title
+        p.name = permission.module +'_' +permission.permission_mark
         if (permission.redirect) {
           p.redirect = permission.redirect
         }
