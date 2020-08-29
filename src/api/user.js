@@ -1,51 +1,24 @@
-/**
- * 用户管理模块
- *
- */
+import request from '@/utils/request'
 
-import { axios } from '@/utils/request'
-
-export function getUserList (parameter) {
-  return axios({
-    url: '/users',
-    method: 'get',
-    params: parameter
-  })
-}
-
-export function store (parameter) {
-  return axios({
-    url: '/users',
+export function login(data) {
+  return request({
+    url: '/vue-element-admin/user/login',
     method: 'post',
-    data: parameter
+    data
   })
 }
 
-export function read (id) {
-  return axios({
-    url: '/users/' + id,
-    method: 'get'
+export function getInfo(token) {
+  return request({
+    url: '/vue-element-admin/user/info',
+    method: 'get',
+    params: { token }
   })
 }
 
-export function update (id, parameter) {
-  return axios({
-    url: '/users/' + id,
-    method: 'put',
-    data: parameter
-  })
-}
-
-export function del (id) {
-  return axios({
-    url: '/users/' + id,
-    method: 'delete'
-  })
-}
-
-export function swtichStatus (id) {
-  return axios({
-    url: '/users/switch/status/' + id,
-    method: 'put'
+export function logout() {
+  return request({
+    url: '/vue-element-admin/user/logout',
+    method: 'post'
   })
 }

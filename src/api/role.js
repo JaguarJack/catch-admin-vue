@@ -1,44 +1,38 @@
-/**
- * 角色管理模块
- *
- */
+import request from '@/utils/request'
 
-import { axios } from '@/utils/request'
-
-export function getRoleList (parameter) {
-  return axios({
-    url: '/roles',
-    method: 'get',
-    params: parameter
-  })
-}
-
-export function store (parameter) {
-  return axios({
-    url: '/roles',
-    method: 'post',
-    data: parameter
-  })
-}
-
-export function read (id) {
-  return axios({
-    url: '/roles/' + id,
+export function getRoutes() {
+  return request({
+    url: '/vue-element-admin/routes',
     method: 'get'
   })
 }
 
-export function update (id, parameter) {
-  return axios({
-    url: '/roles/' + id,
-    method: 'put',
-    data: parameter
+export function getRoles() {
+  return request({
+    url: '/vue-element-admin/roles',
+    method: 'get'
   })
 }
 
-export function del (id) {
-  return axios({
-    url: '/roles/' + id,
+export function addRole(data) {
+  return request({
+    url: '/vue-element-admin/role',
+    method: 'post',
+    data
+  })
+}
+
+export function updateRole(id, data) {
+  return request({
+    url: `/vue-element-admin/role/${id}`,
+    method: 'put',
+    data
+  })
+}
+
+export function deleteRole(id) {
+  return request({
+    url: `/vue-element-admin/role/${id}`,
     method: 'delete'
   })
 }

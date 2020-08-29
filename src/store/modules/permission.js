@@ -1,113 +1,69 @@
-import { asyncRouterMap, constantRouterMap } from '@/config/router.config'
-import components from '@/config/componentsMap'
+import { asyncRoutes, constantRoutes } from '@/router'
 
 /**
- * 单账户多角色时，使用该方法可过滤角色不存在的菜单
- *
+ * Use meta.role to determine if the current user has permission
  * @param roles
  * @param route
- * @returns {*}
  */
-// eslint-disable-next-line
-function hasRole(roles, route) {
+function hasPermission(roles, route) {
   if (route.meta && route.meta.roles) {
-    return route.meta.roles.includes(roles.id)
+    return roles.some(role => route.meta.roles.includes(role))
   } else {
     return true
   }
 }
 
-function camel (snack) {
-  return snack.replace(/\_(\w)/g, function(all, letter){
-    return letter.toUpperCase();
-  });
-}
-
-function treePermissions (permissions, $pid = 0) {
-  let routes = []
-  for (const permission of permissions) {
-    if ($pid === permission.parent_id) {
-        let p = {};
-        p.path = permission.route
-        p.name = permission.module +'_' +permission.permission_mark
-        if (permission.redirect) {
-          p.redirect = permission.redirect
-        }
-        p.component = components[permission.component]
-        p.meta = {}
-        p.meta.title = permission.title
-        p.meta.icon = permission.icon
-        if (permission.keepalive === 1) {
-          p.meta.keepAlive = true
-        }
-        // 隐藏子菜单
-        if (permission.hide_children_in_menu === 1) {
-          p.hideChildrenInMenu = true
-        }
-        // 隐藏OR显示
-       if (permission.status === 2) {
-         p.meta.hidden = true
-       }
-      const children = treePermissions(permissions, permission.id)
-      if (children.length) {
-        p.children = children
-      }
-      routes.push(p)
-    }
-  }
-  return routes
-}
-
-function filterThenGetMenus (permissions) {
-  const menus = [];
-  for (const permission of permissions) {
-    if (permission.type === 1) {
-      menus.push(permission)
-    }
-  }
-  return menus
-}
-
 /**
- * default router
- *
- * you set set here
- *
+ * Filter asynchronous routing tables by recursion
+ * @param routes asyncRoutes
+ * @param roles
  */
-const defaultRoute = [{
-        path: '/dashboard/workplace',
-        name: 'dashboard',
-        component: () => import('@/views/dashboard/Workplace'),
-        meta: { title: '主页', keepAlive: true, icon: 'home' }
-}]
+export function filterAsyncRoutes(routes, roles) {
+  const res = []
 
-const permission = {
-  state: {
-    routers: constantRouterMap,
-    addRouters: []
-  },
-  mutations: {
-    SET_ROUTERS: (state, routers) => {
-      state.addRouters = routers
-      state.routers = constantRouterMap.concat(routers)
+  routes.forEach(route => {
+    const tmp = { ...route }
+    if (hasPermission(roles, tmp)) {
+      if (tmp.children) {
+        tmp.children = filterAsyncRoutes(tmp.children, roles)
+      }
+      res.push(tmp)
     }
-  },
-  actions: {
-    GenerateRoutes ({ commit }, data) {
-      return new Promise(resolve => {
-        const { permissions } = data
-        asyncRouterMap[0].children = defaultRoute.concat(treePermissions(filterThenGetMenus(permissions)))
-        // asyncRouterMap[0].children.push(treePermissions(filterThenGetMenus(permissions)))
-        commit('SET_ROUTERS', asyncRouterMap)
-        resolve()
-      })
-    },
-    GetLatestRoutes ({commit}, data) {
-      const { permissions } = data
-      asyncRouterMap[0].children = defaultRoute.concat(treePermissions(filterThenGetMenus(permissions)))
-      commit('SET_ROUTERS', asyncRouterMap)
-    }
+  })
+
+  return res
+}
+
+const state = {
+  routes: [],
+  addRoutes: []
+}
+
+const mutations = {
+  SET_ROUTES: (state, routes) => {
+    state.addRoutes = routes
+    state.routes = constantRoutes.concat(routes)
   }
 }
 
-export default permission
+const actions = {
+  generateRoutes({ commit }, roles) {
+    return new Promise(resolve => {
+      let accessedRoutes
+      if (roles.includes('admin')) {
+        accessedRoutes = asyncRoutes || []
+      } else {
+        accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
+      }
+      commit('SET_ROUTES', accessedRoutes)
+      resolve(accessedRoutes)
+    })
+  }
+}
+
+export default {
+  namespaced: true,
+  state,
+  mutations,
+  actions
+}

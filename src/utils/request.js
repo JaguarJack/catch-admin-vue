@@ -1,111 +1,85 @@
-import Vue from 'vue'
 import axios from 'axios'
+import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
-import notification from 'ant-design-vue/es/notification'
-import { VueAxios } from './axios'
-import { ACCESS_TOKEN } from '@/store/mutation-types'
-import router from '@/router'
+import { getToken } from '@/utils/auth'
 
-// 创建 axios 实例
+// create an axios instance
 const service = axios.create({
-  baseURL: process.env.VUE_APP_API_BASE_URL, // api base_url
-  timeout: 6000, // 请求超时时间
-  headers: {
-    'X-Requested-with': 'XMLHttpRequest'
-  }
+  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  // withCredentials: true, // send cookies when cross-domain requests
+  timeout: 5000 // request timeout
 })
 
-// token 不存在 直接返回到登陆页面
-const err = (error) => {
-  if (error.response) {
-    const token = Vue.ls.get(ACCESS_TOKEN)
-    if (! token) {
-      notification.error({
-        message: '登陆失效，请重新登陆',
-      })
-
-      setTimeout(() => {
-        router.push({ path: '/user/login' })
-        window.location.reload()
-      }, 1500)
-    }
-  }
-  return Promise.resolve(error)
-}
-
 // request interceptor
-service.interceptors.request.use(config => {
-  const token = Vue.ls.get(ACCESS_TOKEN)
-  if (token) {
-    config.headers['authorization'] = 'Bearer ' + token // 让每个请求携带自定义 token 请根据实际情况自行修改
-  }
-  return config
-}, err)
+service.interceptors.request.use(
+  config => {
+    // do something before request is sent
 
-// 是否再刷新
-let refreshing = false
-// 请求队列
-let requests = []
+    if (store.getters.token) {
+      // let each request carry token
+      // ['X-Token'] is a custom headers key
+      // please modify it according to the actual situation
+      config.headers['X-Token'] = getToken()
+    }
+    return config
+  },
+  error => {
+    // do something with request error
+    console.log(error) // for debug
+    return Promise.reject(error)
+  }
+)
 
 // response interceptor
-service.interceptors.response.use((response) => {
-  if (response.data.code !== 10000) {
-    // 登录失败
-    if (response.data.code === 10001) {
-      Vue.ls.remove(ACCESS_TOKEN)
-      router.push({ path: '/user/login' })
-      // 延迟 1 秒显示错误信息
-      setTimeout(() => {
-        notification.error({
-          message: response.data.message
-        })
-      }, 1000)
-    }
-    // 登录过期 刷新 token 重新请求
-    if (response.data.code === 10006) {
-      const config = response.config
-      if (!refreshing) {
-        refreshing = true
-        return service({
-          url: 'refresh/token',
-          method: 'post'
-        }).then(res => {
-          const token = res.data.token
-          Vue.ls.set(ACCESS_TOKEN, token, 7 * 24 * 60 * 60 * 1000)
-          store.commit('SET_TOKEN', token)
-          config.headers['authorization'] = 'Bearer ' + token // 让每个请求携带自定义 token 请根据实际情况自行修改
-          // 请求出队列
-          requests.forEach(cb => cb(token))
-          requests = []
-          return service(config)
-        }).catch(res => {}).finally(() => {
-          refreshing = false
-        })
-      } else {
-        return new Promise((resolve) => {
-        // 将resolve放进队列，用一个函数形式来保存，等token刷新后直接执行
-          requests.push((token) => {
-            config.headers['authorization'] = 'Bearer ' + Vue.ls.get(ACCESS_TOKEN) // 让每个请求携带自定义 token 请根据实际情况自行修改
-            resolve(service(config))
+service.interceptors.response.use(
+  /**
+   * If you want to get http information such as headers or status
+   * Please return  response => response
+  */
+
+  /**
+   * Determine the request status by custom code
+   * Here is just an example
+   * You can also judge the status by HTTP Status Code
+   */
+  response => {
+    const res = response.data
+
+    // if the custom code is not 20000, it is judged as an error.
+    if (res.code !== 20000) {
+      Message({
+        message: res.message || 'Error',
+        type: 'error',
+        duration: 5 * 1000
+      })
+
+      // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
+      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+        // to re-login
+        MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
+          confirmButtonText: 'Re-Login',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }).then(() => {
+          store.dispatch('user/resetToken').then(() => {
+            location.reload()
           })
         })
       }
+      return Promise.reject(new Error(res.message || 'Error'))
+    } else {
+      return res
     }
-
-    return Promise.resolve(response.data)
-  } else {
-    return response.data
+  },
+  error => {
+    console.log('err' + error) // for debug
+    Message({
+      message: error.message,
+      type: 'error',
+      duration: 5 * 1000
+    })
+    return Promise.reject(error)
   }
-}, err)
+)
 
-const installer = {
-  vm: {},
-  install (Vue) {
-    Vue.use(VueAxios, service)
-  }
-}
-
-export {
-  installer as VueAxios,
-  service as axios
-}
+export default service
