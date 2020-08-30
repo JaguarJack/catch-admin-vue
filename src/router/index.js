@@ -121,6 +121,38 @@ export const constantRoutes = [
         meta: { title: 'Profile', icon: 'user', noCache: true }
       }
     ]
+  },
+  {
+    path: '/permissions',
+    component: Layout,
+    redirect: '/permissions/users',
+    alwaysShow: true, // will always show the root menu
+    name: 'Permission',
+    meta: {
+      title: '权限管理',
+      icon: 'lock',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'users',
+        component: () => import('@/views/catchAdmin/permissions/users'),
+        name: 'users',
+        meta: {
+          title: '用户管理',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'roles',
+        component: () => import('@/views/catchAdmin/permissions/roles'),
+        name: 'roles',
+        meta: {
+          title: '角色管理',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      }
+    ]
   }
 ]
 
