@@ -7,10 +7,10 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /* Router Modules */
-import componentsRouter from './modules/components'
-import chartsRouter from './modules/charts'
-import tableRouter from './modules/table'
-import nestedRouter from './modules/nested'
+// import  from './modules/components'
+// import chartsRouter from './modules/charts'
+// import tableRouter from './modules/table'
+// import nestedRouter from './modules/nested'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -121,8 +121,8 @@ export const constantRoutes = [
         meta: { title: 'Profile', icon: 'user', noCache: true }
       }
     ]
-  },
-  {
+  }
+  /** {
     path: '/permissions',
     component: Layout,
     redirect: '/permissions/users',
@@ -136,7 +136,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'users',
-        component: () => import('@/views/catchAdmin/permissions/users'),
+        component: () => import('@/views/permissions/users'),
         name: 'users',
         meta: {
           title: '用户管理',
@@ -144,23 +144,50 @@ export const constantRoutes = [
         }
       },
       {
+        path: 'permissions',
+        component: () => import('@/views/permissions/permissions'),
+        name: 'permissions',
+        meta: {
+          title: '菜单管理',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'jobs',
+        component: () => import('@/views/permissions/jobs'),
+        name: 'jobs',
+        meta: {
+          title: '岗位管理',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
         path: 'roles',
-        component: () => import('@/views/catchAdmin/permissions/roles'),
+        component: () => import('@/views/permissions/roles'),
         name: 'roles',
         meta: {
           title: '角色管理',
           roles: ['admin'] // or you can only set roles in sub nav
         }
+      },
+      {
+        path: 'departments',
+        component: () => import('@/views/permissions/departments'),
+        name: 'departments',
+        meta: {
+          title: '部门管理',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
       }
     ]
-  }
+  }**/
 ]
 
 /**
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles
  */
-export const asyncRoutes = [
+/** export const asyncRoutes = [
   {
     path: '/permission',
     component: Layout,
@@ -209,14 +236,13 @@ export const asyncRoutes = [
     children: [
       {
         path: 'index',
-        component: () => import('@/views/icons/index'),
+        component: () => import('@/views/permissions/permissions/icons/index'),
         name: 'Icons',
         meta: { title: 'Icons', icon: 'icon', noCache: true }
       }
     ]
   },
 
-  /** when your routing map is too long, you can split it into small modules **/
   componentsRouter,
   chartsRouter,
   nestedRouter,
@@ -418,7 +444,7 @@ export const asyncRoutes = [
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
-
+**/
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),

@@ -1,4 +1,6 @@
-import { asyncRoutes, constantRoutes } from '@/router'
+import { constantRoutes } from '@/router'
+// import role from '@/views/permission/role'
+import components from '@/config/componentsMap'
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -11,6 +13,38 @@ function hasPermission(roles, route) {
   } else {
     return true
   }
+}
+
+function getAsyncRoutesFromPermissions(permissions, $pid = 0, roles) {
+  const routes = []
+  for (const permission of permissions) {
+    if (permission.type === 1 && $pid === permission.parent_id) {
+      const p = {}
+      p.path = permission.route
+      p.name = permission.module + '_' + permission.permission_mark
+      if (permission.redirect) {
+        p.redirect = permission.redirect
+      }
+      p.component = components[permission.component]
+      p.meta = {}
+      p.meta.title = permission.title
+      p.meta.icon = permission.icon
+      p.meta.roles = roles
+      if (permission.keepalive === 2) {
+        p.meta.noCache = true
+      }
+      // 隐藏OR显示
+      if (permission.status === 2) {
+        p.meta.hidden = true
+      }
+      const children = getAsyncRoutesFromPermissions(permissions, permission.id)
+      if (children.length) {
+        p.children = children
+      }
+      routes.push(p)
+    }
+  }
+  return routes
 }
 
 /**
@@ -47,9 +81,12 @@ const mutations = {
 }
 
 const actions = {
-  generateRoutes({ commit }, roles) {
+  generateRoutes({ commit }, params) {
     return new Promise(resolve => {
       let accessedRoutes
+      const roles = params[0]
+      const permissions = params[1]
+      const asyncRoutes = getAsyncRoutesFromPermissions(permissions, 0, roles)
       if (roles.includes('admin')) {
         accessedRoutes = asyncRoutes || []
       } else {

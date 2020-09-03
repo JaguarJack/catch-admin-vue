@@ -17,7 +17,7 @@ import router from './router'
 import './icons' // icon
 import './permission' // permission control
 import './utils/error-log' // error log
-
+import request from '@/utils/request'
 import * as filters from './filters' // global filters
 
 /**
@@ -44,6 +44,7 @@ Object.keys(filters).forEach(key => {
 })
 
 Vue.config.productionTip = false
+Vue.prototype.$http = request
 
 new Vue({
   el: '#app',
