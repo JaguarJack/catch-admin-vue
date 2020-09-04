@@ -11,13 +11,13 @@ export function login(data) {
 export function getInfo(token) {
   return request({
     url: 'user/info',
-    method: 'get',
+    method: 'get'
   })
 }
 
 export function logout() {
   return request({
-    url: 'user/logout',
+    url: 'logout',
     method: 'post'
   })
 }

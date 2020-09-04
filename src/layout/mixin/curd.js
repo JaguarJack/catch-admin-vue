@@ -74,11 +74,21 @@ export function submitForm(url) {
         this.$http.post(url, this.formFieldsData).then(response => {
           this.$message.success(response.message)
           this.resetFormFields()
+          this.handleRefresh()
+          // 刷新路由
+          if (this.refreshRoute !== undefined && this.refreshRoute === true) {
+            this.handleUpdateUserInfo()
+          }
         })
       } else {
         this.$http.put(url + '/' + this.id, this.formFieldsData).then((response) => {
           this.$message.success(response.message)
           this.resetFormFields()
+          this.handleRefresh()
+          // 刷新路由
+          if (this.refreshRoute !== undefined && this.refreshRoute === true) {
+            this.handleUpdateUserInfo()
+          }
         })
       }
     } else {

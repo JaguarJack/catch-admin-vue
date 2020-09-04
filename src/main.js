@@ -19,6 +19,7 @@ import './permission' // permission control
 import './utils/error-log' // error log
 import request from '@/utils/request'
 import * as filters from './filters' // global filters
+import VueHighlightJS from 'vue-highlight.js'
 
 /**
  * If you don't want to use mock-server
@@ -37,6 +38,7 @@ Vue.use(Element, {
   size: Cookies.get('size') || 'medium', // set element-ui default size
   locale: enLang // 如果使用中文，无需设置，请删除
 })
+Vue.use(VueHighlightJS)
 
 // register global utility filters
 Object.keys(filters).forEach(key => {

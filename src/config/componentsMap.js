@@ -5,22 +5,22 @@ export default {
   layout: () => import('@/layout'),
   // workplace: () => import('@/views/catchAdmin/dashboard/Workplace'),
   // 权限管理
-  users: () => import('@/views/permissions/users'),
-  roles: () => import('@/views/permissions/roles'),
-  rules: () => import('@/views/permissions/rules'),
-  departments: () => import('@/views/permissions/departments'),
-  jobs: () => import('@/views/permissions/jobs'),
+  users: () => import('@/views/permission/users'),
+  roles: () => import('@/views/permission/roles'),
+  rules: () => import('@/views/permission/rules'),
+  departments: () => import('@/views/permission/departments'),
+  jobs: () => import('@/views/permission/jobs'),
   // 系统设置
-  // database: () => import('@/views/catchAdmin/system/database'),
-  // loginLog: () => import('@/views/catchAdmin/system/log/login'),
-  // operateLog: () => import('@/views/catchAdmin/system/log/operate'),
-  // attachment: () => import('@/views/catchAdmin/system/attachments'),
-  // config: () => import('@/views/catchAdmin/system/config'),
-  // generate: () => import('@/views/catchAdmin/system/generate'),
-  // develop: () => import('@/views/catchAdmin/system/develop'),
-
+  database: () => import('@/views/system/database'),
+  attachment: () => import('@/views/system/attachments'),
+  loginLog: () => import('@/views/system/log/login'),
+  operateLog: () => import('@/views/system/log/operate'),
+  sensitiveWord: () => import('@/views/system/sensitiveWord'),
+  develop: () => import('@/views/system/develop'),
+  generate: () => import('@/views/system/generate'),
+  config: () => import('@/views/system/config'),
   // menus: () => import('@/views/catchAdmin/wechat/menus'),
-  // sensitiveWord: () => import('@/views/catchAdmin/system/sensitiveWord'),
+  //
   // 微信用户
   // wechatUsers: () => import('@/views/catchAdmin/wechat/users'),
   // 微信用户标签
