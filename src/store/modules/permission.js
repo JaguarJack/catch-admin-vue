@@ -34,8 +34,8 @@ function getAsyncRoutesFromPermissions(permissions, $pid = 0, roles) {
         p.meta.noCache = true
       }
       // 隐藏OR显示
-      if (permission.status === 2) {
-        p.meta.hidden = true
+      if (permission.hidden === 2) {
+        p.hidden = true
       }
       const children = getAsyncRoutesFromPermissions(permissions, permission.id)
       if (children.length) {

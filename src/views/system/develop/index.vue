@@ -15,15 +15,25 @@
       </el-button>
     </div>
     <el-table :data="data" tooltip-effect="dark" style="width: 100%" border fit >
-      <el-table-column label="ID" width="120" prop="id" />
+      <el-table-column label="ID" width="50" prop="id" />
       <el-table-column label="用户名" width="120" prop="username" />
       <el-table-column prop="mobile" label="手机号" width="200" />
       <el-table-column prop="id_card" label="身份证" width="200" />
       <el-table-column prop="alipay_account" label="支付宝账户" width="200" />
-      <el-table-column prop="status" label="状态" width="100" />
+      <el-table-column prop="status" label="状态" width="200">
+        <template slot-scope="develop">
+          <el-switch
+            v-model="develop.row.hidden"
+            active-text="已认证"
+            inactive-text="待认证"
+            :active-value="1"
+            :inactive-value="2"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="created_at" label="创建时间" />
       <el-table-column prop="updated_at" label="更新时间" />
-      <el-table-column label="操作">
+      <el-table-column label="操作" width="150">
         <template slot-scope="developer">
           <el-button type="primary" icon="el-icon-edit" @click="handleUpdate(developer.row)" />
           <el-button type="danger" icon="el-icon-delete" @click="handleDelete(developer.row.id)" />

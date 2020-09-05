@@ -44,7 +44,7 @@
       <el-table-column label="状态" width="150">
         <template slot-scope="permission">
           <el-switch
-            v-model="permission.row.status"
+            v-model="permission.row.hidden"
             active-text="启用"
             inactive-text="禁用"
             :active-value="1"
@@ -181,19 +181,19 @@ export default {
       rules: {
         permission_name: [
           { required: true, message: '请输入菜单名称', trigger: 'blur' },
-          { min: 3, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }
+          { max: 10, message: '最大支持 10 个字符', trigger: 'blur' }
         ],
         permission_mark: [
           { required: true, message: '请输入权限标识', trigger: 'blur' },
-          { min: 3, max: 50, message: '长度在 2 到 50 个字符', trigger: 'blur' }
+          { max: 50, message: '最大支持 50 个字符', trigger: 'blur' }
         ],
         module: [
           { required: true, message: '请输入模块', trigger: 'blur' },
-          { min: 3, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' }
+          { max: 20, message: '最大支持 20 个字符', trigger: 'blur' }
         ],
         route: [
           { required: true, message: '请输入菜单路由', trigger: 'blur' },
-          { min: 3, max: 50, message: '长度在 2 到 50 个字符', trigger: 'blur' }
+          { max: 50, message: '最大支持 50 个字符', trigger: 'blur' }
         ]
       },
       permissionProp: {
