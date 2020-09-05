@@ -232,7 +232,7 @@ export default {
     disOrEnableUser(user) {
       this.$http.put('users/switch/status/' + user.id).then(response => {
         this.$message({
-          message: '禁用成功',
+          message: response.message,
           type: 'success'
         })
       })

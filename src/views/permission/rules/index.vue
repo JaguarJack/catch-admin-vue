@@ -76,7 +76,7 @@
             <el-form-item label="菜单名称" :label-width="formLabelWidth" prop="permission_name">
               <el-input v-model="formFieldsData.permission_name" placeholder="请输入菜单名称" autocomplete="off" clearable />
             </el-form-item>
-            <el-form-item v-show="!isButton" label="模块" :label-width="formLabelWidth" prop="module">
+            <el-form-item v-if="!isButton" label="模块" :label-width="formLabelWidth" prop="module">
               <el-input v-model="formFieldsData.module" placeholder="请输入模块" autocomplete="off" clearable />
             </el-form-item>
             <el-form-item v-if="!isButton" label="菜单Path" :label-width="formLabelWidth" prop="route">
@@ -181,19 +181,19 @@ export default {
       rules: {
         permission_name: [
           { required: true, message: '请输入菜单名称', trigger: 'blur' },
-          { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+          { min: 3, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }
         ],
         permission_mark: [
           { required: true, message: '请输入权限标识', trigger: 'blur' },
-          { min: 3, max: 50, message: '长度在 3 到 50 个字符', trigger: 'blur' }
+          { min: 3, max: 50, message: '长度在 2 到 50 个字符', trigger: 'blur' }
         ],
         module: [
           { required: true, message: '请输入模块', trigger: 'blur' },
-          { min: 3, max: 20, message: '长度在 3 到 20 个字符', trigger: 'blur' }
+          { min: 3, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' }
         ],
         route: [
           { required: true, message: '请输入菜单路由', trigger: 'blur' },
-          { min: 3, max: 50, message: '长度在 3 到 50 个字符', trigger: 'blur' }
+          { min: 3, max: 50, message: '长度在 2 到 50 个字符', trigger: 'blur' }
         ]
       },
       permissionProp: {
@@ -209,6 +209,7 @@ export default {
     disOrEnablePermission(permission) {
       this.$http.put('/permissions/show/' + permission.id).then(res => {
         this.$message.success(res.message)
+        this.handleUpdateUserInfo()
         this.handleSearch()
       })
     },
@@ -226,6 +227,7 @@ export default {
       this.showType = true // 按钮
       this.permissionPrefix = action.permission_mark.indexOf('@') === -1 ? action.permission_mark : action.permission_mark.split('@')[0]
       action.permission_mark = action.permission_mark.split('@')[1]
+      this.getMethods(action.id)
       return action
     },
     beforeHandleCreate(permission) {
