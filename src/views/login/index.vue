@@ -1,16 +1,18 @@
 <template>
-  <div class="login-container">
+  <div class="login" style="background-color: #e9ecef;height: 100%;  overflow-y:hidden;">
+    <el-card shadow="hover">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
-
       <div class="title-container">
-        <h3 class="title">CatchAdmin 后台管理系统</h3>
+        <h3 class="title" align="center">CatchAdmin 后台管理系统</h3>
       </div>
-
+      <h2>登 录</h2>
+      <el-divider/>
       <el-form-item prop="email">
         <span class="svg-container">
-          <svg-icon icon-class="email" />
+          邮 箱
         </span>
         <el-input
+          prefix-icon="el-icon-user"
           ref="email"
           v-model="loginForm.email"
           placeholder="请输入邮箱"
@@ -24,11 +26,13 @@
       <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
         <el-form-item prop="password">
           <span class="svg-container">
-            <svg-icon icon-class="password" />
+            密 码
           </span>
           <el-input
             :key="passwordType"
+            prefix-icon="el-icon-lock"
             ref="password"
+            show-password
             v-model="loginForm.password"
             :type="passwordType"
             placeholder="请输入密码"
@@ -39,18 +43,17 @@
             @blur="capsTooltip = false"
             @keyup.enter.native="handleLogin"
           />
-          <span class="show-pwd" @click="showPwd">
-            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-          </span>
         </el-form-item>
       </el-tooltip>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登 录</el-button>
+      <el-button :loading="loading" type="primary"  @click.native.prevent="handleLogin"><i class="el-icon-s-promotion"/> 登 录</el-button>
 
-      <!--<div style="position:relative">
-        CatchAdin 管理系统@copyright 2018-2020
-      </div>-->
+      <el-divider></el-divider>
+      <div style="position:relative;color: darkgrey;font-size: 14px;">
+        <a href="http://doc.catchadmin.com/">CatchAdmin 管理系统</a> @copyright 2018-2020
+      </div>
     </el-form>
+    </el-card>
   </div>
 </template>
 
@@ -180,18 +183,36 @@ export default {
 </script>
 
 <style lang="scss">
+  .el-input .el-input__inner {
+    padding-left: 35px;
+  }
+
+  .el-card {
+    border-radius: 8px;
+  }
+  @media screen and (max-device-width: 1920px) {
+    .el-card {
+      width: 30%;
+      margin: 12% auto;
+    }
+    .el-card .el-button{
+      position: relative;
+      left: 80%;
+    }
+  }
+  @media screen and (max-device-width: 600px) {
+    .el-card {
+      width: 100%;
+      height: 100%;
+      margin: auto;
+    }
+    .el-card .el-button{
+      position: relative;
+      left: 35%;
+    }
+  }
 /* 修复input 背景不协调 和光标变色 */
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
-
-$bg:#283443;
-$light_gray:#fff;
-$cursor: #fff;
-
-@supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
-  .login-container .el-input input {
-    color: $cursor;
-  }
-}
 
 /* reset element-ui css */
 .login-container {
@@ -206,20 +227,16 @@ $cursor: #fff;
       -webkit-appearance: none;
       border-radius: 0px;
       padding: 12px 5px 12px 15px;
-      color: $light_gray;
       height: 47px;
-      caret-color: $cursor;
 
       &:-webkit-autofill {
-        box-shadow: 0 0 0px 1000px $bg inset !important;
-        -webkit-text-fill-color: $cursor !important;
+        box-shadow: 0 0 0px 1000px inset !important;
       }
     }
   }
 
   .el-form-item {
     border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     color: #454545;
   }
@@ -227,14 +244,10 @@ $cursor: #fff;
 </style>
 
 <style lang="scss" scoped>
-$bg:#2d3a4b;
-$dark_gray:#889aa4;
-$light_gray:#eee;
 
 .login-container {
   min-height: 100%;
   width: 100%;
-  background-color: $bg;
   overflow: hidden;
 
   .login-form {
@@ -260,7 +273,6 @@ $light_gray:#eee;
 
   .svg-container {
     padding: 6px 5px 6px 15px;
-    color: $dark_gray;
     vertical-align: middle;
     width: 30px;
     display: inline-block;
@@ -271,10 +283,10 @@ $light_gray:#eee;
 
     .title {
       font-size: 26px;
-      color: $light_gray;
       margin: 0px auto 40px auto;
       text-align: center;
       font-weight: bold;
+      color: #DCDFE6;
     }
   }
 
@@ -283,7 +295,6 @@ $light_gray:#eee;
     right: 10px;
     top: 7px;
     font-size: 16px;
-    color: $dark_gray;
     cursor: pointer;
     user-select: none;
   }
