@@ -3,6 +3,7 @@
  */
 export default {
   layout: () => import('@/layout'),
+  routerView: () => import('@/layout/routeView'),
   // workplace: () => import('@/views/catchAdmin/dashboard/Workplace'),
   // 权限管理
   users: () => import('@/views/permission/users'),
@@ -19,12 +20,13 @@ export default {
   develop: () => import('@/views/system/develop'),
   generate: () => import('@/views/system/generate'),
   config: () => import('@/views/system/config'),
-  // menus: () => import('@/views/catchAdmin/wechat/menus'),
+  // 微信管理
+  // wechatMenus: () => import('@/views/wechat/menus'),
   //
   // 微信用户
-  // wechatUsers: () => import('@/views/catchAdmin/wechat/users'),
+  wechatUsers: () => import('@/views/wechat/users'),
   // 微信用户标签
-  // wechatTags: () => import('@/views/catchAdmin/wechat/tags'),
+  wechatTags: () => import('@/views/wechat/tags'),
   // wechatGraphic:() => import('@/views/catchAdmin/wechat/graphic'),
-  // wechatReply:() => import('@/views/catchAdmin/wechat/reply')
+  wechatReply: () => import('@/views/wechat/reply')
 }

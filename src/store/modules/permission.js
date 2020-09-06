@@ -87,6 +87,7 @@ const actions = {
       const roles = params[0]
       const permissions = params[1]
       const asyncRoutes = getAsyncRoutesFromPermissions(permissions, 0, roles)
+
       if (roles.includes('admin')) {
         accessedRoutes = asyncRoutes || []
       } else {

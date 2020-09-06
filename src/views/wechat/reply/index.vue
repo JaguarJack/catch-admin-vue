@@ -14,7 +14,7 @@
       </el-button>
     </div>
     <el-table :data="data" tooltip-effect="dark" style="width: 100%" border fit>
-      <el-table-column label="表名" width="150" prop="name" />
+      <el-table-column label="表名" width="name" prop="name" />
       <el-table-column prop="engine" label="引擎" width="150"/>
       <el-table-column prop="collation" label="字符集" width="150"/>
       <el-table-column prop="rows" label="数据行数" width="150"/>
