@@ -4,7 +4,6 @@
 export default {
   layout: () => import('@/layout'),
   routerView: () => import('@/layout/routeView'),
-  // workplace: () => import('@/views/catchAdmin/dashboard/Workplace'),
   // 权限管理
   users: () => import('@/views/permission/users'),
   roles: () => import('@/views/permission/roles'),

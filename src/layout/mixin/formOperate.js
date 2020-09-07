@@ -35,12 +35,12 @@ export default {
     handleCreate() {
       curd.create.apply(this)
     },
-    // 新增
+    // 提交
     handleSubmit() {
       curd.submitForm.apply(this, [this.url])
-      this.formVisible = false
       this.id = null
       this.handleRefresh()
+      this.formVisible = false
     },
     // 更新
     handleUpdate(record, col, idx) {

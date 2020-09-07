@@ -1,228 +1,160 @@
 <p align="center">
-  <img width="320" src="https://wpimg.wallstcn.com/ecc53a42-d79b-42e2-8852-5126b810a4c8.svg">
+    <img src="https://cdn.learnku.com/uploads/images/202005/17/18206/zSuf7Ce5kM.png!large">
+</p>
+
+
+<p align="center"><code>CatchAdmin</code>是一款基于<a href="http://www.thinkphp.cn/" target="_blank">thinkphp framework</a>和
+<a href="https://github.com/PanJiaChen/vue-element-admin/">element admin</a>二次开发而成后台管理系统。因为 thinkphp 的简单高效，文档齐全。在看了很多 thinkphp 生态中的后台管理系统，发现没有一款合适的前后端分离系统。遂开发了 CatchAdmin。
+完全利用了 thinkphp6 的新版本特性 ServiceProvider，将管理系统模块之间的耦合降到了最低限度。每个模块之间都有独立的 `controller，路由，模型，数据表`。在开发上尽可能将模块之间的影响降到最低，降低了开发上的难度。基于 CatchAdmin 可以开发 cms，CRM，OA 等
+等系统。也封装了很多实用的工具，提升开发体验。
 </p>
 
 <p align="center">
-  <a href="https://github.com/vuejs/vue">
-    <img src="https://img.shields.io/badge/vue-2.6.10-brightgreen.svg" alt="vue">
-  </a>
-  <a href="https://github.com/ElemeFE/element">
-    <img src="https://img.shields.io/badge/element--ui-2.7.0-brightgreen.svg" alt="element-ui">
-  </a>
-  <a href="https://travis-ci.org/PanJiaChen/vue-element-admin" rel="nofollow">
-    <img src="https://travis-ci.org/PanJiaChen/vue-element-admin.svg?branch=master" alt="Build Status">
-  </a>
-  <a href="https://github.com/PanJiaChen/vue-element-admin/blob/master/LICENSE">
-    <img src="https://img.shields.io/github/license/mashape/apistatus.svg" alt="license">
-  </a>
-  <a href="https://github.com/PanJiaChen/vue-element-admin/releases">
-    <img src="https://img.shields.io/github/release/PanJiaChen/vue-element-admin.svg" alt="GitHub release">
-  </a>
-  <a href="https://gitter.im/vue-element-admin/discuss">
-    <img src="https://badges.gitter.im/Join%20Chat.svg" alt="gitter">
-  </a>
-  <a href="https://panjiachen.github.io/vue-element-admin-site/donate">
-    <img src="https://img.shields.io/badge/%24-donate-ff69b4.svg" alt="donate">
-  </a>
+<a href="http://doc.catchadmin.com/">文档</a> |
+<a href="http://vue.catchadmin.com">演示地址</a> |
+<a href="http://apidoc.catchadmin.com">接口文档</a> |
+<a href="https://gitee.com/jaguarjack/catchAdmin">项目源码</a> |
+<a href="https://www.kancloud.cn/akasishikelu/thinkphp6">看云分析</a> 
+<a href="#extensions">扩展</a>
 </p>
-
-English | [简体中文](./README.zh-CN.md) | [日本語](./README.ja.md) | [Spanish](./README.es.md)
-
-## Introduction
-
-[vue-element-admin](https://panjiachen.github.io/vue-element-admin) is a production-ready front-end solution for admin interfaces. It is based on [vue](https://github.com/vuejs/vue) and uses the UI Toolkit [element-ui](https://github.com/ElemeFE/element).
-
-[vue-element-admin](https://panjiachen.github.io/vue-element-admin) is based on the newest development stack of vue and it has a built-in i18n solution, typical templates for enterprise applications, and lots of awesome features. It helps you build large and complex Single-Page Applications. I believe whatever your needs are, this project will help you.
-
-- [Preview](https://panjiachen.github.io/vue-element-admin)
-
-- [Documentation](https://panjiachen.github.io/vue-element-admin-site/)
-
-- [Gitter](https://gitter.im/vue-element-admin/discuss)
-
-- [Donate](https://panjiachen.github.io/vue-element-admin-site/donate/)
-
-- [Wiki](https://github.com/PanJiaChen/vue-element-admin/wiki)
-
-- [Gitee](https://panjiachen.gitee.io/vue-element-admin/) 国内用户可访问该地址在线预览
-
-- Base template recommends using: [vue-admin-template](https://github.com/PanJiaChen/vue-admin-template)
-- Desktop: [electron-vue-admin](https://github.com/PanJiaChen/electron-vue-admin)
-- Typescript: [vue-typescript-admin-template](https://github.com/Armour/vue-typescript-admin-template) (Credits: [@Armour](https://github.com/Armour))
-- [awesome-project](https://github.com/PanJiaChen/vue-element-admin/issues/2312)
-
-**After the `v4.1.0+` version, the default master branch will not support i18n. Please use [i18n Branch](https://github.com/PanJiaChen/vue-element-admin/tree/i18n), it will keep up with the master update**
-
-**The current version is `v4.0+` build on `vue-cli`. If you find a problem, please put [issue](https://github.com/PanJiaChen/vue-element-admin/issues/new). If you want to use the old version , you can switch branch to [tag/3.11.0](https://github.com/PanJiaChen/vue-element-admin/tree/tag/3.11.0), it does not rely on `vue-cli`**
-
-**This project does not support low version browsers (e.g. IE). Please add polyfill by yourself.**
-
-## Preparation
-
-You need to install [node](https://nodejs.org/) and [git](https://git-scm.com/) locally. The project is based on [ES2015+](https://es6.ruanyifeng.com/), [vue](https://cn.vuejs.org/index.html), [vuex](https://vuex.vuejs.org/zh-cn/), [vue-router](https://router.vuejs.org/zh-cn/), [vue-cli](https://github.com/vuejs/vue-cli) , [axios](https://github.com/axios/axios) and [element-ui](https://github.com/ElemeFE/element), all request data is simulated using [Mock.js](https://github.com/nuysoft/Mock).
-Understanding and learning this knowledge in advance will greatly help the use of this project.
-
-[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/PanJiaChen/vue-element-admin/tree/CodeSandbox)
 
 <p align="center">
-  <img width="900" src="https://wpimg.wallstcn.com/a5894c1b-f6af-456e-82df-1151da0839bf.png">
-</p>
+    <a href="https://gitee.com/jaguarjack/catchAdmin" target="_blank">
+        <img src="https://svg.hamm.cn/gitee.svg?type=star&user=jaguarjack&project=catchAdmin"/>
+    </a >
+    <a href="https://gitee.com/jaguarjack/catchAdmin" target="_blank">
+        <img src="https://svg.hamm.cn/gitee.svg?type=fork&user=jaguarjack&project=catchAdmin"/>
+    </a >
+    <img src="https://svg.hamm.cn/badge.svg?key=Base&value=ThinkPHP6"/>
+    <img src="https://svg.hamm.cn/badge.svg?key=Data&value=MySQL5.5"/>
+    <img src="https://svg.hamm.cn/badge.svg?key=Runtime&value=PHP7.1"/>
+    <img src="https://svg.hamm.cn/badge.svg?key=License&value=Apache-2.0"/>
+</p >
 
-## Sponsors
+## 功能
+- [x] 用户管理 后台用户管理
+- [x] 部门管理 配置公司的部门结构，支持树形结构
+- [x] 岗位管理 配置后台用户的职务
+- [x] 菜单管理 配置系统菜单，按钮等等
+- [x] 角色管理 配置用户担当的角色，分配权限
+- [x] 数据字典 管理后台表结构
+- [x] 操作日志 后台用户操作记录
+- [x] 登录日志 后台系统用户的登录记录
+- [x] 代码生成 生成 API 端的 CURD 操作
+- [x] 敏感词  支持敏感词配置
+- [x] 附件管理 可管理上传的文件
+- [ ] 微信管理
 
-Become a sponsor and get your logo on our README on GitHub with a link to your site. [[Become a sponsor]](https://www.patreon.com/panjiachen)
+## 项目地址
+- [github 地址](https://github.com/yanwenwu/catch-admin)
+- [gitee 地址](https://gitee.com/jaguarjack/catchAdmin)
+- [前端 Vue 项目地址](https://github.com/yanwenwu/catch-admin-vue)
+- [文档地址](https://github.com/catch-admin/document)[个人精力实在有限,希望可以小伙伴们可以一起维护文档]
+## 预览
+<table>
+    <tr>
+        <td><img src="https://s1.ax1x.com/2020/09/07/wucNXq.md.png"></td>
+        <td><img src="https://s1.ax1x.com/2020/09/07/wucm6I.md.png"></td>
+    </tr>
+    <tr>
+        <td><img src="https://s1.ax1x.com/2020/09/07/wucZpd.md.png"></td>
+        <td><img src="https://s1.ax1x.com/2020/09/07/wuce1A.md.png"></td>
+    </tr>
+    <tr>
+        <td><img src="https://s1.ax1x.com/2020/09/07/wucnXt.md.png"></td>
+        <td><img src="https://s1.ax1x.com/2020/09/07/wucKnP.md.png"></td>
+    </tr>
+    <tr>
+        <td><img src="https://s1.ax1x.com/2020/09/07/wuc3tg.md.png"></td>
+        <td><img src="https://s1.ax1x.com/2020/09/07/wucM0f.md.png"></td>
+    </tr>
+    <tr>
+        <td><img src="https://s1.ax1x.com/2020/09/07/wucQ78.md.png"></td>
+        <td><img src="https://s1.ax1x.com/2020/09/07/wuc1AS.md.png"></td>
+    </tr>
+     <tr>
+        <td><img src="https://s1.ax1x.com/2020/09/07/wuc8hQ.md.png"></td>
+        <td><img src="https://s1.ax1x.com/2020/09/07/wucY1s.md.png"></td>
+    </tr>
+    <tr>
+        <td><img src="https://s1.ax1x.com/2020/09/07/wucJpj.md.png"></td>
+        <td><img src="https://s1.ax1x.com/2020/09/07/wuctcn.md.png"></td>
+    </tr>
+</table>
 
-<a href="https://flatlogic.com/admin-dashboards?from=vue-element-admin"><img width="150px" src="https://wpimg.wallstcn.com/9c0b719b-5551-4c1e-b776-63994632d94a.png" /></a><p>Admin Dashboard Templates made with Vue, React and Angular.</p>
+## 环境要求
+- php7.1+ (需以下扩展)
+    - [x] mbstring
+    - [x] json
+    - [x] openssl
+    - [x] xml
+    - [x] pdo
+- nginx
+- mysql
 
-### GitAds
+### 如何安装
+> 安装之前请确保已安装 Composer
 
-> vue-element-admin is being sponsored by the following tool; please help to support us by taking a look and signing up to a free trial
+#### 下载项目
+- 通过 Git 下载(推荐)
+```shell
+git clone https://gitee.com/jaguarjack/catchAdmin && cd catchAdmin
 
-[<img src="https://images.gitads.io/vue-element-admin" alt="GitAds" />](https://tracking.gitads.io/?repo=vue-element-admin)
+curl -sS https://install.phpcomposer.com/installer | php
 
-## Features
+composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
+
+composer install
 
 ```
-- Login / Logout
-
-- Permission Authentication
-  - Page permission
-  - Directive permission
-  - Permission configuration page
-  - Two-step login
-
-- Multi-environment build
-  - Develop (dev)
-  - sit
-  - Stage Test (stage)
-  - Production (prod)
-
-- Global Features
-  - I18n
-  - Multiple dynamic themes
-  - Dynamic sidebar (supports multi-level routing)
-  - Dynamic breadcrumb
-  - Tags-view (Tab page Support right-click operation)
-  - Svg Sprite
-  - Mock data
-  - Screenfull
-  - Responsive Sidebar
-
-- Editor
-  - Rich Text Editor
-  - Markdown Editor
-  - JSON Editor
-
-- Excel
-  - Export Excel
-  - Upload Excel
-  - Visualization Excel
-  - Export zip
-
-- Table
-  - Dynamic Table
-  - Drag And Drop Table
-  - Inline Edit Table
-
-- Error Page
-  - 401
-  - 404
-
-- Components
-  - Avatar Upload
-  - Back To Top
-  - Drag Dialog
-  - Drag Select
-  - Drag Kanban
-  - Drag List
-  - SplitPane
-  - Dropzone
-  - Sticky
-  - CountTo
-
-- Advanced Example
-- Error Log
-- Dashboard
-- Guide Page
-- ECharts
-- Clipboard
-- Markdown to html
+- composer 安装
+```shell
+composer create-project jaguarjack/catchadmin:dev-master
 ```
 
-## Getting started
-
-```bash
-# clone the project
-git clone https://github.com/PanJiaChen/vue-element-admin.git
-
-# enter the project directory
-cd vue-element-admin
-
-# install dependency
-npm install
-
-# develop
-npm run dev
+#### 安装
+下载完成之后通过命令来进行安装, 一键安装 🚀
+```shell
+ php think catch:install 
 ```
 
-This will automatically open http://localhost:9527
+## 体验地址
 
-## Build
+[体验地址](http://vue.catchadmin.com)
+- 账号: admin@gmail.com
+- 密码: admin
 
-```bash
-# build for test environment
-npm run build:stage
+[catchadmin 文档地址](http://doc.catchadmin.com)
 
-# build for production environment
-npm run build:prod
-```
+### 系列文章
+如果是刚开始使用 thinkphp6, 以下文章可能会对你有些许帮助，文章基于 RC3 版本。整体架构是不变的。
+- [Tp6 启动分析](https://www.kancloud.cn/akasishikelu/thinkphp6/1129385)
+- [Tp6 Request 解析](https://www.kancloud.cn/akasishikelu/thinkphp6/1134496)
+- [TP6 应用初始化](https://www.kancloud.cn/akasishikelu/thinkphp6/1130427)
+- [Tp6 中间件分析](https://www.kancloud.cn/akasishikelu/thinkphp6/1136616)
+- [Tp6 请求流程](https://www.kancloud.cn/akasishikelu/thinkphp6/1136608)
 
-## Advanced
+### Donate
+如果你觉得项目对你有帮助，可以请作者喝杯咖啡☕️！鼓励下
+<img src="https://cdn.learnku.com/uploads/images/202008/11/18206/e6qAAM8Bod.jpg!large">
 
-```bash
-# preview the release environment effect
-npm run preview
+### Talking
+- [论坛讨论](http://bbs.catchadmin.com)
+- 可以提 `ISSUE`，请按照 `issue` 模板提问
+- 加入 Q 群 `302266230` 讨论以及反馈一些问题。
+    - 加群需要付费，所以请使用能支持群费的客户端。(不喜勿喷，过滤一部分不看文档和 TP 框架文档并且衣来伸手饭来张口的用户)
+    - 不建议你付费入群，认真阅读文档可以解决所有问题
+    - 更愿意以 `ISSUE` 的方式提问
+    - 付费入群，群里的各位也是没有义务回答各种各样的基础问题。请 GOOGLE。
 
-# preview the release environment effect + static resource analysis
-npm run preview -- --report
+### Thanks
+> 排名部分先后
 
-# code format check
-npm run lint
-
-# code format check and auto fix
-npm run lint -- --fix
-```
-
-Refer to [Documentation](https://panjiachen.github.io/vue-element-admin-site/guide/essentials/deploy.html) for more information
-
-## Changelog
-
-Detailed changes for each release are documented in the [release notes](https://github.com/PanJiaChen/vue-element-admin/releases).
-
-## Online Demo
-
-[Preview](https://panjiachen.github.io/vue-element-admin)
-
-## Donate
-
-If you find this project useful, you can buy author a glass of juice :tropical_drink:
-
-![donate](https://wpimg.wallstcn.com/bd273f0d-83a0-4ef2-92e1-9ac8ed3746b9.png)
-
-[Paypal Me](https://www.paypal.me/panfree23)
-
-[Buy me a coffee](https://www.buymeacoffee.com/Pan)
-
-## Browsers support
-
-Modern browsers and Internet Explorer 10+.
-
-| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" />](https://godban.github.io/browsers-support-badges/)</br>IE / Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](https://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](https://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](https://godban.github.io/browsers-support-badges/)</br>Safari |
-| --------- | --------- | --------- | --------- |
-| IE10, IE11, Edge | last 2 versions | last 2 versions | last 2 versions |
-
-## License
-
-[MIT](https://github.com/PanJiaChen/vue-element-admin/blob/master/LICENSE)
-
-Copyright (c) 2017-present PanJiaChen
+- [top-think/think](https://github.com/top-think/think)
+- [ant-design-pro-vue](https://github.com/sendya/ant-design-pro-vue)
+- [thans/tp-jwt-auth](https://packagist.org/packages/thans/tp-jwt-auth)
+- [workerman/workerman](https://github.com/walkor/Workerman)
+- [jaguarjack/think-filesystem-cloud](https://github.com/yanwenwu/think-filesystem-cloud)
+- [overtrue/wechat](https://github.com/overtrue/wechat)
+- [jaguarjack/migration-generator](https://github.com/yanwenwu/migration-generator)
+- [phpoffice/phpspreadsheet](https://github.com/PHPOffice/PhpSpreadsheet)

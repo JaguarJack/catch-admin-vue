@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-      title: 'CatchAdmin',
+      title: 'CatchAdmin管理系统',
       logo: '@/assets/logo.png'
     }
   }
