@@ -67,7 +67,7 @@
           />
         </el-form-item>
         <el-form-item label="数据权限" :label-width="formLabelWidth" prop="data_range">
-          <el-select v-model="formFieldsData.data_range" placeholder="请选择数据权限">
+          <el-select v-model="formFieldsData.data_range" placeholder="请选择数据权限" @change="selectDataRange">
             <el-option
               v-for="item in dataRange"
               :key="item.id"
@@ -75,6 +75,14 @@
               :value="item.id"
             />
           </el-select>
+        </el-form-item>
+        <el-form-item v-if="showCustomize" label="自定义权限" :label-width="formLabelWidth">
+          <el-cascader
+            v-model="formFieldsData.departments"
+            :options="departments"
+            :props="departmentsProp"
+            :show-all-levels="false"
+            clearable/>
         </el-form-item>
         <el-input v-model="formFieldsData.parent_id" type="hidden" />
       </el-form>
@@ -103,7 +111,8 @@ export default {
         identify: '',
         data_range: '',
         parent_id: 0,
-        permissions: []
+        permissions: [],
+        departments: []
       },
       permissions: [],
       queryParam: { role_name: '' },
@@ -128,6 +137,15 @@ export default {
       },
       permissionProp: {
         label: 'permission_name'
+      },
+      // 展示自定义权限
+      showCustomize: false,
+      departments: [],
+      departmentsProp: {
+        label: 'department_name',
+        value: 'id',
+        emitPath: false,
+        multiple: true
       }
     }
   },
@@ -144,6 +162,18 @@ export default {
         this.permissions = response.data
       })
     },
+    // 选择权限
+    selectDataRange(value) {
+      this.showCustomize = value === 2
+      // 选择自定义权限
+      if (value === 2) {
+        this.$http.get('departments').then(response => {
+          this.departments = response.data
+        })
+      } else {
+        this.departments = []
+      }
+    },
     beforeHandleCreate(role) {
       this.getPermissions(role.id)
       this.formFieldsData.parent_id = role.id
@@ -158,6 +188,18 @@ export default {
             this.$refs.permissions.setChecked(node, true)
           }
         })
+        // 自定义数据
+        this.showCustomize = res.data.data_range === 2
+        if (res.data.data_range === 2) {
+          this.$http.get('departments').then(response => {
+            this.departments = response.data
+          })
+          const departments = []
+          res.data.departments.map(item => {
+            departments.push(item.id)
+          })
+          this.formFieldsData.departments = departments
+        }
       })
     },
     beforeHandleUpdate(role) {

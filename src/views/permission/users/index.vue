@@ -213,7 +213,7 @@ export default {
         ]
       },
       // 部门
-      departments: [],
+      departments: []
     }
   },
   // 初始化数据
