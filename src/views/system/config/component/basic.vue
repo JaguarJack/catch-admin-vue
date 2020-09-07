@@ -21,7 +21,17 @@
         <el-input v-model="form.site.keywords" placeholder="请输入站点关键字" autocomplete="off" clearable />
       </el-form-item>
       <el-form-item label="站点描述" :label-width="width">
-        <el-input type="textarea" v-model="form.site.description" placeholder="请输入站点描述" autocomplete="off" clearable />
+        <el-input v-model="form.site.description" type="textarea" placeholder="请输入站点描述" autocomplete="off" clearable />
+      </el-form-item>
+      <el-form-item label="上传设置" :label-width="width">
+        <el-select v-model="form.site.upload" placeholder="请选择上传方式">
+          <el-option
+            v-for="(item, key) in upload"
+            :key="item"
+            :label="item"
+            :value="key"
+          />
+        </el-select>
       </el-form-item>
 
       <el-divider content-position="left"><h3>底部信息</h3></el-divider>
@@ -50,7 +60,7 @@
 
 <script>
 export default {
-  name: 'basic',
+  name: 'Basic',
   data() {
     return {
       width: '180px',
@@ -61,7 +71,8 @@ export default {
           url: '',
           start_at: '',
           keywords: '',
-          description: ''
+          description: '',
+          upload: ''
         },
         footer: {
           record_number: '',
@@ -74,6 +85,12 @@ export default {
         },
         parent: 'basic'
       },
+      upload: {
+        local: '本地上传',
+        oss: '阿里OSS',
+        qcloud: '腾讯云上传',
+        qiniu: '七牛云上传'
+      },
       // 规则
       rules: {
         'site.name': [
@@ -82,11 +99,20 @@ export default {
       }
     }
   },
+  created() {
+    this.$http.get('/config/basic').then(response => {
+      const basic = response.data
+      Object.keys(basic).forEach(k => {
+        Object.keys(basic[k]).forEach(key => {
+          this.form[k][key] = basic[k][key]
+        })
+      })
+    })
+  },
   methods: {
     submit() {
       this.$refs['form'].validate(valid => {
         if (valid) {
-          console.log(this.form)
           this.$http.post('config', this.form).then(response => {
             this.$message.success(response.message)
           })

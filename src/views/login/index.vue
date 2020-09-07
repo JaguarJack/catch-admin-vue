@@ -1,6 +1,6 @@
 <template>
   <div class="login" style="background-color: #e9ecef;height: 100%;  overflow-y:hidden;">
-    <el-card shadow="hover">
+    <el-card shadow="hover" class="login-card">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
       <div class="title-container">
         <h3 class="title" align="center">CatchAdmin 后台管理系统</h3>
@@ -183,30 +183,30 @@ export default {
 </script>
 
 <style lang="scss">
-  .el-input .el-input__inner {
+  .login .el-input .el-input__inner {
     padding-left: 35px;
   }
 
-  .el-card {
+  .login .el-card {
     border-radius: 8px;
   }
   @media screen and (max-device-width: 1920px) {
-    .el-card {
+    .login .el-card {
       width: 30%;
       margin: 12% auto;
     }
-    .el-card .el-button{
+    .login .el-card .el-button{
       position: relative;
       left: 80%;
     }
   }
   @media screen and (max-device-width: 600px) {
-    .el-card {
+   .login .el-card {
       width: 100%;
       height: 100%;
       margin: auto;
     }
-    .el-card .el-button{
+    .login .el-card .el-button{
       position: relative;
       left: 35%;
     }

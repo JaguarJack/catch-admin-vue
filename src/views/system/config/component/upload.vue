@@ -19,7 +19,7 @@
       </el-form-item>
       <el-form-item label="is_cname" :label-width="width">
         <el-radio v-model="form.oss.is_cname" :label="1">是</el-radio>
-        <el-radio v-model="form.oss.is_cname" :label="0">否</el-radio>
+        <el-radio v-model="form.oss.is_cname" :label="2">否</el-radio>
       </el-form-item>
 
       <el-divider content-position="left"><h3>七牛配置</h3></el-divider>
@@ -66,7 +66,7 @@
       </el-form-item>
       <el-form-item label="read_from_cdn" :label-width="width">
         <el-radio v-model="form.qcloud.read_from_cdn" :label="1">是</el-radio>
-        <el-radio v-model="form.qcloud.read_from_cdn" :label="0">否</el-radio>
+        <el-radio v-model="form.qcloud.read_from_cdn" :label="2">否</el-radio>
       </el-form-item>
       <el-form-item style="margin: auto">
         <el-button type="primary" @click="submit">提交</el-button>
@@ -121,6 +121,22 @@ export default {
         ]
       }
     }
+  },
+  created() {
+    this.$http.get('/config/upload').then(response => {
+      const upload = response.data
+      Object.keys(upload).forEach(k => {
+        Object.keys(upload[k]).forEach(key => {
+          if (key === 'cname') {
+            this.form[k][key] = parseInt(upload[k][key])
+          } else if (key === 'read_from_cdn') {
+            this.form[k][key] = parseInt(upload[k][key])
+          } else {
+            this.form[k][key] = upload[k][key]
+          }
+        })
+      })
+    })
   },
   methods: {
     submit() {
