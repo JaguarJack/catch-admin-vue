@@ -53,7 +53,7 @@
         <el-form-item label="角色描述" :label-width="formLabelWidth" prop="description">
           <el-input v-model="formFieldsData.description" style="width: 92%" type="textarea" />
         </el-form-item>
-        <el-form-item label="权限" :label-width="formLabelWidth">
+        <el-form-item label="角色权限" :label-width="formLabelWidth">
           <el-tree
             ref="permissions"
             :data="permissions"

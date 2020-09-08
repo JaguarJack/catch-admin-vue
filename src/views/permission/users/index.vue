@@ -98,7 +98,7 @@
       <el-form :ref="formName" :model="formFieldsData" :rules="rules">
         <el-row :gutter="12">
           <el-col :span="10">
-            <el-form-item label="用户昵称" :label-width="formLabelWidth" prop="username">
+            <el-form-item label="昵称" :label-width="formLabelWidth" prop="username">
               <el-input v-model="formFieldsData.username" placeholder="请输入用户昵称" autocomplete="off" clearable />
             </el-form-item>
             <el-form-item label="邮箱" :label-width="formLabelWidth" prop="email">

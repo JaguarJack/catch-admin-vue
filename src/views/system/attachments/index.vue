@@ -11,7 +11,8 @@
       <el-table-column label="文件名" width="250" prop="filename" />
       <el-table-column prop="url" label="预览" width="150">
         <template slot-scope="attachment">
-          <img :src="attachment.row.url" style="width: 100px">
+          <img :src="attachment.row.url" v-if="attachment.row.file_ext === 'jpg' || attachment.row.file_ext === 'jpeg' || attachment.row.file_ext === 'png' || attachment.row.file_ext === 'gif'" style="width: 100px" />
+          <el-tag v-else class="el-icon-download" @click="download(attachment.row.url)">下载</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="path" label="路径" width="330"/>
@@ -68,6 +69,11 @@ export default {
         driver: ''
       },
       selectedIds: []
+    }
+  },
+  methods: {
+    download(url) {
+      location.href = url
     }
   }
 }
