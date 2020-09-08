@@ -54,7 +54,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="created_at" label="创建时间" width="200" />
-      <el-table-column label="操作" width="200">
+      <el-table-column label="操作">
         <template slot-scope="permission">
           <el-button size="small" type="primary" icon="el-icon-plus" @click="beforeHandleCreate(permission.row);handleCreate()" />
           <el-button size="small" type="primary" icon="el-icon-edit" @click="isButton=false;handleUpdate(permission.row)" />
