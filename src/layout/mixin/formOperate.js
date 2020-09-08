@@ -23,6 +23,23 @@ export default {
     this.getList()
   },
   methods: {
+    hiddenDialog() {
+      this.formVisible = false
+    },
+    handleResponse(response) {
+      if (response.code === 10000) {
+        this.$message.success(response.message)
+        this.resetFormFields()
+        this.handleRefresh()
+        this.hiddenDialog()
+        // 刷新路由
+        if (this.refreshRoute !== undefined && this.refreshRoute === true) {
+          this.handleUpdateUserInfo()
+        }
+      } else {
+        this.$message.error(response.message)
+      }
+    },
     // 列表请求
     getList(params = null) {
       const query = params ? params : this.queryParam
@@ -40,7 +57,6 @@ export default {
       curd.submitForm.apply(this, [this.url])
       this.id = null
       this.handleRefresh()
-      this.formVisible = false
     },
     // 更新
     handleUpdate(record, col, idx) {
@@ -103,7 +119,11 @@ export default {
             this.formFieldsData[k] = 1
             break
           case 'number':
-            this.formFieldsData[k] = 1
+            if (k === 'parent_id' || k === 'pid') {
+              this.formFieldsData[k] = 0
+            } else {
+              this.formFieldsData[k] = 1
+            }
             break
           case 'string':
             this.formFieldsData[k] = ''

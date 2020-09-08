@@ -72,23 +72,11 @@ export function submitForm(url) {
     if (valid) {
       if (!this.id) {
         this.$http.post(url, this.formFieldsData).then(response => {
-          this.$message.success(response.message)
-          this.resetFormFields()
-          this.handleRefresh()
-          // 刷新路由
-          if (this.refreshRoute !== undefined && this.refreshRoute === true) {
-            this.handleUpdateUserInfo()
-          }
+          this.handleResponse(response)
         })
       } else {
         this.$http.put(url + '/' + this.id, this.formFieldsData).then((response) => {
-          this.$message.success(response.message)
-          this.resetFormFields()
-          this.handleRefresh()
-          // 刷新路由
-          if (this.refreshRoute !== undefined && this.refreshRoute === true) {
-            this.handleUpdateUserInfo()
-          }
+          this.handleResponse(response)
         })
       }
     } else {

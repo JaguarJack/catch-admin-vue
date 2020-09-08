@@ -8,7 +8,7 @@
       <el-button class="filter-item" icon="el-icon-refresh" @click="handleRefresh">
         重置
       </el-button>
-      <el-button class="filter-item fr" type="primary" icon="el-icon-plus" @click="getPermissions();handleCreate()">
+      <el-button class="filter-item fr" type="primary" icon="el-icon-plus" @click="handleCreateTop">
         新增
       </el-button>
     </div>
@@ -85,7 +85,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="handleCancel()">取 消</el-button>
-        <el-button type="primary" @click="handlePermissions();handleSubmit()">确 定</el-button>
+        <el-button type="primary" @click="handleSubmitRole">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -106,7 +106,7 @@ export default {
       formFieldsData: {
         role_name: '',
         identify: '',
-        data_range: '',
+        data_range: 3,
         parent_id: 0,
         permissions: [],
         departments: []
@@ -199,10 +199,23 @@ export default {
         }
       })
     },
+    // 更新之前处理
     beforeHandleUpdate(role) {
       this.getPermissions()
       this.setRolePermissions(role.id)
       this.handleUpdate(role)
+    },
+    // 处理
+    handleCreateTop() {
+      this.getPermissions()
+      this.formFieldsData.parent_id = 0
+      this.formFieldsData.data_range = 3
+      this.handleCreate()
+    },
+    // 处理提交角色
+    handleSubmitRole() {
+      this.handlePermissions()
+      this.handleSubmit()
     }
   }
 }

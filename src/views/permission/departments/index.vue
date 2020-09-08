@@ -74,7 +74,7 @@
         <el-form-item label="排序" :label-width="formLabelWidth">
           <el-input-number v-model="formFieldsData.sort" :min="1" :max="100000" />
         </el-form-item>
-        <el-input v-model="formFieldsData.pid" type="hidden" />
+        <el-input v-model="formFieldsData.parent_id" type="hidden" />
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="handleCancel">取 消</el-button>
