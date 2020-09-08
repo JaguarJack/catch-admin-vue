@@ -31,5 +31,12 @@ module.exports = {
    * The default is only used in the production env
    * If you want to also use it in dev, you can pass ['production', 'development']
    */
-  errorLog: 'production'
+  errorLog: 'production',
+
+  /**
+   * @type boolean
+   *
+   * @description 左侧菜单栏是否只展开一个子菜单
+   */
+  uniqueOpened: true
 }

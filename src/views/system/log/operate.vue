@@ -9,7 +9,7 @@
         <el-option value="PUT" label="PUT" />
         <el-option value="DELETE" label="DELETE" />
       </el-select>
-      <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
+      <el-button class="filter-item search" icon="el-icon-search" @click="handleSearch">搜索</el-button>
       <el-button class="filter-item" type="warning" icon="el-icon-refresh" @click="handleRefresh">刷新</el-button>
       <el-button v-if="this.selectedIds.length" size="small" class="filter-item mb-5" type="danger" icon="el-icon-delete" @click="handleMultiDelete">
         批量删除

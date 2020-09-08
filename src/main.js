@@ -35,7 +35,7 @@ import VueHighlightJS from 'vue-highlight.js'
 // }
 
 Vue.use(Element, {
-  size: Cookies.get('size') || 'small'// set element-ui default size
+  size: 'small'// set element-ui default size
   // locale: enLang // 如果使用中文，无需设置，请删除
 })
 Vue.use(VueHighlightJS)

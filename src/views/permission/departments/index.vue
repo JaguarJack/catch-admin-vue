@@ -6,7 +6,7 @@
         <el-option value="1" label="启用" />
         <el-option value="2" label="禁用" />
       </el-select>
-      <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleSearch">
+      <el-button class="filter-item search" icon="el-icon-search" @click="handleSearch">
         搜索
       </el-button>
       <el-button class="filter-item" icon="el-icon-refresh" @click="handleRefresh">

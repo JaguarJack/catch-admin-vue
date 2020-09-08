@@ -6,7 +6,7 @@
         <el-option value="MyISAM" label="MyISAM" />
         <el-option value="InnoDB" label="InnoDB" />
       </el-select>
-      <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleSearch">
+      <el-button class="filter-item search" icon="el-icon-search" @click="handleSearch">
         搜索
       </el-button>
       <el-button class="filter-item" icon="el-icon-refresh" @click="handleRefresh">

@@ -2,7 +2,7 @@
   <div class="app-container">
     <div class="filter-container">
       <el-input v-model="queryParam.word" placeholder="用户名" clearable class="filter-item form-search-input" />
-      <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleSearch">
+      <el-button class="filter-item search" icon="el-icon-search" @click="handleSearch">
         搜索
       </el-button>
       <el-button class="filter-item" icon="el-icon-refresh" @click="handleRefresh">
