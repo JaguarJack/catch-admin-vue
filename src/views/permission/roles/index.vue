@@ -23,17 +23,14 @@
       <el-table-column
         prop="role_name"
         label="角色名称"
-        width="180"
       />
       <el-table-column
         prop="identify"
         label="角色标识"
-        width="180"
       />
       <el-table-column
         prop="description"
         label="角色描述"
-        width="180"
       />
       <el-table-column prop="created_at" label="创建时间" />
       <el-table-column label="操作">

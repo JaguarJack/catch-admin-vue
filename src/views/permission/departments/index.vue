@@ -27,19 +27,16 @@
       <el-table-column
         prop="department_name"
         label="部门名称"
-        width="180"
       />
       <el-table-column
         prop="sort"
         label="排序"
         sortable
-        width="180"
       />
       <el-table-column
         prop="status"
         label="状态"
         sortable
-        width="180"
       >
         <template slot-scope="department">
           <el-button v-if="department.row.status === 1" size="small">启用</el-button>

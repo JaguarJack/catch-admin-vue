@@ -14,16 +14,16 @@
       </el-button>
     </div>
     <el-table :data="data" tooltip-effect="dark" style="width: 100%" border fit>
-      <el-table-column label="表名" width="150" prop="name" />
-      <el-table-column prop="engine" label="引擎" width="150"/>
-      <el-table-column prop="collation" label="字符集" width="150"/>
-      <el-table-column prop="rows" label="数据行数" width="150"/>
-      <el-table-column prop="index_length" label="索引大小" width="150">
+      <el-table-column label="表名"  prop="name" />
+      <el-table-column prop="engine" label="引擎"/>
+      <el-table-column prop="collation" label="字符集" />
+      <el-table-column prop="rows" label="数据行数" />
+      <el-table-column prop="index_length" label="索引大小">
         <template slot-scope="table">
           <el-tag type="success">{{ table.row.index_length }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="comment" label="注释" width="150"/>
+      <el-table-column prop="comment" label="注释" />
       <el-table-column prop="update_time" label="创建时间" />
       <el-table-column label="操作">
         <template slot-scope="table">

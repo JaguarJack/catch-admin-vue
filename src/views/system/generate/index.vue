@@ -25,12 +25,12 @@
     </el-form>
     <el-divider></el-divider>
     <el-table :data="fields" tooltip-effect="dark" style="width: 100%" border>
-      <el-table-column label="字段名称" width="200">
+      <el-table-column label="字段名称">
         <template slot-scope="field">
           <el-input v-model="field.row.field" placeholder="字段名称" autocomplete="off" clearable />
         </template>
       </el-table-column>
-      <el-table-column prop="type" label="类型" width="150">
+      <el-table-column prop="type" label="类型">
         <template slot-scope="field">
           <el-select  v-model="field.row.type" placeholder="请选择" prop="type">
             <el-option-group
@@ -47,22 +47,22 @@
           </el-select>
         </template>
       </el-table-column>
-      <el-table-column prop="unsigned" label="unsigned" width="90">
+      <el-table-column prop="unsigned" label="unsigned" width="100">
         <template slot-scope="field">
           <el-checkbox v-model="field.row.unsigned"></el-checkbox>
         </template>
       </el-table-column>
-      <el-table-column prop="length" label="长度" width="230">
+      <el-table-column prop="length" label="长度" width="200">
         <template slot-scope="field">
           <el-input-number v-model="field.row.length" :min="0" :max="1000000"  label="长度" controls-position="right"/>
         </template>
       </el-table-column>
-      <el-table-column prop="nullable" label="NULL" width="70">
+      <el-table-column prop="nullable" label="NULL" width="100">
         <template slot-scope="field">
           <el-checkbox v-model="field.row.nullable"></el-checkbox>
         </template>
       </el-table-column>
-      <el-table-column prop="index" label="索引类型" width="180">
+      <el-table-column prop="index" label="索引类型" >
         <template slot-scope="field">
           <el-select v-model="field.row.index" placeholder="请选择">
             <el-option
@@ -74,17 +74,17 @@
           </el-select>
         </template>
       </el-table-column>
-      <el-table-column prop="default" label="默认值" width="180">
+      <el-table-column prop="default" label="默认值">
         <template slot-scope="field">
           <el-input v-model="field.row.default" placeholder="默认值"  autocomplete="off" clearable />
         </template>
       </el-table-column>
-      <el-table-column prop="comment" label="注释" width="220">
+      <el-table-column prop="comment" label="注释">
         <template slot-scope="field">
           <el-input v-model="field.row.comment" placeholder="注释" autocomplete="off" clearable />
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="70">
+      <el-table-column label="操作" width="150">
         <template slot-scope="field">
           <el-button type="danger" icon="el-icon-delete" @click="deleteField(field.row.field)" />
         </template>

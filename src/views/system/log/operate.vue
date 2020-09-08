@@ -17,13 +17,13 @@
     </div>
     <el-table ref="multipleTable" :data="data" tooltip-effect="dark" style="width: 100%" border fit @selection-change="handleSelectMulti">
       <el-table-column type="selection" width="55" />
-      <el-table-column label="ID" width="100" prop="id" />
-      <el-table-column prop="creator" label="操作人" width="150"/>
-      <el-table-column prop="module" label="操作模块" width="150"/>
-      <el-table-column prop="operate" label="操作菜单" width="150"/>
-      <el-table-column prop="route" label="菜单" width="150"/>
-      <el-table-column prop="method" label="请求方式" width="150"/>
-      <el-table-column prop="params" label="参数" width="200">
+      <el-table-column label="ID"  prop="id" />
+      <el-table-column prop="creator" label="操作人" />
+      <el-table-column prop="module" label="操作模块"/>
+      <el-table-column prop="operate" label="操作菜单" />
+      <el-table-column prop="route" label="菜单" />
+      <el-table-column prop="method" label="请求方式" />
+      <el-table-column prop="params" label="参数">
         <template slot-scope="data">
           <el-tooltip class="item" effect="dark" :content="data.row.params" placement="top-start">
             <el-tag type="success">查看</el-tag>

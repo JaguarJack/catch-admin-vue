@@ -17,8 +17,8 @@
     </div>
     <el-table ref="multipleTable" :data="data" tooltip-effect="dark" style="width: 100%" border fit @selection-change="handleSelectMulti">
       <el-table-column type="selection" width="55" />
-      <el-table-column label="敏感词" width="120" prop="word" />
-      <el-table-column prop="creator" label="创建人" width="300" />
+      <el-table-column label="敏感词" prop="word" />
+      <el-table-column prop="creator" label="创建人" />
       <el-table-column prop="created_at" label="创建时间" />
       <el-table-column prop="updated_at" label="更新时间" />
       <el-table-column label="操作">

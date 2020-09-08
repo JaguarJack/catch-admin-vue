@@ -20,10 +20,10 @@
       default-expand-all
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
-      <el-table-column prop="permission_name" label="菜单名称" width="180" />
-      <el-table-column prop="route" label="路由Path" width="180" />
-      <el-table-column prop="permission_mark" label="权限标识" width="180" />
-      <el-table-column label="可操作权限" width="260">
+      <el-table-column prop="permission_name" label="菜单名称" width="200" />
+      <el-table-column prop="route" label="路由Path" width="200" />
+      <el-table-column prop="permission_mark" label="权限标识" width="200" />
+      <el-table-column label="可操作权限" width="400">
         <template slot-scope="permission">
           <el-popover
             v-for="(action, index) in permission.row.actionList"
@@ -41,7 +41,7 @@
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column label="状态" width="150">
+      <el-table-column label="状态" width="200">
         <template slot-scope="permission">
           <el-switch
             v-model="permission.row.hidden"
@@ -53,7 +53,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column prop="created_at" label="创建时间" width="160" />
+      <el-table-column prop="created_at" label="创建时间" width="200" />
       <el-table-column label="操作" width="200">
         <template slot-scope="permission">
           <el-button size="small" type="primary" icon="el-icon-plus" @click="beforeHandleCreate(permission.row);handleCreate()" />

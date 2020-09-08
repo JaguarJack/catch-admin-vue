@@ -8,10 +8,10 @@
     </div>
     <el-table ref="multipleTable" :data="data" tooltip-effect="dark" style="width: 100%" border fit @selection-change="handleSelectMulti">
       <el-table-column type="selection" width="55" />
-      <el-table-column label="登陆用户" width="200" prop="login_name" />
-      <el-table-column prop="login_ip" label="登陆IP" width="200"/>
-      <el-table-column prop="browser" label="客户端" width="200"/>
-      <el-table-column prop="os" label="系统" width="200"/>
+      <el-table-column label="登陆用户" prop="login_name" />
+      <el-table-column prop="login_ip" label="登陆IP" />
+      <el-table-column prop="browser" label="客户端" />
+      <el-table-column prop="os" label="系统" />
       <el-table-column prop="login_at" label="登陆时间">
         <template slot-scope="data">
           {{ formatLoginTime(data.row.login_at) }}

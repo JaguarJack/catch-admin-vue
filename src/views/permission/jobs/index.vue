@@ -21,9 +21,9 @@
     </el-button>
     <el-table ref="multipleTable" :data="data" tooltip-effect="dark" style="width: 100%" border fit @selection-change="handleSelectMulti">
       <el-table-column type="selection" width="55" />
-      <el-table-column label="岗位名称" width="120" prop="job_name" />
-      <el-table-column prop="coding" label="编码" width="300" />
-      <el-table-column prop="status" label="状态" width="150">
+      <el-table-column label="岗位名称" prop="job_name" />
+      <el-table-column prop="coding" label="编码" />
+      <el-table-column prop="status" label="状态">
         <template slot-scope="job">
           <el-button v-if="job.row.status === 1" size="small">启用</el-button>
           <el-button v-else size="small" type="danger">禁用</el-button>

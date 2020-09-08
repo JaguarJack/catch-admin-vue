@@ -54,16 +54,14 @@
           />
           <el-table-column
             label="用户名"
-            width="120"
           >
             <template slot-scope="user">{{ user.row.username }}</template>
           </el-table-column>
           <el-table-column
             prop="email"
             label="邮箱"
-            width="300"
           />
-          <el-table-column prop="status" label="状态" width="150">
+          <el-table-column prop="status" label="状态">
             <template slot-scope="user">
               <el-switch
                 v-model="user.row.status"
@@ -75,10 +73,7 @@
               />
             </template>
           </el-table-column>
-          <el-table-column
-            prop="created_at"
-            label="创建时间"
-          />
+          <el-table-column prop="created_at" label="创建时间" />
           <el-table-column label="操作">
             <template slot-scope="user">
               <el-button type="primary" icon="el-icon-edit" @click="beforeHandleUpdate(user.row)"/>
