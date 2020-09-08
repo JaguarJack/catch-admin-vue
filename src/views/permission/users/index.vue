@@ -94,7 +94,7 @@
       </el-col>
     </el-row>
     <!----------------------------------- 用户 ---------------------------------------------->
-    <el-dialog :title="title" :visible.sync="formVisible" :destroy-on-close="true" @close="handleCancel">
+    <el-dialog :title="title" :visible.sync="formVisible" :destroy-on-close="true" width="40%" @close="handleCancel" >
       <el-form :ref="formName" :model="formFieldsData" :rules="rules">
         <el-row :gutter="12">
           <el-col :span="10">
@@ -118,16 +118,17 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="部门" label-width="60px" prop="department_id">
+            <el-form-item label="部门" label-width="80px" prop="department_id">
               <el-cascader
                 v-model="formFieldsData.department_id"
                 :options="treeDepartments.data"
                 :props="treeDepartments.prop"
                 :show-all-levels="false"
+                style="width: 85%"
                 clearable/>
             </el-form-item>
-            <el-form-item label="岗位" label-width="60px" prop="jobs">
-              <el-select multiple v-model="formFieldsData.jobs" placeholder="请选择岗位">
+            <el-form-item label="岗位" label-width="80px" prop="jobs">
+              <el-select multiple v-model="formFieldsData.jobs" placeholder="请选择岗位" style="width: 85%">
                 <el-option v-for="item in selectJobs" :key="item.id" :label="item.job_name" :value="item.id"/>
               </el-select>
             </el-form-item>

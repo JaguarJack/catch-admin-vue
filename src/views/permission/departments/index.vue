@@ -53,19 +53,19 @@
       </el-table-column>
     </el-table>
     <!------------------------- 部门 ------------------------------>
-    <el-dialog :title="title" :visible.sync="formVisible" @close="handleCancel">
+    <el-dialog :title="title" :visible.sync="formVisible" width="30%" @close="handleCancel">
       <el-form :ref="formName" :model="formFieldsData" :rules="rules">
         <el-form-item label="部门名称" :label-width="formLabelWidth" prop="department_name">
-          <el-input v-model="formFieldsData.department_name" autocomplete="off" clearable />
+          <el-input v-model="formFieldsData.department_name" style="width: 92%" autocomplete="off" clearable />
         </el-form-item>
         <el-form-item label="部门负责人" :label-width="formLabelWidth">
-          <el-input v-model="formFieldsData.principal" autocomplete="off" clearable />
+          <el-input v-model="formFieldsData.principal" style="width: 92%" autocomplete="off" clearable />
         </el-form-item>
         <el-form-item label="联系方式" :label-width="formLabelWidth">
-          <el-input v-model="formFieldsData.mobile" autocomplete="off" clearable />
+          <el-input v-model="formFieldsData.mobile" style="width: 92%" autocomplete="off" clearable />
         </el-form-item>
         <el-form-item label="邮箱" :label-width="formLabelWidth">
-          <el-input v-model="formFieldsData.email" autocomplete="off" clearable />
+          <el-input v-model="formFieldsData.email" style="width: 92%" autocomplete="off" clearable />
         </el-form-item>
         <el-form-item label="状态" :label-width="formLabelWidth">
           <el-radio v-model="formFieldsData.status" :label="1" checked>启用</el-radio>

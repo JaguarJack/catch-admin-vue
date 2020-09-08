@@ -42,16 +42,16 @@
       </el-table-column>
     </el-table>
     <!------------------------- 角色 ------------------------------>
-    <el-dialog :title="title" :visible.sync="formVisible" @close="handleCancel">
+    <el-dialog :title="title" :visible.sync="formVisible" width="30%" @close="handleCancel" >
       <el-form :ref="formName" :model="formFieldsData" :rules="rules">
         <el-form-item label="角色名称" :label-width="formLabelWidth" prop="role_name">
-          <el-input v-model="formFieldsData.role_name" placeholder="请输入角色名称" autocomplete="off" clearable />
+          <el-input v-model="formFieldsData.role_name" placeholder="请输入角色名称" style="width: 92%" autocomplete="off" clearable />
         </el-form-item>
         <el-form-item label="角色标识" :label-width="formLabelWidth" prop="identify">
-          <el-input v-model="formFieldsData.identify" placeholder="角色标识，路由权限时使用" autocomplete="off" clearable />
+          <el-input v-model="formFieldsData.identify" placeholder="角色标识，路由权限时使用" style="width: 92%" autocomplete="off" clearable />
         </el-form-item>
         <el-form-item label="角色描述" :label-width="formLabelWidth" prop="description">
-          <el-input v-model="formFieldsData.description" type="textarea" />
+          <el-input v-model="formFieldsData.description" style="width: 92%" type="textarea" />
         </el-form-item>
         <el-form-item label="权限" :label-width="formLabelWidth">
           <el-tree
@@ -100,7 +100,7 @@ export default {
   data() {
     return {
       formName: 'roles',
-      formLabelWidth: '120px',
+      formLabelWidth: '90px',
       // 刷新路由
       refreshRoute: true,
       formFieldsData: {

@@ -48,13 +48,13 @@
       :layout="paginate.layout"
       :total="paginate.total"/>
     <!----------------------------------- 部门 ---------------------------------------------->
-    <el-dialog :title="title" :visible.sync="formVisible" @close="handleCancel">
+    <el-dialog :title="title" :visible.sync="formVisible" width="30%" @close="handleCancel">
       <el-form :ref="formName" :model="formFieldsData" :rules="rules">
         <el-form-item label="岗位名称" :label-width="formLabelWidth" prop="job_name">
-          <el-input v-model="formFieldsData.job_name" placeholder="请输入岗位名称" autocomplete="off" clearable />
+          <el-input v-model="formFieldsData.job_name" style="width: 92%" placeholder="请输入岗位名称" autocomplete="off" clearable />
         </el-form-item>
         <el-form-item label="编码" :label-width="formLabelWidth" prop="coding">
-          <el-input v-model="formFieldsData.coding" placeholder="请输入编码" autocomplete="off" clearable />
+          <el-input v-model="formFieldsData.coding" style="width: 92%" placeholder="请输入编码" autocomplete="off" clearable />
         </el-form-item>
         <el-form-item label="状态" :label-width="formLabelWidth">
           <el-radio v-model="formFieldsData.status" :label="1" checked>启用</el-radio>
