@@ -50,6 +50,7 @@ export default {
     },
     // 弹出层
     handleCreate() {
+      this.id = null
       curd.create.apply(this)
     },
     // 提交
