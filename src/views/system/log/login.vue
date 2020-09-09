@@ -12,6 +12,12 @@
       <el-table-column prop="login_ip" label="登陆IP" />
       <el-table-column prop="browser" label="客户端" />
       <el-table-column prop="os" label="系统" />
+      <el-table-column prop="status" label="登录状态">
+        <template slot-scope="item">
+          <el-tag v-if="item.row.status === 1" type="success">成功</el-tag>
+          <el-tag v-else type="danger">失败</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column prop="login_at" label="登陆时间">
         <template slot-scope="data">
           {{ formatLoginTime(data.row.login_at) }}
