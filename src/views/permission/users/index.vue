@@ -48,13 +48,8 @@
           fit
           @selection-change="handleSelectMulti"
         >
-          <el-table-column
-            type="selection"
-            width="55"
-          />
-          <el-table-column
-            label="用户名"
-          >
+          <el-table-column type="selection" width="55" :selectable="selectInit"/>
+          <el-table-column label="用户名">
             <template slot-scope="user">{{ user.row.username }}</template>
           </el-table-column>
           <el-table-column
@@ -64,6 +59,14 @@
           <el-table-column prop="status" label="状态">
             <template slot-scope="user">
               <el-switch
+                v-if="user.row.id === 1"
+                v-model="user.row.status"
+                disabled
+                active-text="启用"
+                :active-value="1"
+              />
+              <el-switch
+                v-else
                 v-model="user.row.status"
                 active-text="启用"
                 inactive-text="禁用"
@@ -76,8 +79,10 @@
           <el-table-column prop="created_at" label="创建时间" />
           <el-table-column label="操作">
             <template slot-scope="user">
-              <el-button type="primary" icon="el-icon-edit" @click="beforeHandleUpdate(user.row)"/>
-              <el-button type="danger" icon="el-icon-delete" @click="handleDelete(user.row.id)"/>
+              <el-button type="primary" icon="el-icon-edit" v-if="user.row.id === 1" disabled/>
+              <el-button type="primary" icon="el-icon-edit" v-else @click="beforeHandleUpdate(user.row)"/>
+              <el-button type="danger" icon="el-icon-edit" v-if="user.row.id === 1" disabled/>
+              <el-button type="danger" icon="el-icon-delete" v-else @click="handleDelete(user.row.id)"/>
             </template>
           </el-table-column>
         </el-table>
@@ -264,6 +269,10 @@ export default {
     },
     handleSelectRoles() {
       this.formFieldsData.roles = this.$refs.roles.getCheckedKeys()
+    },
+    selectInit(row, index) {
+      console.log(row)
+      return row.id !== 1
     },
     submit() {
       this.handleSelectRoles()
