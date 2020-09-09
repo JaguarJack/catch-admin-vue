@@ -271,7 +271,6 @@ export default {
       this.formFieldsData.roles = this.$refs.roles.getCheckedKeys()
     },
     selectInit(row, index) {
-      console.log(row)
       return row.id !== 1
     },
     submit() {

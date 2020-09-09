@@ -8,7 +8,7 @@
       <el-button class="filter-item" icon="el-icon-refresh" @click="handleRefresh">
         重置
       </el-button>
-      <el-button class="filter-item fr" type="primary" icon="el-icon-plus" @click="handleCreate">
+      <el-button class="filter-item fr" type="primary" icon="el-icon-plus" @click="handleCreateTop">
         新增
       </el-button>
     </div>
@@ -230,7 +230,14 @@ export default {
       this.getMethods(action.id)
       return action
     },
-    beforeHandleCreate(permission) {
+    handleCreateTop() {
+      this.isButton = false
+      this.formFieldsData.parent_id = 0
+      this.formFieldsData.type = 1
+      this.showType = true
+      this.handleCreate()
+    },
+    beforeHandleCreate(permission = null) {
       this.permissionPrefix = permission.permission_mark.indexOf('@') === -1 ? permission.permission_mark : permission.permission_mark.split('@')[0]
       this.isButton = true
       this.formFieldsData.type = 2 // 按钮
