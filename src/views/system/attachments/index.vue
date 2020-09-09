@@ -11,7 +11,12 @@
       <el-table-column label="文件名" width="250" prop="filename" />
       <el-table-column prop="url" label="预览" width="150">
         <template slot-scope="attachment">
-          <img :src="attachment.row.url" v-if="attachment.row.file_ext === 'jpg' || attachment.row.file_ext === 'jpeg' || attachment.row.file_ext === 'png' || attachment.row.file_ext === 'gif'" style="width: 100px" />
+          <el-image
+            v-if="attachment.row.file_ext === 'jpg' || attachment.row.file_ext === 'jpeg' || attachment.row.file_ext === 'png' || attachment.row.file_ext === 'gif'"
+            style="width: 100px;"
+            :src="attachment.row.url"
+            :preview-src-list="[attachment.row.url]">
+          </el-image>
           <el-tag v-else class="el-icon-download" @click="download(attachment.row.url)">下载</el-tag>
         </template>
       </el-table-column>
