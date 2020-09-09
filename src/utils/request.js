@@ -1,7 +1,8 @@
 import axios from 'axios'
-import { Message } from 'element-ui'
+import { Message, MessageBox } from 'element-ui'
 import store from '@/store'
-import { getToken, setToken } from '@/utils/auth'
+import { getToken  } from '@/utils/auth'
+import router from '@/router'
 
 // create an axios instance
 const service = axios.create({
@@ -30,11 +31,6 @@ service.interceptors.request.use(
   }
 )
 
-// 是否再刷新
-let refreshing = false
-// 请求队列
-let requests = []
-
 // response interceptor
 service.interceptors.response.use(
   /**
@@ -52,62 +48,30 @@ service.interceptors.response.use(
 
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 10000) {
-      Message({
-        message: res.message || 'Error',
-        type: 'error',
-        duration: 5 * 1000
-      })
-
-      // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-      if (res.code === 10001 || res.code === 10004 || res.code === 10006) {
+      if (res.code === 10004) {
+        Message({
+          message: res.message || 'Error',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      } else if (res.code === 10001 || res.code === 10006 || res.code === 10007 || res.code === 10008) {
         // to re-login
-        /** MessageBox.confirm(res.message + '，需要重新登陆', '退出', {
+        MessageBox.confirm(res.message + '，需要重新登陆', '退出', {
           confirmButtonText: '重新登陆',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          store.dispatch('user/resetToken').then(() => {
-            location.reload()
+          store.dispatch('user/logout').then(() => {
+            router.push('/login')
           })
-        })*/
-        const config = response.config
-        if (!refreshing) {
-          refreshing = true
-          return service({
-            url: 'refresh/token',
-            method: 'post'
-          }).then(res => {
-            const token = res.data.token
-            setToken(token)
-            config.headers['authorization'] = 'Bearer ' + token // 让每个请求携带自定义 token 请根据实际情况自行修改
-            // 请求出队列
-            requests.forEach(cb => cb(token))
-            requests = []
-            return service(config)
-          }).catch(res => {}).finally(() => {
-            refreshing = false
-          })
-        } else {
-          return new Promise((resolve) => {
-            // 将resolve放进队列，用一个函数形式来保存，等token刷新后直接执行
-            requests.push((token) => {
-              config.headers['authorization'] = 'Bearer ' + getToken() // 让每个请求携带自定义 token 请根据实际情况自行修改
-              resolve(service(config))
-            })
-          })
-        }
-      }
-      // 用户被禁止
-      /** if (res.code === 10008) {
-        MessageBox.confirm(res.message, '退出', {
-          confirmButtonText: '退出',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          store.dispatch('user/logout').then(() => {})
         })
-      }*/
-
+      } else {
+        Message({
+          message: res.message || 'Error',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
       return Promise.reject(new Error(res.message || 'Error'))
     } else {
       return res
