@@ -27,7 +27,7 @@
       <el-table-column label="操作">
         <template slot-scope="role">
           <el-button type="primary" icon="el-icon-plus" @click="beforeHandleCreate(role.row)" />
-          <el-button type="primary" icon="el-icon-edit" @click="beforeHandleUpdate(role.row)" />
+          <el-button type="primary" icon="el-icon-edit" @click="handleUpdate(role.row)" />
           <el-button type="danger" icon="el-icon-delete" @click="handleDelete(role.row.id)" />
         </template>
       </el-table-column>
@@ -75,8 +75,8 @@
         <el-input v-model="formFieldsData.parent_id" type="hidden" />
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="handleCancel()">取 消</el-button>
-        <el-button type="primary" @click="handleSubmitRole">确 定</el-button>
+        <el-button @click="handleCancel">取 消</el-button>
+        <el-button type="primary" @click="handleSubmit">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -191,10 +191,9 @@ export default {
       })
     },
     // 更新之前处理
-    beforeHandleUpdate(role) {
+    beforeUpdate(role) {
       this.getPermissions()
       this.setRolePermissions(role.id)
-      this.handleUpdate(role)
     },
     // 处理
     handleCreateTop() {
@@ -204,9 +203,8 @@ export default {
       this.handleCreate()
     },
     // 处理提交角色
-    handleSubmitRole() {
+    beforeSubmit() {
       this.handlePermissions()
-      this.handleSubmit()
     }
   }
 }

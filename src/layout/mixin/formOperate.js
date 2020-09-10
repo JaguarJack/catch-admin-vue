@@ -50,11 +50,17 @@ export default {
     },
     // 弹出层
     handleCreate() {
-      this.id = null
+      // 创建前
+      if (this.beforeCreate !== undefined) {
+        this.beforeCreate()
+      }
       curd.create.apply(this)
     },
     // 提交
     handleSubmit() {
+      if (this.beforeSubmit !== undefined) {
+        this.beforeSubmit()
+      }
       curd.submitForm.apply(this, [this.url])
       this.id = null
       this.handleRefresh()
@@ -62,10 +68,18 @@ export default {
     // 更新
     handleUpdate(record, col, idx) {
       this.id = record[this.pk !== undefined ? this.pk : 'id']
+      // 更新前
+      if (this.beforeUpdate !== undefined) {
+        this.beforeUpdate(record)
+      }
       curd.update.apply(this, [record])
     },
     // 删除
     handleDelete(id) {
+      // 更新前
+      if (this.beforeDelete !== undefined) {
+        this.beforeDelete()
+      }
       curd.del.apply(this, [this.url + '/' + id, '确定删除吗?'])
     },
     // 关闭
@@ -74,9 +88,16 @@ export default {
       // 防止提交关闭的时候 导致数据清空 所以延迟 300ms 清空数据
       setTimeout(this.resetFormFields, 300)
       this.$refs[this.formName].clearValidate()
+      if (this.afterCancel !== undefined) {
+        this.afterCancel()
+      }
     },
     // 批量删除
     handleMultiDelete() {
+      // 批量删除前
+      if (this.beforeMultiDelete !== undefined) {
+        this.beforeMultiDelete()
+      }
       curd.multiDel.apply(this, [this.url, '确定批量删除吗？'])
     },
     // 搜索
