@@ -233,7 +233,7 @@ export default {
     handleCreateTop() {
       this.isButton = false
       this.formFieldsData.parent_id = 0
-      this.formFieldsData.type = 2
+      this.formFieldsData.type = 1 // 菜单类型
       this.showType = false
       this.handleCreate()
     },
@@ -248,6 +248,7 @@ export default {
       } else {
         this.isButton = false
         this.showType = true
+        this.formFieldsData.type = 1 // 按钮
       }
       this.formFieldsData.parent_id = permission.id
       this.title = this.title.concat(' [', permission.permission_name, ']')
