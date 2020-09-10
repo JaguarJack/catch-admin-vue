@@ -75,7 +75,6 @@ export function submitForm(url) {
         })
       }
     } else {
-      this.resetFormFields()
       return false
     }
   })
