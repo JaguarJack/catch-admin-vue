@@ -1,12 +1,4 @@
 /**
- * 创建
- */
-export function create() {
-  this.formVisible = true
-  this.title = '新增'
-}
-
-/**
  * 更新
  *
  * @param record
@@ -16,7 +8,6 @@ export function update(record) {
     this.formFieldsData[k] = record[k]
   })
   this.formVisible = true
-  this.title = '更新'
 }
 
 /**

@@ -50,11 +50,12 @@ export default {
     },
     // 弹出层
     handleCreate() {
+      this.title = '新增'
       // 创建前
       if (this.beforeCreate !== undefined) {
         this.beforeCreate()
       }
-      curd.create.apply(this)
+      this.formVisible = true
     },
     // 提交
     handleSubmit() {
@@ -67,6 +68,7 @@ export default {
     },
     // 更新
     handleUpdate(record, col, idx) {
+      this.title = '更新'
       this.id = record[this.pk !== undefined ? this.pk : 'id']
       // 更新前
       if (this.beforeUpdate !== undefined) {

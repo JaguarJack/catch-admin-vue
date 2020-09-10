@@ -48,8 +48,12 @@ function getAsyncRoutesFromPermissions(permissions, $pid = 0, roles) {
         p.hidden = true
       }
       const children = getAsyncRoutesFromPermissions(permissions, permission.id)
-      if (children.length) {
+      const childrenNum = children.length
+      if (childrenNum) {
         p.children = children
+        if (childrenNum === 1) {
+          p.alwaysShow = true
+        }
       }
       routes.push(p)
     }

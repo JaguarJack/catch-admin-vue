@@ -56,7 +56,7 @@
       <el-table-column prop="created_at" label="创建时间" width="200" />
       <el-table-column label="操作" fixed="right" width="200">
         <template slot-scope="permission">
-          <el-button size="small" type="primary" icon="el-icon-plus" @click="beforeHandleCreate(permission.row);handleCreate()" />
+          <el-button size="small" type="primary" icon="el-icon-plus" @click="beforeHandleCreate(permission.row)" />
           <el-button size="small" type="primary" icon="el-icon-edit" @click="isButton=false;handleUpdate(permission.row)" />
           <el-button size="small" type="danger" icon="el-icon-delete" @click="handleDelete(permission.row.id)" />
         </template>
@@ -233,17 +233,24 @@ export default {
     handleCreateTop() {
       this.isButton = false
       this.formFieldsData.parent_id = 0
-      this.formFieldsData.type = 1
-      this.showType = true
+      this.formFieldsData.type = 2
+      this.showType = false
       this.handleCreate()
     },
     beforeHandleCreate(permission = null) {
-      this.permissionPrefix = permission.permission_mark.indexOf('@') === -1 ? permission.permission_mark : permission.permission_mark.split('@')[0]
-      this.isButton = true
-      this.formFieldsData.type = 2 // 按钮
-      this.showType = true
+      this.handleCreate()
+      if (permission.parent_id > 0) {
+        this.permissionPrefix = permission.permission_mark.indexOf('@') === -1 ? permission.permission_mark : permission.permission_mark.split('@')[0]
+        this.isButton = true
+        this.formFieldsData.type = 2 // 按钮
+        this.showType = true
+        this.getMethods(permission.id)
+      } else {
+        this.isButton = false
+        this.showType = true
+      }
       this.formFieldsData.parent_id = permission.id
-      this.getMethods(permission.id)
+      this.title = this.title.concat(' [', permission.permission_name, ']')
     },
     // 获取控制器方法
     getMethods(id) {
