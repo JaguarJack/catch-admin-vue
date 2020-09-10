@@ -15,6 +15,16 @@ function hasPermission(roles, route) {
   }
 }
 
+// eslint-disable-next-line no-unused-vars
+function isAlwaysShow(routes) {
+  routes.forEach(route => {
+    if (route.children !== undefined && route.children.length === 1) {
+      route.alwaysShow = true
+    }
+  })
+  return routes
+}
+
 function getAsyncRoutesFromPermissions(permissions, $pid = 0, roles) {
   const routes = []
   for (const permission of permissions) {
@@ -86,8 +96,7 @@ const actions = {
       let accessedRoutes
       const roles = params[0]
       const permissions = params[1]
-      const asyncRoutes = getAsyncRoutesFromPermissions(permissions, 0, roles)
-
+      const asyncRoutes = isAlwaysShow(getAsyncRoutesFromPermissions(permissions, 0, roles))
       if (roles.includes('admin')) {
         accessedRoutes = asyncRoutes || []
       } else {

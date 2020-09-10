@@ -37,6 +37,10 @@ export function del(url, title) {
         message: response.message
       })
       this.handleRefresh()
+      // 刷新路由
+      if (this.refreshRoute !== undefined && this.refreshRoute === true) {
+        this.handleUpdateUserInfo()
+      }
     })
   })
 }
