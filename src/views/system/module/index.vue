@@ -1,6 +1,7 @@
 <template>
   <div class="app-container">
     <el-table ref="multipleTable" :data="data" tooltip-effect="dark" style="width: 100%" border fit @selection-change="handleSelectMulti">
+      <el-table-column type="index" width="50" />
       <el-table-column label="模块名称" prop="name" />
       <el-table-column prop="alias" label="模块别名" />
       <el-table-column prop="description" label="模块描述" />
@@ -8,6 +9,7 @@
       <el-table-column prop="status" label="模块状态">
         <template slot-scope="item">
           <el-switch
+            v-if="!isDefaultModule(item.row.alias)"
             v-model="item.row.enable"
             active-text="启用"
             inactive-text="禁用"
@@ -15,8 +17,18 @@
             :inactive-value="false"
             @change="disOrEnable(item.row)"
           />
+          <el-switch
+            v-else
+            v-model="item.row.enable"
+            active-text="启用"
+            inactive-text="禁用"
+            :active-value="true"
+            :inactive-value="false"
+            disabled
+          />
         </template>
       </el-table-column>
+      <el-table-column prop="order" label="排序" sortable />
     </el-table>
   </div>
 </template>
@@ -29,7 +41,7 @@ export default {
   data() {
     return {
       url: 'modules',
-      selectedIds: []
+      defaultModules: ['permissions', 'system', 'login']
     }
   },
   methods: {
@@ -38,6 +50,15 @@ export default {
         this.handleRefresh()
         this.handleUpdateUserInfo()
       })
+    },
+    isDefaultModule(module) {
+      let is = false
+      this.defaultModules.forEach(item => {
+        if (module === item) {
+          is = true
+        }
+      })
+      return is
     }
   }
 }
