@@ -104,6 +104,7 @@ export default {
     },
     // 搜索
     handleSearch() {
+      this.queryParam.page = 1
       this.getList()
     },
     // 刷新
@@ -124,7 +125,7 @@ export default {
         this.queryParam.limit = this.paginate.limit
         this.queryParam.page = 1
       }
-      this.handleSearch()
+      this.getList()
     },
     // 选择全部
     handleSelectMulti(data) {
@@ -185,7 +186,7 @@ export default {
         this.queryParam.page = page
         this.paginate.current = page
       }
-      this.handleSearch()
+      this.getList()
     },
     handlePaginateResponse(response) {
       if (response.limit !== undefined) {
