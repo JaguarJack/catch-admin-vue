@@ -19,6 +19,8 @@ export default {
   develop: () => import('@/views/system/develop'),
   generate: () => import('@/views/system/generate'),
   config: () => import('@/views/system/config'),
+  // 模块管理
+  module: () => import('@/views/system/module'),
   // 微信管理
   // wechatMenus: () => import('@/views/wechat/menus'),
   //
