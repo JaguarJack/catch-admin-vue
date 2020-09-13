@@ -1,10 +1,25 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="queryParam.tablename" placeholder="表名" clearable class="filter-item form-search-input" />
-      <el-select v-model="queryParam.engine" clearable placeholder="请选择引擎" class="filter-item" style="margin-right: 5px">
-        <el-option value="MyISAM" label="MyISAM" />
-        <el-option value="InnoDB" label="InnoDB" />
+      <el-select v-model="queryParam.rule_type" placeholder="请选择规则类型" clearable class="filter-item" style="margin-right: 5px">
+        <el-option
+          v-for="(item, key) in rule_types"
+          :key="key"
+          :label="item"
+          :value="key"
+        />
+      </el-select>
+      <el-select v-model="queryParam.type" placeholder="请选择类型" clearable class="filter-item" style="margin-right: 5px">
+        <el-option
+          v-for="(item, key) in types"
+          :key="key"
+          :label="item"
+          :value="key"
+        />
+      </el-select>
+      <el-select v-model="queryParam.status" clearable placeholder="请选择状态" class="filter-item" style="margin-right: 5px">
+        <el-option value="1" label="启用" />
+        <el-option value="2" label="禁用" />
       </el-select>
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleSearch">
         搜索
@@ -150,8 +165,9 @@ export default {
       url: 'wechat/official/reply',
       formName: 'wechatReply',
       queryParam: {
-        tablename: '',
-        engine: ''
+        rule_type: '',
+        type: '',
+        status: ''
       },
       headers: {
         authorization: 'Bearer ' + getToken()

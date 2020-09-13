@@ -22,7 +22,7 @@ export default {
   // 模块管理
   module: () => import('@/views/system/module'),
   // 微信管理
-  // wechatMenus: () => import('@/views/wechat/menus'),
+  wechatMenus: () => import('@/views/wechat/menus'),
   //
   // 微信用户
   wechatUsers: () => import('@/views/wechat/users'),
