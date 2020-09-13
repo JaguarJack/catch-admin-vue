@@ -36,6 +36,8 @@ export default {
         if (this.refreshRoute !== undefined && this.refreshRoute === true) {
           this.handleUpdateUserInfo()
         }
+        // 成功后
+        this.id = null
       } else {
         this.$message.error(response.message)
       }
@@ -63,7 +65,6 @@ export default {
         this.beforeSubmit()
       }
       curd.submitForm.apply(this, [this.url])
-      this.id = null
       this.handleRefresh()
     },
     // 更新
