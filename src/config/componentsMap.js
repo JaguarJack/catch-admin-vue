@@ -29,5 +29,9 @@ export default {
   // 微信用户标签
   wechatTags: () => import('@/views/wechat/tags'),
   // wechatGraphic:() => import('@/views/catchAdmin/wechat/graphic'),
-  wechatReply: () => import('@/views/wechat/reply')
+  wechatReply: () => import('@/views/wechat/reply'),
+
+  // 系统监控
+  // 定时任务
+  crontab: () => import('@/views/monitor/crontab')
 }

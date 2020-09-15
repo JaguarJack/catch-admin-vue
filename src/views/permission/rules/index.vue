@@ -104,7 +104,7 @@
               <el-input v-model="formFieldsData.permission_mark" placeholder="请输入权限标识(controller@action)" autocomplete="off" clearable />
             </el-form-item>
             <el-form-item v-if="!isButton" label="菜单 Icon" :label-width="formLabelWidth" prop="icon">
-              <el-input v-model="formFieldsData.icon" placeholder="请选择菜单Icon" clearable @focus="selectIcon()" />
+              <el-input v-model="formFieldsData.icon" placeholder="请选择菜单Icon" clearable @input="selectIcon" />
             </el-form-item>
             <el-form-item v-if="!isButton" label="组件" :label-width="formLabelWidth" prop="component">
               <el-select v-model="formFieldsData.component" filterable placeholder="请选择组件">
