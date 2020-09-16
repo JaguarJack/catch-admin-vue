@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="queryParam.name" placeholder="用户名" clearable class="filter-item form-search-input" />
-      <el-select v-model="queryParam.status" clearable placeholder="请选择" class="filter-item" style="margin-right: 5px">
+      <el-input v-model="queryParam.name" placeholder="任务名称" clearable class="filter-item form-search-input" />
+      <el-select v-model="queryParam.status" clearable placeholder="请选择执行状态" class="filter-item" style="margin-right: 5px">
         <el-option value="1" label="启用" />
         <el-option value="2" label="禁用" />
       </el-select>
@@ -12,6 +12,11 @@
       <el-button class="filter-item" icon="el-icon-refresh" @click="handleRefresh">
         重置
       </el-button>
+      <router-link to="/monitor/crontab/log">
+        <el-button class="filter-item" type="danger" icon="el-icon-guide" style="margin-left: 5px">
+          日志
+        </el-button>
+      </router-link>
       <el-button class="filter-item fr" type="primary" icon="el-icon-plus" @click="handleCreate()">
         新增
       </el-button>
@@ -29,6 +34,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="task" label="调用目标类" />
+      <el-table-column prop="cron" label="cron表达式" />
       <el-table-column prop="status" label="状态">
         <template slot-scope="cron">
           <el-switch
@@ -42,10 +48,13 @@
         </template>
       </el-table-column>
       <el-table-column prop="created_at" label="创建时间" />
-      <el-table-column label="操作">
+      <el-table-column label="操作" width="220">
         <template slot-scope="cron">
-          <el-button type="primary" icon="el-icon-edit" @click="handleUpdate(cron.row)" />
-          <el-button type="danger" icon="el-icon-delete" @click="handleDelete(cron.row.id)" />
+          <el-button type="primary" size="small" icon="el-icon-edit" @click="handleUpdate(cron.row)" />
+          <el-button type="danger" size="small" icon="el-icon-delete" @click="handleDelete(cron.row.id)" />
+          <router-link :to="'/monitor/crontab/log/' + cron.row.id" style="margin-left: 5px">
+            <el-button size="small" icon="el-icon-guide">日志</el-button>
+          </router-link>
         </template>
       </el-table-column>
     </el-table>
@@ -127,7 +136,8 @@ export default {
           { max: 100, message: '最大支持 100 个字符', trigger: 'blur' }
         ],
         task: [
-          { required: true, message: '请输入调用目标类', trigger: 'blur' }
+          { required: true, message: '请输入调用目标类', trigger: 'blur' },
+          { pattern: /^[a-zA-Z]+$/, message: '类名称支持英文', trigger: 'blur' }
         ],
         cron: [
           { required: true, message: '请输入cron表达式', trigger: 'blur' }

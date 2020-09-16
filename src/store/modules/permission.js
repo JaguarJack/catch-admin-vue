@@ -51,7 +51,7 @@ function getAsyncRoutesFromPermissions(permissions, $pid = 0, roles) {
       const childrenNum = children.length
       if (childrenNum) {
         p.children = children
-        if (childrenNum === 1) {
+        if (childrenNum >= 1) {
           p.alwaysShow = true
         }
       }
