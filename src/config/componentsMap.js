@@ -34,6 +34,8 @@ export default {
   // 系统监控
   // 定时任务
   crontab: () => import('@/views/monitor/crontab'),
-  crontabLog: () => import('@/views/monitor/crontabLog')
+  crontabLog: () => import('@/views/monitor/crontabLog'),
+  // 短信平台
+  sms: () => import('@/views/sms')
 
 }

@@ -32,7 +32,7 @@
       </el-table-column>
       <el-table-column prop="type" label="类型">
         <template slot-scope="field">
-          <el-select  v-model="field.row.type" placeholder="请选择" prop="type">
+          <el-select  v-model="field.row.type" filterable placeholder="请选择" prop="type">
             <el-option-group
               v-for="group in types"
               :key="group.label"
