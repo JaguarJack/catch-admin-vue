@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="queryParam.username" placeholder="部门名称" clearable class="filter-item form-search-input" />
+      <el-input v-model="queryParam.department_name" placeholder="部门名称" clearable class="filter-item form-search-input" />
       <el-select v-model="queryParam.status" clearable placeholder="请选择" class="filter-item" style="margin-right: 5px">
         <el-option value="1" label="启用" />
         <el-option value="2" label="禁用" />
@@ -104,7 +104,7 @@ export default {
         parent_id: 0
       },
       queryParam: {
-        name: '',
+        department_name: '',
         status: ''
       },
       url: 'departments',

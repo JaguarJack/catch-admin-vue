@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="queryParam.name" placeholder="用户名" clearable class="filter-item form-search-input" />
+      <el-input v-model="queryParam.job_name" placeholder="岗位名称" clearable class="filter-item form-search-input" />
       <el-select v-model="queryParam.status" clearable placeholder="请选择" class="filter-item" style="margin-right: 5px">
         <el-option value="1" label="启用" />
         <el-option value="2" label="禁用" />
@@ -82,7 +82,7 @@ export default {
       formLabelWidth: '120px',
       // 用户搜索
       queryParam: {
-        name: '',
+        job_name: '',
         status: ''
       },
       formVisible: false,
@@ -96,7 +96,7 @@ export default {
       // 表单验证
       rules: {
         job_name: [
-          { required: true, message: '请输入部门名称', trigger: 'blur' },
+          { required: true, message: '请输入岗位名称', trigger: 'blur' },
           { min: 3, max: 20, message: '长度在 3 到 20 个字符', trigger: 'blur' }
         ]
       }
