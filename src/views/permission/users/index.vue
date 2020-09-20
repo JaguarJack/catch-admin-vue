@@ -32,7 +32,7 @@
           <el-button class="filter-item" icon="el-icon-refresh" @click="handleRefresh">
             重置
           </el-button>
-          <el-button class="filter-item fr" type="primary" icon="el-icon-plus" @click="beforeHandleCreate();handleCreate()">
+          <el-button class="filter-item fr" type="primary" icon="el-icon-plus" @click="handleCreate">
             新增
           </el-button>
         </div>
@@ -238,7 +238,7 @@ export default {
         })
       })
     },
-    beforeHandleCreate() {
+    beforeCreate() {
       this.$http.get('roles').then(response => {
         this.treeRoles.data = response.data
       })
@@ -250,7 +250,7 @@ export default {
       })
     },
     beforeHandleUpdate(user) {
-      this.beforeHandleCreate()
+      this.beforeCreate()
       this.$http.get(this.url + '/' + user.id).then(response => {
         const user = response.data
         const roleIds = []

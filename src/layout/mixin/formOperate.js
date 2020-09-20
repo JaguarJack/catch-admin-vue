@@ -53,6 +53,7 @@ export default {
     // 弹出层
     handleCreate() {
       this.title = '新增'
+      this.id = null
       // 创建前
       if (this.beforeCreate !== undefined) {
         this.beforeCreate()
