@@ -17,9 +17,13 @@ export default {
   sensitiveWord: () => import('@/views/system/sensitiveWord'),
   develop: () => import('@/views/system/develop'),
   generate: () => import('@/views/system/generate'),
+  // 配置管理
   config: () => import('@/views/system/config'),
   // 模块管理
   module: () => import('@/views/system/module'),
+  // 表单构建
+  form: () => import('@/views/system/form'),
+
   // 微信管理
   wechatMenus: () => import('@/views/wechat/menus'),
   //

@@ -1,10 +1,11 @@
 import Vue from 'vue'
 
-import Cookies from 'js-cookie'
-
 import 'normalize.css/normalize.css' // a modern alternative to CSS resets
 
+import EleForm from "vue-ele-form";
+import FRender from "f-render";
 import Element from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 import './styles/element-variables.scss'
 // import enLang from 'element-ui/lib/locale/lang/en'// 如果使用中文语言包请默认支持，无需额外引入，请删除该依赖
 
@@ -39,7 +40,8 @@ Vue.use(Element, {
   // locale: enLang // 如果使用中文，无需设置，请删除
 })
 Vue.use(VueHighlightJS)
-
+Vue.use(EleForm)
+Vue.component('f-render', FRender)
 // register global utility filters
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
