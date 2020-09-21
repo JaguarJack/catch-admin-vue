@@ -1,11 +1,13 @@
 <template>
   <div class="dashboard-editor-container">
     <github-corner class="github-corner" />
-
-    <panel-group @handleSetLineChartData="handleSetLineChartData" />
+    <!--<panel-group @handleSetLineChartData="handleSetLineChartData" />-->
     <el-row :gutter="12">
       <el-col :span="16">
         <el-card shadow="hover">
+          <div slot="header" class="clearfix">
+            <span>项目介绍</span>
+          </div>
           <div>
             <p align="center">
               <img src="https://cdn.learnku.com/uploads/images/202005/17/18206/zSuf7Ce5kM.png!large">
@@ -45,10 +47,33 @@
       </el-col>
       <el-col :span="8">
         <el-card shadow="hover">
-          其实这里不该说些什么了，祝大家用的愉快吧！有 BUG 早点提奥！😄
+          <div slot="header" class="clearfix">
+            <span>☕️ Buy me a coffee</span>
+          </div>
+            <el-alert
+              title="如果觉得项目对你有帮助，或者帮你节省了开发时间，可以通过以下方式 [wechat]/[alipay] 赞助开发者。开源不易，感谢支持🙏"
+              type="success"
+              :closable="false" />
+            <el-divider/>
+            <div class="block">
+              <el-image src="https://cdn.learnku.com/uploads/images/202008/11/18206/e6qAAM8Bod.jpg!large"></el-image>
+            </div>
         </el-card>
       </el-col>
     </el-row>
+    <el-card shadow="hover">
+      <div slot="header" class="clearfix">
+        <span>云大使推广 通过以下链接购买云产品可以获的折扣</span>
+      </div>
+      <el-link href="https://www.aliyun.com/product/ecs?source=5176.11533457&userCode=oq2t54oi&type=copy" target="_blank" type="success">🎉 通过链接购买阿里云[ECS]，可获得低折优惠 👉</el-link>
+      <el-divider></el-divider>
+      <el-link href="https://www.aliyun.com/product/oss?source=5176.11533457&userCode=oq2t54oi" target="_blank" type="warning">🎉 通过链接购买阿里[OSS]云存储服务，可获得低折优惠 👉</el-link>
+      <el-divider></el-divider>
+      <el-link href="https://curl.qcloud.com/fQDTtPNl" target="_blank" type="primary">🎉 【腾讯云】新客户无门槛领取总价值高达2860元代金券，每种代金券限量500张，先到先得。 👉</el-link>
+      <el-divider></el-divider>
+      <el-link href="https://curl.qcloud.com/sNfg5CJy" target="_blank" type="danger">🎉 【腾讯云】热卖云产品3折起，云服务器、云数据库特惠，服务更稳，速度更快，价格更优 👉</el-link>
+      <el-divider></el-divider>
+    </el-card>
     <!--
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <line-chart :chart-data="lineChartData" />
