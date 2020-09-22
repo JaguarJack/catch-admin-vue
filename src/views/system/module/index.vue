@@ -1,5 +1,11 @@
 <template>
   <div class="app-container">
+    <el-button class="filter-item mb-5 fr" icon="el-icon-delete" type="danger" @click="clear" style="margin-left: 10px;">
+      清理缓存
+    </el-button>
+    <el-button class="filter-item search mb-5 fr" icon="el-icon-plus" @click="cache">
+      缓存模块
+    </el-button>
     <el-table ref="multipleTable" :data="data" tooltip-effect="dark" style="width: 100%" border fit @selection-change="handleSelectMulti">
       <el-table-column type="index" width="50" />
       <el-table-column label="模块名称" prop="name" />
@@ -49,6 +55,16 @@ export default {
       this.$http.put(this.url + '/' + module.alias).then(response => {
         this.handleRefresh()
         this.handleUpdateUserInfo()
+      })
+    },
+    cache() {
+      this.$http.put('cache/modules').then(response => {
+        this.$message.success(response.message)
+      })
+    },
+    clear() {
+      this.$http.delete('clear/modules').then(response => {
+        this.$message.success(response.message)
       })
     },
     isDefaultModule(module) {
