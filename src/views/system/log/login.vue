@@ -1,7 +1,20 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-button class="filter-item" type="primary" icon="el-icon-refresh" @click="handleRefresh">刷新</el-button>
+      <el-date-picker
+        class="filter-item mr-5"
+        v-model="queryParam.start_at"
+        type="datetime"
+        placeholder="选择开始日期时间">
+      </el-date-picker>
+      <el-date-picker
+        class="filter-item mr-5"
+        v-model="queryParam.end_at"
+        type="datetime"
+        placeholder="选择结束日期时间">
+      </el-date-picker>
+      <el-button class="filter-item search" icon="el-icon-search" @click="handleSearch">搜索</el-button>
+      <el-button class="filter-item" icon="el-icon-refresh" @click="handleRefresh">刷新</el-button>
       <el-button v-if="this.selectedIds.length" size="small" class="filter-item mb-5" type="danger" icon="el-icon-delete" @click="handleMultiDelete">
         批量删除
       </el-button>
@@ -46,6 +59,10 @@ export default {
   data() {
     return {
       url: 'log/login',
+      queryParam: {
+        start_at: '',
+        end_at: ''
+      },
       selectedIds: []
     }
   },
