@@ -39,6 +39,9 @@ export default {
   crontab: () => import('@/views/monitor/crontab'),
   crontabLog: () => import('@/views/monitor/crontabLog'),
   // 短信平台
-  sms: () => import('@/views/sms')
-
+  sms: () => import('@/views/sms'),
+  // 域名管理
+  domain: () => import('@/views/domain'),
+  // 域名记录
+  domainRecord: () => import('@/views/domain/record')
 }
