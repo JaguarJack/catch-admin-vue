@@ -5,7 +5,7 @@
         <span>个人信息</span>
       </div>
       <el-form :ref="formName" :rules="rules" :model="user">
-        <el-form-item  label="用户头像" prop="avatar">
+        <el-form-item label="用户头像" prop="avatar">
           <el-upload
             class="avatar-uploader"
             name="image"
@@ -17,6 +17,7 @@
             <img v-if="user.avatar" :src="user.avatar" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
+          <el-button type="primary" size="small" @click="show=true" style="margin-left: 11%;">从附件选择</el-button>
         </el-form-item>
         <el-form-item label="用户昵称" prop="username">
           <el-input v-model.trim="user.username" />
@@ -32,18 +33,24 @@
         </el-form-item>
       </el-form>
     </el-card>
+    <el-dialog :visible.sync="show" title="选择附件" width="64%">
+      <images @selectAttach="selectAvatar" />
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import store from '@/store'
+import Images from '@/components/Images'
 
 export default {
   name: 'Profile',
+  components: { Images },
   data() {
     return {
       formName: 'user',
+      show: false,
       user: {},
       activeTab: 'account',
       headers: {
@@ -76,6 +83,10 @@ export default {
     this.getUser()
   },
   methods: {
+    selectAvatar(url) {
+      this.show = false
+      this.user.avatar = url
+    },
     getUser() {
       this.user = {
         username: this.name,
