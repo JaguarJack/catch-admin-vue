@@ -1,39 +1,29 @@
 <template>
   <div class="app-container">
-    <div class="filter-container">
-      <el-input v-model="queryParam.job_name" placeholder="岗位名称" clearable class="filter-item form-search-input" />
-      <el-select v-model="queryParam.status" clearable placeholder="请选择" class="filter-item" style="margin-right: 5px">
-        <el-option value="1" label="启用" />
-        <el-option value="2" label="禁用" />
-      </el-select>
-      <el-button class="filter-item search" icon="el-icon-search" @click="handleSearch">
-        搜索
-      </el-button>
-      <el-button class="filter-item" icon="el-icon-refresh" @click="handleRefresh">
-        重置
-      </el-button>
-      <el-button class="filter-item fr" type="primary" icon="el-icon-plus" @click="handleCreate()">
-        新增
-      </el-button>
-    </div>
-    <el-button v-if="this.selectedIds.length" size="small" class="filter-item mb-5" type="danger" icon="el-icon-delete" @click="handleMultiDelete">
-      批量删除
-    </el-button>
-    <el-table ref="multipleTable" :data="data" tooltip-effect="dark" style="width: 100%" border fit @selection-change="handleSelectMulti">
-      <el-table-column type="selection" width="55" />
-      <el-table-column label="岗位名称" prop="job_name" />
-      <el-table-column prop="coding" label="编码" />
-      <el-table-column prop="status" label="状态">
-        <template slot-scope="job">
-          <el-button v-if="job.row.status === 1" size="small">启用</el-button>
-          <el-button v-else size="small" type="danger">禁用</el-button>
+    <h3>域名设置</h3>
+    <el-table :data="data" tooltip-effect="dark" style="width: 100%" border fit>
+      <el-table-column type="index" width="55" />
+      <el-table-column label="域名" prop="name" />
+      <el-table-column prop="record_count" label="记录数" sortable />
+      <el-table-column label="dns服务器">
+        <template slot-scope="domain">
+          {{ domain.row.dns_server.join() }}
+        </template>
+      </el-table-column>
+      <el-table-column prop="from" label="运营商" />
+      <el-table-column label="付费版本">
+        <template slot-scope="domain">
+          {{ domain.row.free ? '免费版' : '付费版' }}
         </template>
       </el-table-column>
       <el-table-column prop="created_at" label="创建时间" />
       <el-table-column label="操作">
-        <template slot-scope="job">
-          <el-button type="primary" icon="el-icon-edit" @click="handleUpdate(job.row)" />
-          <el-button type="danger" icon="el-icon-delete" @click="handleDelete(job.row.id)" />
+        <template slot-scope="domain">
+          <router-link :to="'/domain/record/' + domain.row.name" style="margin-left: 5px">
+            <el-button type="primary">
+              解析设置
+            </el-button>
+          </router-link>
         </template>
       </el-table-column>
     </el-table>
@@ -63,7 +53,14 @@ export default {
         job_name: '',
         status: ''
       },
-      url: 'domain',
+      url: 'domain'
+    }
+  },
+  methods: {
+    handleView(name) {
+      this.$http.get('domain/' + name.replace('.', '-')).then(response => {
+
+      })
     }
   }
 }

@@ -30,7 +30,7 @@
       <el-table-column label="名称" prop="name" />
       <el-table-column prop="group" label="分组">
         <template slot-scope="cron">
-          {{ cron.row.group === 1 ? '默认' : '系统'}}
+          {{ cron.row.group === 1 ? '默认' : '系统' }}
         </template>
       </el-table-column>
       <el-table-column prop="task" label="调用目标类" />
