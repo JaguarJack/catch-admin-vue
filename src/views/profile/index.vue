@@ -99,7 +99,7 @@ export default {
     submit() {
       this.$refs['user'].validate(valid => {
         if (valid) {
-          this.$http.put('users/profile', this.user).then(response => {
+          this.$http.put('user/profile', this.user).then(response => {
             store.dispatch('user/getInfo').then(response => {
               const { roles, permissions } = response
               store.dispatch('permission/generateRoutes', [roles, permissions]).then(r => {})
