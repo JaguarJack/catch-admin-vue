@@ -65,6 +65,7 @@
       </el-table-column>
     </el-table>
     <el-pagination
+      class="pagination-container"
       background
       :current-page="paginate.current"
       hide-on-single-page

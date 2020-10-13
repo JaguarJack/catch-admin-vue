@@ -90,6 +90,7 @@
     </el-table>
     <el-pagination
       background
+      class="pagination-container"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="paginate.current"

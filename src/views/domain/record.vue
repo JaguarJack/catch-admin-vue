@@ -71,6 +71,7 @@
       </el-table-column>
     </el-table>
     <el-pagination
+      class="pagination-container"
       background
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
