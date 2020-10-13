@@ -10,7 +10,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+  'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji',
+  'Segoe UI Emoji', 'Segoe UI Symbol';
 }
 
 label {
@@ -127,8 +129,9 @@ aside {
 //main-container全局样式
 .app-container {
   padding: 20px;
-  margin: 24px 24px 0;
+  margin: 24px 24px;
   background: white;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 }
 
 .components-container {
@@ -137,7 +140,15 @@ aside {
 }
 
 .pagination-container {
-  margin-top: 30px;
+  text-align: right;
+  margin-top: 20px;
+  margin-left: -10px;
+  margin-right: -10px;
+
+  //如果不喜欢页数大小选择在左侧去掉并调整上面的margin即可
+  .el-pagination__sizes {
+    float:left;
+  }
 }
 
 .text-center {
@@ -179,16 +190,21 @@ aside {
 }
 
 .filter-container {
-  padding-bottom: 10px;
+  padding-bottom: 20px;
+  text-align: right;
 
   .filter-item {
     display: inline-block;
     vertical-align: middle;
-    margin-bottom: 10px;
   }
   .form-search-input {
-     width: 200px;
-     margin-right: 5px;
+    width: 200px;
+    margin-right: 5px;
+  }
+
+  .reset,.search,.multi-delete{
+    padding-left: 10px;
+    padding-right: 10px;
   }
 }
 
@@ -201,16 +217,14 @@ aside {
   z-index: 1000 !important;
 }
 
-.app-container .search {
-  background-color: #42b983;
-  border-color: #42b983;
-  color: white;
+.handle-cell .cell{
+  text-align: center;
 }
-.app-container .search:hover {
-  background-color: #13ce66;
-  border-color: #13ce66;
+.handle-cell .cell button{
+  font-size: 12px;
+  padding: 7px 10px;
 }
-.app-container .search:active {
-  background-color: #42b983;
-  border-color: #42b983;
+.el-table th {
+  color:#646464;
+  background-color: #fafafa;
 }
