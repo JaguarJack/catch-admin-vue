@@ -187,7 +187,8 @@ export default {
         prop: {
           label: 'department_name',
           value: 'id',
-          emitPath: false
+          emitPath: false,
+          checkStrictly: true
         }
       },
       // 岗位
