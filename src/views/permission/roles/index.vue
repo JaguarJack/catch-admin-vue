@@ -191,8 +191,8 @@ export default {
       })
     },
     // 更新之前处理
-    beforeUpdate(role) {
-      this.getPermissions()
+    async beforeUpdate(role) {
+      await this.getPermissions()
       this.setRolePermissions(role.id)
     },
     // 处理
