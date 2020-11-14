@@ -25,6 +25,12 @@ function isAlwaysShow(routes) {
   return routes
 }
 
+function notHiddenMenusNumber(menus) {
+  return menus.filter(menu => {
+    return menu.hidden === false
+  }).length
+}
+
 function getAsyncRoutesFromPermissions(permissions, $pid = 0, roles) {
   const routes = []
   for (const permission of permissions) {
@@ -44,11 +50,9 @@ function getAsyncRoutesFromPermissions(permissions, $pid = 0, roles) {
         p.meta.noCache = true
       }
       // 隐藏OR显示
-      if (permission.hidden === 2) {
-        p.hidden = true
-      }
+      p.hidden = permission.hidden === 2
       const children = getAsyncRoutesFromPermissions(permissions, permission.id)
-      const childrenNum = children.length
+      const childrenNum = notHiddenMenusNumber(children)
       if (childrenNum) {
         p.children = children
         if (childrenNum >= 1) {
