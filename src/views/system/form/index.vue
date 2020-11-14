@@ -10,7 +10,12 @@
 </template>
 
 <script>
+import FRender from 'f-render'
+
 export default {
+  components: {
+    'f-render': FRender
+  },
   data() {
     return {
       loading: false,

@@ -2,8 +2,7 @@ import Vue from 'vue'
 
 import 'normalize.css/normalize.css' // a modern alternative to CSS resets
 
-import EleForm from "vue-ele-form";
-import FRender from "f-render";
+import EleForm from 'vue-ele-form'
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './styles/element-variables.scss'
@@ -41,7 +40,6 @@ Vue.use(Element, {
 })
 Vue.use(VueHighlightJS)
 Vue.use(EleForm)
-Vue.component('f-render', FRender)
 // register global utility filters
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
