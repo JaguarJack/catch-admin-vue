@@ -4,7 +4,13 @@
     <el-divider></el-divider>
     <el-form ref="coding" :model="generate" :rules="rules" style="width: 40%;margin: auto">
       <el-form-item label="模块" :label-width="formLabelWidth" prop="module">
-        <el-input v-model="generate.module" placeholder="请输入模块名称" autocomplete="off" clearable @change="moduleChange"/>
+        <el-input v-model="generate.module" placeholder="请输入模块名称" autocomplete="off" clearable @change="moduleChange">
+          <template slot="append">
+            <el-button slot="append" @click="moduleCreateVisible=true">
+              创建模块
+            </el-button>
+          </template>
+        </el-input>
       </el-form-item>
       <el-form-item label="表名" :label-width="formLabelWidth" prop="table">
         <el-input v-model="generate.table" placeholder="请输入表名" autocomplete="off" clearable />
@@ -122,17 +128,25 @@
         {{ preview_content }}
       </highlight-code>
     </el-drawer>
-
+    <el-dialog title="创建模块" :visible="moduleCreateVisible" :destroy-on-close="true" width="40%" @close="moduleCreateVisible = false">
+      <create-module @close="closeCreateModule" />
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import 'highlight.js/styles/atom-one-dark.css'
+import CreateModule from './createModule'
+
 export default {
+  components: {
+    CreateModule
+  },
   data() {
     return {
       title: '代码生成器',
       formLabelWidth: '120px',
+      moduleCreateVisible: false,
       generate: {
         module: '',
         controller: '',
@@ -180,6 +194,9 @@ export default {
         return value.field !== field
       })
       console.log(this.fields)
+    },
+    closeCreateModule() {
+      this.moduleCreateVisible = false
     },
     getColumn() {
       return {
