@@ -1,8 +1,24 @@
 /**
  * export component map
  */
+
+// find router.js from views/
+const routeFiles = require.context('../views/', true, /router.js$/)
+
+let routers = {
+  layout: () => import('@/layout')
+}
+
+routeFiles.keys().map(item => {
+  // require route.js
+  // eslint-disable-next-line no-const-assign
+  routers = Object.assign(routers, routeFiles(item).default)
+})
+
+export default routers
+
+/**
 export default {
-  layout: () => import('@/layout'),
   // 权限管理
   users: () => import('@/views/permission/users'),
   roles: () => import('@/views/permission/roles'),
@@ -44,4 +60,4 @@ export default {
   domain: () => import('@/views/domain'),
   // 域名记录
   domainRecord: () => import('@/views/domain/record')
-}
+}*/

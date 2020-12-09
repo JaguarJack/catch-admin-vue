@@ -1,7 +1,6 @@
 import { constantRoutes } from '@/router'
 // import role from '@/views/permission/role'
 import components from '@/config/componentsMap'
-
 /**
  * Use meta.role to determine if the current user has permission
  * @param roles
