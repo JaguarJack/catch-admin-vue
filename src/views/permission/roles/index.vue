@@ -146,8 +146,11 @@ export default {
       const params = {
         role_id: roleId
       }
-      this.$http.get('permissions', { params: params }).then(response => {
-        this.permissions = response.data
+      return new Promise((resolve, reject) => {
+        this.$http.get('permissions', { params: params }).then(response => {
+          this.permissions = response.data
+          resolve(response.data)
+        })
       })
     },
     // 选择权限
