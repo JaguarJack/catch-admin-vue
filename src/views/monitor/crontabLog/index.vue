@@ -27,9 +27,6 @@
       <el-button class="filter-item search" icon="el-icon-search" @click="handleSearch">
         搜索
       </el-button>
-      <el-button class="filter-item" icon="el-icon-refresh" @click="handleRefresh">
-        重置
-      </el-button>
     </div>
     <el-button v-if="this.selectedIds.length" size="small" class="filter-item mb-5" type="danger" icon="el-icon-delete" @click="handleMultiDelete">
       批量删除
@@ -59,7 +56,6 @@
       <el-table-column prop="created_at" label="创建时间" />
       <el-table-column label="操作">
         <template slot-scope="cron">
-          <el-button type="primary" icon="el-icon-edit" @click="handleUpdate(cron.row)" />
           <el-button type="danger" icon="el-icon-delete" @click="handleDelete(cron.row.id)" />
         </template>
       </el-table-column>
@@ -95,7 +91,7 @@ export default {
         end_at: ''
       },
       date: '',
-      url: 'monitor/crontab/log'
+      url: 'monitor/crontab/log/list'
     }
   },
   created() {
