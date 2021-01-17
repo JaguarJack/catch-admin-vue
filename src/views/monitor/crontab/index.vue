@@ -33,7 +33,7 @@
           {{ cron.row.group === 1 ? '默认' : '系统' }}
         </template>
       </el-table-column>
-      <el-table-column prop="task" label="调用目标类" />
+      <el-table-column prop="task" label="Command指令" />
       <el-table-column prop="cron" label="cron表达式" />
       <el-table-column prop="status" label="状态">
         <template slot-scope="cron">
@@ -79,8 +79,8 @@
           <el-radio v-model="formFieldsData.group" :label="1" checked>默认</el-radio>
           <el-radio v-model="formFieldsData.group" :label="2">系统</el-radio>
         </el-form-item>
-        <el-form-item label="调用任务类" :label-width="formLabelWidth" prop="task">
-          <el-input v-model="formFieldsData.task" style="width: 92%" placeholder="请输入类名称" autocomplete="off" clearable />
+        <el-form-item label="Command指令" :label-width="formLabelWidth" prop="task">
+          <el-input v-model="formFieldsData.task" style="width: 92%" placeholder="请输入Command指令" autocomplete="off" clearable />
         </el-form-item>
         <el-form-item label="cron 表达式" :label-width="formLabelWidth" prop="cron">
           <el-input v-model="formFieldsData.cron" style="width: 92%" placeholder="请输入 cron 表达式" autocomplete="off" clearable />
@@ -137,8 +137,8 @@ export default {
           { max: 100, message: '最大支持 100 个字符', trigger: 'blur' }
         ],
         task: [
-          { required: true, message: '请输入调用目标类', trigger: 'blur' },
-          { pattern: /^[a-zA-Z]+$/, message: '类名称支持英文', trigger: 'blur' }
+          { required: true, message: '请输入Command指令', trigger: 'blur' },
+          { pattern: /^[a-zA-Z:]+$/, message: 'command 指令格式错误', trigger: 'blur' }
         ],
         cron: [
           { required: true, message: '请输入cron表达式', trigger: 'blur' }
