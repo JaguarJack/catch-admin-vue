@@ -43,7 +43,7 @@
       <el-table-column prop="task" label="调用目标类" />
       <el-table-column prop="used_time" label="耗时">
         <template slot-scope="cron">
-          {{ cron.row.used_time > 1000 ? cron.row.used_time/1000 + '秒' : cron.row.used_time + '毫秒' }}
+          {{ cron.row.used_time + '秒' }}
         </template>
       </el-table-column>
       <el-table-column prop="error_message" label="错误日志" />
