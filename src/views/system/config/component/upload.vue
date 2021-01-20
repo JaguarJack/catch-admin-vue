@@ -127,7 +127,7 @@ export default {
       const upload = response.data
       Object.keys(upload).forEach(k => {
         Object.keys(upload[k]).forEach(key => {
-          if (key === 'cname') {
+          if (key === 'is_cname') {
             this.form[k][key] = parseInt(upload[k][key])
           } else if (key === 'read_from_cdn') {
             this.form[k][key] = parseInt(upload[k][key])
