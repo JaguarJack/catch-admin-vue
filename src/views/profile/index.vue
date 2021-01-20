@@ -102,7 +102,8 @@ export default {
           this.$http.put('user/profile', this.user).then(response => {
             store.dispatch('user/getInfo').then(response => {
               const { roles, permissions } = response
-              store.dispatch('permission/generateRoutes', [roles, permissions]).then(r => {})
+              store.dispatch('permission/generateRoutes', [roles, permissions]).then(r => {
+              })
             })
             this.$message.success(response.message)
           })
@@ -110,7 +111,11 @@ export default {
       })
     },
     handleImageSuccess(response, file, fileList) {
-      this.user.avatar = response.data
+      if (response.code !== 10000) {
+        this.$message.error(response.message)
+      } else {
+        this.user.avatar = response.data
+      }
     },
     beforeImageUpload(file) {
       const image = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg' || file.type === 'image/gif'
