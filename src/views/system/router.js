@@ -12,5 +12,7 @@ export default {
   // 模块管理
   module: () => import('@/views/system/module'),
   // 表单构建
-  form: () => import('@/views/system/form')
+  form: () => import('@/views/system/form'),
+  // 字典管理
+  dictionary: () => import('@/views/system/dictionary')
 }
