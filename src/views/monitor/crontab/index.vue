@@ -148,7 +148,7 @@ export default {
   },
   methods: {
     disOrEnableCron(cron) {
-      this.$http.put(this.url + '/' + cron.id).then(response => {
+      this.$http.put(this.url + '/enable/' + cron.id).then(response => {
         this.$message.success(response.message)
       })
     }
