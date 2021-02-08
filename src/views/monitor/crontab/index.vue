@@ -92,7 +92,7 @@
         <el-form-item label="状态" :label-width="formLabelWidth">
           <el-radio v-model="formFieldsData.tactics" :label="1" checked>立即执行</el-radio>
           <el-radio v-model="formFieldsData.tactics" :label="2">执行一次</el-radio>
-          <el-radio v-model="formFieldsData.tactics" :label="3">放弃执行</el-radio>
+          <el-radio v-model="formFieldsData.tactics" :label="3">正常执行</el-radio>
         </el-form-item>
         <el-form-item label="备注" :label-width="formLabelWidth" prop="remark">
           <el-input type="textarea" v-model="formFieldsData.remark" placeholder="请输入备注" />
@@ -148,7 +148,7 @@ export default {
   },
   methods: {
     disOrEnableCron(cron) {
-      this.$http.put(this.url + '/' + cron.id).then(response => {
+      this.$http.put(this.url + '/enable/' + cron.id).then(response => {
         this.$message.success(response.message)
       })
     }
