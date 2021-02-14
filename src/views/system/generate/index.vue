@@ -124,9 +124,7 @@
     <el-drawer
       :visible.sync="drawerVisible"
       direction="rtl">
-      <highlight-code lang="java">
-        {{ preview_content }}
-      </highlight-code>
+      <pre v-highlightjs><code class="php">{{ preview_content }}</code></pre>
     </el-drawer>
     <el-dialog title="创建模块" :visible="moduleCreateVisible" :destroy-on-close="true" width="40%" @close="moduleCreateVisible = false">
       <create-module @close="closeCreateModule" />
