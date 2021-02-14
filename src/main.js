@@ -19,7 +19,7 @@ import './permission' // permission control
 import './utils/error-log' // error log
 import request from '@/utils/request'
 import * as filters from './filters' // global filters
-import VueHighlightJS from 'vue-highlight.js'
+import VueHighlightJS from 'vue-highlightjs'
 
 /**
  * If you don't want to use mock-server
