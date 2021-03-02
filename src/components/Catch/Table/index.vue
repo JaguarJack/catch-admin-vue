@@ -3,20 +3,22 @@
     <component is="div">
       <div class="filter-container">
         <component
-          v-for="item in search"
+          v-for="(item, k) in search"
           :is="'el-' + item.type"
           class="filter-item form-search-input"
           v-model="queryParams[item.name]"
           :placeholder="item.placeholder"
           clearable
+          :key="item.name"
           type="datetime"
         >
           <component
             v-if="item.type === 'select'"
             is="el-option"
-            v-for="i in item.options"
+            v-for="(i, k) in item.options"
             :value="i.value"
             :label="i.text"
+            :key="i.value"
           />
         </component>
         <!-- 搜索按钮  --->
@@ -25,9 +27,10 @@
         <!-- 额外的 action -->
         <component
           is="el-button"
-          v-for="item in actions"
+          v-for="(item, k) in actions"
           :class="item.class"
           :icon="item.icon"
+          :key="item.name"
           @click="item.action"
           :type="item.type === undefined ? 'primary' : item.type"
         >
@@ -43,6 +46,7 @@
       >
         <el-table-column
           v-for="(item, k) in headers"
+          :key="item.name"
           v-if="item.type !== 'selection'"
           v-bind="getAttrsValue(item)"
         >
