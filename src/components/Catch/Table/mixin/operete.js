@@ -41,6 +41,9 @@ export default {
     },
     // 表单提交
     handleFormSubmit(formData) {
+      if (this.beforeSubmit !== undefined) {
+        formData = this.beforeSubmit(formData);
+      }
       formData.validate((valid, fail) => {
         if(valid){
           if (formData.form.id !== undefined && formData.form.id) {
@@ -76,16 +79,17 @@ export default {
     // 如果 data 不是 null，说明是 update
     handleShowDialog(data = null, create = false) {
       this.dialog.visible = true
-      this.form.data = data
       // 注意 form 对象必须要有
       if (data !== null && create === false) {
         this.dialog.title = '更新'
+        this.form.data = data
       }
     },
     // 隐藏弹窗
     handleHiddenDialog() {
       this.dialog.visible = false
       this.getForm.resetFields()
+      this.form.data = null
     },
     // 表格搜索
     handleSearch() {

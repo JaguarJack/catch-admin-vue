@@ -112,6 +112,7 @@
       :title="dialog.title"
       :visible.sync="dialog.visible"
       :width="dialogWidth"
+      :modal="dialogModal"
       @opened="dialogOpened"
     >
       <form-create v-model="formCreate.fApi" :rule="formCreate.rule" :option="form.options" :value.sync="formCreate.value"/>
@@ -175,6 +176,12 @@ export default {
       type: String,
       default() {
         return '50%'
+      }
+    },
+    dialogModal: {
+      type: Boolean,
+      default() {
+        return true
       }
     },
     // 表单数据
@@ -270,6 +277,15 @@ export default {
         isCreatedFillData: false,
         // form create options
         options: {
+          global: {
+            upload: {
+              props: {
+                onSuccess: function(res, file){
+                  file.url = res.data.filePath
+                }
+              }
+            }
+          },
           submitBtn: {
             col: {
               span: 3,
@@ -381,7 +397,15 @@ export default {
         size: size, el: el, type: 'primary', icon: 'el-icon-plus',
         click() {
           if (this.beforeCreate !== undefined) {
-            this.beforeCreate(row)
+            const p = this.beforeCreate(row)
+
+            if (p instanceof Promise) {
+              p.then(() => {
+                this.$refs[this.table.ref].handleShowDialog(row)
+              })
+
+              return false
+            }
           }
 
           this.$refs[this.table.ref].handleShowDialog()
@@ -392,7 +416,15 @@ export default {
         size: size, el: el, type: 'primary', icon: 'el-icon-edit',
         click() {
           if (this.beforeUpdate !== undefined) {
-            this.beforeUpdate(row)
+            const p = this.beforeUpdate(row)
+
+            if (p instanceof Promise) {
+                p.then(() => {
+                  this.$refs[this.table.ref].handleShowDialog(row)
+                })
+
+                return false
+              }
           }
 
           this.$refs[this.table.ref].handleShowDialog(row)
