@@ -41,9 +41,10 @@ export default {
     },
     // 表单提交
     handleFormSubmit(formData) {
-      if (this.beforeSubmit !== undefined) {
-        formData = this.beforeSubmit(formData);
+      if (this.getParent.beforeSubmit !== undefined) {
+        formData = this.getParent.beforeSubmit(formData);
       }
+      console.log(this)
       formData.validate((valid, fail) => {
         if(valid){
           if (formData.form.id !== undefined && formData.form.id) {

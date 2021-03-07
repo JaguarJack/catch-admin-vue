@@ -80,6 +80,7 @@
           v-else
           type="selection"
           width="50px"
+          :selectable="selectable"
         />
       </el-table>
 
@@ -246,6 +247,12 @@ export default {
       default() {
         return null
       }
+    },
+    selectable: {
+      type: Function,
+      default() {
+        return function() { return true }
+      }
     }
   },
   data() {
@@ -391,7 +398,7 @@ export default {
       const size = 'mini'
       const el = 'button'
 
-     let actions = [];
+      let actions = [];
 
       const add = {
         size: size, el: el, type: 'primary', icon: 'el-icon-plus',
@@ -451,9 +458,10 @@ export default {
         }
       }
 
-      this.tableActions.forEach(function(item){
+      if (row.id) {
+        this.tableActions.forEach(function(item) {
           if (item === 'add') {
-              actions = actions.concat(add)
+            actions = actions.concat(add)
           }
 
           if (item === 'edit') {
@@ -461,13 +469,14 @@ export default {
           }
 
           if (item === 'delete') {
-            actions =  actions.concat(del)
+            actions = actions.concat(del)
           }
 
           if (item === 'view') {
-            actions =  actions.concat(view)
+            actions = actions.concat(view)
           }
-      })
+        })
+      }
 
       return actions
     }
