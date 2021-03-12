@@ -108,7 +108,18 @@
             </el-form-item>
             <el-form-item v-if="!isButton" label="组件" :label-width="formLabelWidth" prop="component">
               <el-select v-model="formFieldsData.component" filterable placeholder="请选择组件">
-                <el-option v-for="(item, key) in components" :key="key" :value="key" :label="key" />
+                <el-option-group
+                  v-for="(item, key) in components"
+                  :key="key"
+                  :label="key"
+                >
+                  <el-option
+                    v-for="(i, key) in item"
+                    :key="key"
+                    :label="key"
+                    :value="key">
+                  </el-option>
+                </el-option-group>
               </el-select>
             </el-form-item>
             <el-form-item v-if="!isButton" label="排序" :label-width="formLabelWidth" prop="sort">
@@ -136,7 +147,7 @@
 <script>
 import formOperate from '@/layout/mixin/formOperate'
 import icons from './icons/index'
-import componentsMap from '@/config/componentsMap'
+import componentsSelect from '@/config/componentsSelect'
 
 export default {
   name: 'Index',
@@ -154,7 +165,7 @@ export default {
       // 刷新路由
       refreshRoute: true,
       // 组件
-      components: componentsMap,
+      components: componentsSelect,
       // 按钮权限标识 prefix
       permissionPrefix: '',
       // 表单数据

@@ -12,14 +12,22 @@ export default {
     },
     // 创建
     create(url, formData) {
-      this.$http.post(this.apiRoute, formData).then(response => {
+      this.$http.post(this.apiRoute, formData.form).then(response => {
         this.handleResponse(response)
+      }).catch(e => {
+        if (this.getParent.afterSubmit !== undefined) {
+          this.getParent.afterSubmit(formData);
+        }
       })
     },
     // 更新
     update(url, formData) {
-      this.$http.put(this.apiRoute + '/' + formData.id, formData).then(response => {
+      this.$http.put(this.apiRoute + '/' + formData.form.id, formData.form).then(response => {
         this.handleResponse(response)
+      }).catch(e => {
+        if (this.getParent.afterSubmit !== undefined) {
+          this.getParent.afterSubmit(formData);
+        }
       })
     },
     // 删除
@@ -44,13 +52,12 @@ export default {
       if (this.getParent.beforeSubmit !== undefined) {
         formData = this.getParent.beforeSubmit(formData);
       }
-      console.log(this)
       formData.validate((valid, fail) => {
         if(valid){
           if (formData.form.id !== undefined && formData.form.id) {
-            this.update(this.apiRoute, formData.form)
+            this.update(this.apiRoute, formData)
           } else {
-            this.create(this.apiRoute, formData.form)
+            this.create(this.apiRoute, formData)
           }
         }else{
           //todo 表单验证未通过

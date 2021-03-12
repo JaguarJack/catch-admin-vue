@@ -36,6 +36,7 @@
         >
           {{ item.text }}
         </component>
+        <el-button  type="danger" size="small" v-if="this.selectedIds.length > 0 && hidePagination" @click="handleDelete(selectedIds)">批量删除</el-button>
       </div>
       <el-table
         v-loading="loading"
@@ -87,13 +88,13 @@
       <el-row
         justify="end"
         type="flex"
+        v-if="!hidePagination"
       >
         <el-col :span="8" style="padding-top: 14px">
-          <el-button  type="danger" size="small" v-if="this.selectedIds.length > 0" @click="handleDelete(selectedIds)">批量删除</el-button>
+          <el-button  style="float: left" type="danger" size="small" v-if="this.selectedIds.length > 0" @click="handleDelete(selectedIds)">批量删除</el-button>
         </el-col>
         <el-col
           :span="16"
-          v-if="!hidePagination"
         >
           <el-pagination
             class="pagination-container"
