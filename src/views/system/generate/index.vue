@@ -171,7 +171,7 @@ export default {
       },
       // 索引选项
       indexes: [
-        'unique', 'index', 'fulltext', 'spatial'
+        'unique', 'index', 'fulltext'
       ],
       engines: [
         'InnoDB', 'MyISAM', 'Memory'
@@ -193,7 +193,6 @@ export default {
       this.fields = this.fields.filter(function(value, key) {
         return value.field !== field
       })
-      console.log(this.fields)
     },
     closeCreateModule() {
       this.moduleCreateVisible = false
@@ -268,9 +267,7 @@ const mysqlTypes = [
       { value: 'bigint' },
       { value: 'decimal' },
       { value: 'float' },
-      { value: 'tinyint' },
-      { value: 'double' },
-      { value: 'bit' },
+      { value: 'uuid' },
       { value: 'boolean' }
     ]
   },
@@ -280,8 +277,7 @@ const mysqlTypes = [
       { value: 'date' },
       { value: 'datetime' },
       { value: 'timestamp' },
-      { value: 'time' },
-      { value: 'year' }
+      { value: 'time' }
     ]
   },
   {
@@ -290,7 +286,6 @@ const mysqlTypes = [
       { value: 'char' },
       { value: 'varchar' },
       { value: 'tinyText' },
-      { value: 'char' },
       { value: 'text' },
       { value: 'mediumText' },
       { value: 'longText' },
@@ -304,7 +299,7 @@ const mysqlTypes = [
       { value: 'set' }
     ]
   },
-  {
+  /**{
     label: '空间',
     options: [
       { value: 'geometry' },
@@ -316,7 +311,7 @@ const mysqlTypes = [
       { value: 'multipolygon' },
       { value: 'geometrycollection' }
     ]
-  },
+  },*/
   {
     label: 'json',
     options: [

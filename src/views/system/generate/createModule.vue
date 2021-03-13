@@ -1,93 +1,106 @@
 <template>
-  <ele-form
-    v-model="formData"
-    v-bind="formConfig"
-    style="width: 90%; margin: auto;"
-    :request-fn="handleRequest"
+  <form-create
+    v-model="form.fApi"
+    :rule="form.rule"
+    :option="form.options"
+    :value.sync="form.value"
   />
 </template>
 
 <script>
+import formCreate from '@form-create/element-ui'
+
 export default {
+  components: {
+    'form-create': formCreate.component('form-create')
+  },
   data() {
     return {
-      formData: {},
-      formConfig: {
-        isShowErrorNotify: false,
-        isShowBackBtn: false,
-        formDesc: {
-          name: {
-            type: 'input',
-            label: '模块名称',
-            required: true
+      form: {
+        options: {
+          submitBtn: {
+            col: {
+              span: 3,
+              push: 21,
+            },
+            icon: '',
+            innerText: '确定',
+            click: this.handleRequest
           },
-          alias: {
-            type: 'input',
-            label: '模块目录',
-            required: true
-          },
-          description: {
-            type: 'input',
-            label: '模块描述',
-            required: false
-          },
-          keywords: {
-            type: 'input',
-            label: '模块关键字'
-          },
-          dirs: {
-            type: 'checkbox',
-            label: '目录安装',
-            isOptions: true,
-            options: [
-              {
-                text: 'Controller目录',
-                value: 'controller'
-              },
-              {
-                text: 'model目录',
-                value: 'model'
-              },
-              {
-                text: 'Database目录',
-                value: 'database'
-              },
-              {
-                text: 'Request目录',
-                value: 'request'
-              }
-            ],
-            default: [
-              'controller',
-              'model',
-              'database'
-            ],
-            layout: 24
+          resetBtn: {
+            width: '95%',
+            col: {
+              span: 3,
+              push: 15,
+            },
+            innerText: '取消',
+            show: true,
+            icon: '',
+            click: this.handleClose
           }
         },
-        order: [
-          'name',
-          'alias',
-          'description',
-          'keywords',
-          'dirs'
-        ]
+        fApi: {},
+        rule: [
+          {
+            field: 'name',
+            type: 'input',
+            title: '模块名称',
+            validate:[
+              { required: true, message: '请输入模块名称', trigger: 'blur' },
+            ],
+          },
+          {
+            field: 'alias',
+            type: 'input',
+            title: '模块目录',
+            validate:[
+              { required: true, message: '请输入模块目录', trigger: 'blur' },
+            ],
+          },
+          {
+            field: 'description',
+            type: 'input',
+            title: '模块描述'
+          },
+          {
+            field: 'keywords',
+            type: 'input',
+            title: '模块关键字'
+          },
+          {
+            type:'checkbox',
+            title:'目录安装',
+            field:'dirs',
+            value:[ 'controller', 'model', 'database'],
+            options:[
+              {value: 'controller',label: 'Controller 目录'},
+              {value: 'model', label: 'Model 目录'},
+              {value: 'database',label: 'Database目录'},
+              {value: 'request',label: 'Request目录'},
+            ]
+          },
+
+        ],
+        value: []
       }
     }
   },
   methods: {
-    handleRequest(data) {
-      data.dirs = data.dirs.join()
+    handleRequest() {
+      let data = {}
+      data.alias = this.form.fApi.form.alias
+      data.name = this.form.fApi.form.name
+      data.description = this.form.fApi.form.description
+      data.keywords = this.form.fApi.form.keywords
+      data.dirs = this.form.fApi.form.dirs.join()
       this.$http.post('generate/create/module', data).then(response => {
         this.$message.success(response.message)
-        this.$emit('close')
+        this.handleClose()
       })
+    },
+    handleClose() {
+      this.$emit('close')
     }
   }
 }
 </script>
-<style>
-  .el-button--primary {
-    float: right;
-  }
-</style>
