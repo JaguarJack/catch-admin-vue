@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <component is="div">
+    <div>
       <div class="filter-container">
         <component
           v-for="(item, k) in search"
@@ -109,7 +109,7 @@
           />
         </el-col>
       </el-row>
-    </component>
+    </div>
     <el-dialog
       :title="dialog.title"
       :visible.sync="dialog.visible"
@@ -128,10 +128,14 @@ import operate from './mixin/operete'
 import ElementsMapping from './ElementsMapping'
 import ComponentsMapping from './ComponentsMapping'
 import formCreate from '@form-create/element-ui'
+import create from '@/components/Catch/Table/mixin/create'
+import update from '@/components/Catch/Table/mixin/update'
+import del from '@/components/Catch/Table/mixin/del'
+import view from '@/components/Catch/Table/mixin/view'
 
 export default {
   name: 'Table',
-  mixins: [operate],
+  mixins: [operate, create, update, del, view],
   components: {
     ElementsMapping,
     ComponentsMapping,
@@ -404,57 +408,27 @@ export default {
       const add = {
         size: size, el: el, type: 'primary', icon: 'el-icon-plus',
         click() {
-          if (this.beforeCreate !== undefined) {
-            const p = this.beforeCreate(row)
-
-            if (p instanceof Promise) {
-              p.then(() => {
-                this.$refs[this.table.ref].handleShowDialog(row)
-              })
-
-              return false
-            }
-          }
-
-          this.$refs[this.table.ref].handleShowDialog()
+          this.$refs[this.table.ref].handleCreate()
         }
       }
 
       const edit = {
         size: size, el: el, type: 'primary', icon: 'el-icon-edit',
         click() {
-          if (this.beforeUpdate !== undefined) {
-            const p = this.beforeUpdate(row)
-
-            if (p instanceof Promise) {
-                p.then(() => {
-                  this.$refs[this.table.ref].handleShowDialog(row)
-                })
-
-                return false
-              }
-          }
-
-          this.$refs[this.table.ref].handleShowDialog(row)
+          this.$refs[this.table.ref].handleUpdate(row)
         }
       }
 
       const del = {
         size: size, el: el, type: 'danger', icon: 'el-icon-delete',
         click() {
-          if (this.beforeDelete !== undefined) {
-            this.beforeDelete(row);
-          }
-          this.$refs[this.table.ref].handleDelete(row.id)
+          this.$refs[this.table.ref].handleDel(row)
         }
       }
 
       const view = {
         size: size, el: el, type: 'success', icon: 'el-icon-view',
         click() {
-          if (this.beforeView !== undefined) {
-            this.beforeView(row);
-          }
           this.$refs[this.table.ref].handleView(row)
         }
       }

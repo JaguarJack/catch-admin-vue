@@ -11,7 +11,7 @@ export default {
       })
     },
     // 创建
-    create(url, formData) {
+    create(formData) {
       this.$http.post(this.apiRoute, formData.form).then(response => {
         this.handleResponse(response)
       }).catch(e => {
@@ -21,7 +21,7 @@ export default {
       })
     },
     // 更新
-    update(url, formData) {
+    update(formData) {
       this.$http.put(this.apiRoute + '/' + formData.form.id, formData.form).then(response => {
         this.handleResponse(response)
       }).catch(e => {
@@ -31,7 +31,7 @@ export default {
       })
     },
     // 删除
-    delete(url, id, isMulti = false) {
+    delete(id, isMulti = false) {
       let title = isMulti ? '确定批量删除吗' : '确定删除吗';
       this.$confirm(title, '提示', {
         confirmButtonText: '确定',
@@ -55,9 +55,9 @@ export default {
       formData.validate((valid, fail) => {
         if(valid){
           if (formData.form.id !== undefined && formData.form.id) {
-            this.update(this.apiRoute, formData)
+            this.update(formData)
           } else {
-            this.create(this.apiRoute, formData)
+            this.create(formData)
           }
         }else{
           //todo 表单验证未通过
@@ -68,9 +68,9 @@ export default {
     // 删除
     handleDelete(id) {
        if (id instanceof Array && id.length > 0) {
-         this.delete(this.apiRoute, id.join(','), true)
+         this.delete(id.join(','), true)
        } else {
-         this.delete(this.apiRoute, id)
+         this.delete(id)
        }
     },
     // 查看
