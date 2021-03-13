@@ -1,7 +1,6 @@
 export default {
   // 微信管理
   wechatMenus: () => import('@/views/wechat/menus'),
-  //
   // 微信用户
   wechatUsers: () => import('@/views/wechat/users'),
   // 微信用户标签
