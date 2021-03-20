@@ -71,9 +71,6 @@ export default {
     }
   },
   methods: {
-    beforeDelete() {
-      alert(123)
-    },
     handleSelectMulti(rows) {
       this.$refs.catchTable.handleSelectMulti(rows)
     }
