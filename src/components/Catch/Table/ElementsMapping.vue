@@ -56,6 +56,10 @@ export default {
     return createElement('div',
       this.getCellList.map((cellItem) => {
         const attributes = this.getAttrsValue(cellItem)
+        let label = attributes.props.label
+        if (attributes.props.icon !== undefined) {
+          label = label === undefined ? '<icon class="' + attributes.props.icon + '">' : '<icon class="' + attributes.props.icon + '"> ' + label
+        }
         return createElement(
           this.elementsMapping[cellItem.el],
           {
@@ -63,7 +67,7 @@ export default {
               click: cellItem.click.bind(this.parent, this.row)
             },
             domProps: {
-              innerHTML: attributes.props.label
+              innerHTML: label
             },
             ...attributes
           }
