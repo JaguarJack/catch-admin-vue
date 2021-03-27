@@ -1,8 +1,8 @@
 export default {
   methods: {
     handleView(row) {
-      if (this.getParent.beforeUpdate !== undefined) {
-        const p = this.getParent.beforeUpdate(row)
+      if (this.getParent.beforeView !== undefined) {
+        const p = this.getParent.beforeView(row)
 
         if (p instanceof Promise) {
           p.then(() => {

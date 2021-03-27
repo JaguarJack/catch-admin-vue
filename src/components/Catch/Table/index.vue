@@ -408,7 +408,7 @@ export default {
       const add = {
         size: size, el: el, type: 'primary', icon: 'el-icon-plus',
         click() {
-          this.$refs[this.table.ref].handleCreate()
+          this.$refs[this.table.ref].handleCreate(row)
         }
       }
 

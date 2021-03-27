@@ -1,7 +1,7 @@
 export default {
   methods: {
      handleCreate(row) {
-       if (this.getParent.beforeUpdate !== undefined) {
+       if (this.getParent.beforeCreate !== undefined) {
          const p = this.getParent.beforeCreate(row)
 
          if (p instanceof Promise) {
