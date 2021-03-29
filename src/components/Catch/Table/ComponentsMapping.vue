@@ -6,6 +6,9 @@
       :key="index"
       v-model="item.data"
       :row="row"
+      :field="item.field === undefined ? null : item.field"
+      :table="parent.$refs[parent.table.ref]"
+      :options="item.options === undefined ? [] : item.options"
     />
   </div>
 </template>

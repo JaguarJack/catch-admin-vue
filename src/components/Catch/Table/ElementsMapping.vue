@@ -1,7 +1,15 @@
 <script>
+import {isFunction} from "@/components/Catch/Table/type";
+
 export default {
   props: {
     parent: {
+      type: Object,
+      default() {
+        return {}
+      }
+    },
+    catchTable: {
       type: Object,
       default() {
         return {}
@@ -50,6 +58,30 @@ export default {
         directives: directives || [],
         props: attrs
       }
+    },
+    getOnFunctions(cellItem) {
+      let on = {};
+
+      if (cellItem.click !== undefined) {
+        if (isFunction(cellItem.click)) {
+          // 支持方法
+          on.click = cellItem.click.bind(this.parent, this.row)
+        } else {
+          // 绑定方法
+          if (this.catchTable[cellItem.click] === undefined) {
+            on.click = this.catchTable.$parent[cellItem.click].bind(this.parent, this.row)
+          } else {
+            on.click = this.catchTable[cellItem.click].bind(this.parent, this.row)
+          }
+        }
+      }
+
+      // 支持路由跳转
+      if (cellItem.route !== undefined) {
+        on.click = this.catchTable.to.bind(this.parent, this.row, cellItem.route)
+      }
+
+      return on
     }
   },
   render: function(createElement) {
@@ -60,12 +92,11 @@ export default {
         if (attributes.props.icon !== undefined) {
           label = label === undefined ? '<icon class="' + attributes.props.icon + '">' : '<icon class="' + attributes.props.icon + '"> ' + label
         }
+
         return createElement(
           this.elementsMapping[cellItem.el],
           {
-            on: {
-              click: cellItem.click.bind(this.parent, this.row)
-            },
+            on: this.getOnFunctions(cellItem),
             domProps: {
               innerHTML: label
             },

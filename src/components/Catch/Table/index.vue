@@ -1,129 +1,127 @@
 <template>
-  <div class="app-container">
-    <div>
-      <div class="filter-container">
+  <div>
+    <div class="search-container search-form">
+      <el-card v-if="search.length > 0" shadow="never">
         <component
           v-for="(item, k) in search"
           :is="'el-' + item.type"
           class="filter-item form-search-input"
-          v-model="queryParams[item.name]"
-          :placeholder="item.placeholder"
+          v-model="queryParams[item.field]"
+          :placeholder="item.props === undefined ? '' : item.props.placeholder"
           clearable
-          :key="item.name"
-          type="datetime"
+          :key="item.field"
         >
           <component
             v-if="item.type === 'select'"
             is="el-option"
             v-for="(i, k) in item.options"
             :value="i.value"
-            :label="i.text"
+            :label="i.label"
             :key="i.value"
           />
         </component>
         <!-- 搜索按钮  --->
-        <el-button v-if="search.length > 0" class="filter-item search" icon="el-icon-search" @click="handleSearch">搜索</el-button>
-        <el-button v-if="search.length > 0" class="filter-item" icon="el-icon-refresh" @click="handleReset">刷新</el-button>
-        <!-- 额外的 action -->
-        <component
-          is="el-button"
-          v-for="(item, k) in actions"
-          :class="item.class"
-          :icon="item.icon"
-          :key="item.name"
-          @click="item.action"
-          :type="item.type === undefined ? 'primary' : item.type"
-        >
-          {{ item.text }}
-        </component>
-        <el-button  type="danger" size="small" v-if="this.selectedIds.length > 0 && hidePagination" @click="handleDelete(selectedIds)">批量删除</el-button>
-      </div>
-      <el-table
-        v-loading="loading"
-        :data="source"
-        style="width: 100%"
-        v-bind="$attrs"
-        v-on="tableEvents"
-      >
-        <el-table-column
-          v-for="(item, k) in headers"
-          :key="item.name"
-          v-if="item.type !== 'selection'"
-          v-bind="getAttrsValue(item)"
-        >
-          <template v-slot="scope">
-            <elements-mapping
-              v-if="headers.length - 1 === k"
-              :cell-list="defaultActions(scope.row)"
-              :row="scope.row"
-              :parent="getParent"
-              @click.native="($event) => {
-                handleNativeClick(getAttrsValue(item), $event)
-              }"
-            />
-            <div v-if="isFunction(getValue(scope, item))">
-              <component
-                :is="renderTypeList[getMatchRenderFunction(item)].target"
-                :cell-list="getValue(scope, item)()"
-                :row="scope.row"
-                :parent="getParent"
-                @click.native="($event) => {
-                  handleNativeClick(getAttrsValue(item), $event)
-                }"
-              />
-            </div>
-            <span v-else>
-              {{ getValue(scope, item) }}
-            </span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          v-else
-          type="selection"
-          width="50px"
-          :selectable="selectable"
-        />
-      </el-table>
-
-      <el-row
-        justify="end"
-        type="flex"
-        v-if="!hidePagination"
-      >
-        <el-col :span="8" style="padding-top: 14px">
-          <el-button  style="float: left" type="danger" size="small" v-if="this.selectedIds.length > 0" @click="handleDelete(selectedIds)">批量删除</el-button>
-        </el-col>
-        <el-col
-          :span="16"
-        >
-          <el-pagination
-            class="pagination-container"
-            background
-            layout="prev, pager, next"
-            :current-page="pagination.currentPage"
-            :page-size="pagination.pageSize"
-            :page-sizes="pagination.sizes"
-            :total="pagination.total"
-            @size-change="handleSizeChange"
-            @current-change="handlePageChange"
-          />
-        </el-col>
-      </el-row>
+        <el-button type="primary" class="filter-item search" icon="el-icon-search" @click="handleSearch">搜索</el-button>
+        <el-button class="filter-item" icon="el-icon-refresh" @click="handleReset">刷新</el-button>
+      </el-card>
     </div>
-    <el-dialog
-      :title="dialog.title"
-      :visible.sync="dialog.visible"
-      :width="dialogWidth"
-      :modal="dialogModal"
-      @opened="dialogOpened"
-    >
-      <form-create v-model="formCreate.fApi" :rule="formCreate.rule" :option="form.options" :value.sync="formCreate.value"/>
-    </el-dialog>
+    <div class="app-container" style="margin: 15px 24px;">
+        <div class="filter-container">
+          <!-- 表头的 actions -->
+          <component
+            :is="'el-' + item.el"
+            v-for="item in actions"
+            :key="item.name"
+            :class="item.class"
+            :icon="item.icon"
+            :type="item.type === undefined ? 'primary' : item.type"
+            @click="getTableObject()[item.click]()"
+            style="margin-bottom: 5px;"
+          >
+            {{ item.label }}
+          </component>
+          <el-button v-if="this.selectedIds.length > 0 && hidePagination" type="danger" size="small" @click="handleDelete(selectedIds)">批量删除</el-button>
+        </div>
+        <el-table
+          v-loading="loading"
+          :data="source"
+          style="width: 100%"
+          v-bind="$attrs"
+          v-on="getTableEvents"
+        >
+          <el-table-column
+            v-for="(item, k) in headers"
+            v-if="item.type !== 'selection'"
+            :key="item.name"
+            v-bind="getAttrsValue(item)"
+          >
+            <template v-slot="scope">
+              <div v-if="isActionOrComponent(getValue(scope, item))">
+                <component
+                  :is="renderTypeList[getMatchRenderFunction(item)].target"
+                  :cell-list="getValue(scope, item)"
+                  :row="scope.row"
+                  :parent="getParent"
+                  :catch-table="getTableObject()"
+                  @click.native="($event) => {
+                    handleNativeClick(getAttrsValue(item), $event)
+                  }"
+                />
+              </div>
+              <span v-else>
+                {{ getValue(scope, item) }}
+              </span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            v-else
+            type="selection"
+            width="50px"
+            :selectable="selectable"
+          />
+        </el-table>
+
+        <el-row
+          v-if="!hidePagination"
+          justify="end"
+          type="flex"
+        >
+          <el-col :span="8" style="padding-top: 14px">
+            <el-button v-if="this.selectedIds.length > 0" style="float: left" type="danger" size="small" @click="handleDelete(selectedIds)">批量删除</el-button>
+          </el-col>
+          <el-col
+            :span="16"
+          >
+            <el-pagination
+              class="pagination-container"
+              background
+              layout="prev, pager, next"
+              :current-page="pagination.currentPage"
+              :page-size="pagination.pageSize"
+              :page-sizes="pagination.sizes"
+              :total="pagination.total"
+              @size-change="handleSizeChange"
+              @current-change="handlePageChange"
+            />
+          </el-col>
+        </el-row>
+
+      <el-dialog
+        :title="dialog.title"
+        :visible.sync="dialog.visible"
+        :width="dialogWidth"
+        :modal="dialogModal"
+        @opened="dialogOpened"
+        append-to-body
+      >
+        <form-create v-model="formCreate.fApi" :rule="formCreate.rule" :option="form.options" :value.sync="formCreate.value" />
+      </el-dialog>
+      </div>
   </div>
 </template>
 
 <script>
-import { isFunction, isBoolean } from './type'
+import {isBoolean, isArray} from './type'
 import operate from './mixin/operete'
 import ElementsMapping from './ElementsMapping'
 import ComponentsMapping from './ComponentsMapping'
@@ -132,10 +130,11 @@ import create from '@/components/Catch/Table/mixin/create'
 import update from '@/components/Catch/Table/mixin/update'
 import del from '@/components/Catch/Table/mixin/del'
 import view from '@/components/Catch/Table/mixin/view'
+import to from '@/components/Catch/Table/mixin/to'
 
 export default {
   name: 'Table',
-  mixins: [operate, create, update, del, view],
+  mixins: [operate, create, update, del, view, to],
   components: {
     ElementsMapping,
     ComponentsMapping,
@@ -172,10 +171,10 @@ export default {
     dialog: {
       type: Object,
       default() {
-         return {
-           title: '新增',
-           visible: false
-         }
+        return {
+          title: '新增',
+          visible: false
+        }
       }
     },
     dialogWidth: {
@@ -194,16 +193,10 @@ export default {
     formCreate: {
       type: Object,
       default() {
-        /**
-        return {
-          fApi: {},
-          value: {},
-          rule: {},
-        }*/
         return {
           fApi: null,
           value: {},
-          rule: {},
+          rule: {}
         }
       }
     },
@@ -239,7 +232,7 @@ export default {
         return {}
       }
     },
-    // 禁用表格事件
+    // 表格事件
     tableActions: {
       type: Array,
       default() {
@@ -264,10 +257,10 @@ export default {
     return {
       renderTypeList: {
         render: {},
-        renderHTML: {
+        action: {
           target: 'elements-mapping'
         },
-        renderComponent: {
+        component: {
           target: 'components-mapping'
         }
       },
@@ -292,7 +285,7 @@ export default {
           global: {
             upload: {
               props: {
-                onSuccess: function(res, file){
+                onSuccess: function(res, file) {
                   file.url = res.data.filePath
                 }
               }
@@ -301,7 +294,7 @@ export default {
           submitBtn: {
             col: {
               span: 3,
-              push: 21,
+              push: 21
             },
             icon: '',
             innerText: '确定',
@@ -311,7 +304,7 @@ export default {
             width: '95%',
             col: {
               span: 3,
-              push: 15,
+              push: 15
             },
             innerText: '取消',
             show: true,
@@ -319,7 +312,7 @@ export default {
             click: this.handleCancel
           }
         }
-      },
+      }
     }
   },
   computed: {
@@ -328,7 +321,14 @@ export default {
     },
     getForm() {
       return this.formCreate.fApi
-    }
+    },
+    getTableEvents() {
+      let events = this.tableEvents
+      for (let key in events) {
+        events[key] = this[events[key]]
+      }
+      return events
+    },
   },
   methods: {
     getAttrsValue(item) {
@@ -357,10 +357,11 @@ export default {
       const prop = configItem.prop
       const renderName = this.getMatchRenderFunction(configItem)
       const renderObj = this.renderTypeList[renderName]
-      if (renderObj && this.isFunction(configItem[renderName])) {
-        return renderObj.target
+      if (renderObj !== undefined) {
+        return configItem[renderName]
+        /** return renderObj.target
           ? this.getRenderValue(scope, configItem, { name: renderName, type: 'bind' })
-          : this.getRenderValue(scope, configItem)
+          : this.getRenderValue(scope, configItem)*/
       }
       return scope.row[prop]
     },
@@ -374,12 +375,13 @@ export default {
     // 匹配 render 开头的函数
     getMatchRenderFunction(obj) {
       return Object.keys(obj).find((key) => {
-        const matchRender = key.match(/^render.*/)
-        return matchRender && matchRender[0]
+        if (key === 'action' || key === 'component') {
+          return key
+        }
       })
     },
-    isFunction(fn) {
-      return isFunction(fn)
+    isActionOrComponent($item) {
+      return isArray($item)
     },
     stopBubbles(e) {
       const event = e || window.event
@@ -398,68 +400,38 @@ export default {
       ) return
       this.stopBubbles(e)
     },
-    // 默认的 actions
-    defaultActions(row) {
-      const size = 'mini'
-      const el = 'button'
-
-      let actions = [];
-
-      const add = {
-        size: size, el: el, type: 'primary', icon: 'el-icon-plus',
-        click() {
-          this.$refs[this.table.ref].handleCreate(row)
-        }
-      }
-
-      const edit = {
-        size: size, el: el, type: 'primary', icon: 'el-icon-edit',
-        click() {
-          this.$refs[this.table.ref].handleUpdate(row)
-        }
-      }
-
-      const del = {
-        size: size, el: el, type: 'danger', icon: 'el-icon-delete',
-        click() {
-          this.$refs[this.table.ref].handleDel(row)
-        }
-      }
-
-      const view = {
-        size: size, el: el, type: 'success', icon: 'el-icon-view',
-        click() {
-          this.$refs[this.table.ref].handleView(row)
-        }
-      }
-
-      if (row.id) {
-        this.tableActions.forEach(function(item) {
-          if (item === 'add') {
-            actions = actions.concat(add)
-          }
-
-          if (item === 'edit') {
-            actions = actions.concat(edit)
-          }
-
-          if (item === 'delete') {
-            actions = actions.concat(del)
-          }
-
-          if (item === 'view') {
-            actions = actions.concat(view)
-          }
-        })
-      }
-
-      return actions
-    }
+    // 获取 table 对象
+    getTableObject() {
+      return this
+    },
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.search-container {
+  margin: 5px 24px;
+  background: white;
+}
+
+.search-form {
+  // padding-bottom: 20px;
+  text-align: right;
+
+  .filter-item {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .form-search-input {
+    width: 200px;
+    margin-right: 5px;
+  }
+
+  .reset,.search,.multi-delete{
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
 .table-list-container {
   .table-pagination {
     padding-top: 20px;
