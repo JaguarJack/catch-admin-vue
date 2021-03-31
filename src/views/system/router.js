@@ -10,7 +10,5 @@ export default {
   // 配置管理
   config: () => import('@/views/system/config'),
   // 模块管理
-  module: () => import('@/views/system/module'),
-  // 表单构建
-  form: () => import('@/views/system/form')
+  module: () => import('@/views/system/module')
 }

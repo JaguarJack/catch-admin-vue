@@ -21,6 +21,7 @@ import request from '@/utils/request'
 import * as filters from './filters' // global filters
 import VueHighlightJS from 'vue-highlight.js'
 import './utils/registerCatchTable'
+import formCreate from '@form-create/element-ui'
 
 Vue.use(Element, {
   size: 'small'// set element-ui default size
@@ -28,6 +29,7 @@ Vue.use(Element, {
 })
 
 Vue.use(VueHighlightJS)
+Vue.use(formCreate)
 // register global utility filters
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
