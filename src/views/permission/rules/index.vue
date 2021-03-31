@@ -27,12 +27,14 @@
 import icons from './icons/index'
 import componentsSelect from '@/config/componentsSelect'
 import actions from './actions'
+import status from './status'
 
 export default {
   name: 'Index',
   components: {
     icons,
-    actions
+    actions,
+    status
   },
 
   created() {
