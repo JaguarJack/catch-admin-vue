@@ -15,9 +15,7 @@ export default {
       this.$http.post(this.apiRoute, formData.form).then(response => {
         this.handleResponse(response)
       }).catch(e => {
-        if (this.getParent.afterSubmit !== undefined) {
-          this.getParent.afterSubmit(formData);
-        }
+         //
       })
     },
     // 更新
@@ -25,9 +23,7 @@ export default {
       this.$http.put(this.apiRoute + '/' + formData.form.id, formData.form).then(response => {
         this.handleResponse(response)
       }).catch(e => {
-        if (this.getParent.afterSubmit !== undefined) {
-          this.getParent.afterSubmit(formData);
-        }
+          //
       })
     },
     // 删除
@@ -87,16 +83,20 @@ export default {
     // 如果 data 不是 null，说明是 update
     handleShowDialog(data = null, create = false) {
       this.dialog.visible = true
+      this.getForm.clearValidateState()
       // 注意 form 对象必须要有
       if (data !== null && create === false) {
         this.dialog.title = '更新'
         this.form.data = data
+      } else {
+        this.dialog.title = '创建'
       }
     },
     // 隐藏弹窗
     handleHiddenDialog() {
       this.dialog.visible = false
       this.getForm.resetFields()
+      this.getForm.clearValidateState()
       this.form.data = null
     },
     // 表格搜索
@@ -146,6 +146,10 @@ export default {
         this.$message.success(response.message)
         this.handleHiddenDialog()
         this.handleReset()
+        // handleResponse 之后的处理
+        if (this.getParent.afterHandleResponse !== undefined) {
+          this.getParent.afterHandleResponse();
+        }
       } else {
         this.$message.error(response.message)
       }

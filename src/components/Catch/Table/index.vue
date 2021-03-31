@@ -112,11 +112,20 @@
         :width="dialogWidth"
         :modal="dialogModal"
         @opened="dialogOpened"
+        @close="handleHiddenDialog"
         append-to-body
       >
         <form-create v-model="formCreate.fApi" :rule="formCreate.rule" :option="form.options" :value.sync="formCreate.value" />
       </el-dialog>
       </div>
+    <!-- 页面初始化需要渲染 form-create 目前只能这么做 看看之后有什么更好的方案 -->
+    <form-create
+     v-show=false
+     v-model="formCreate.fApi"
+     :rule="formCreate.rule"
+     :option="form.options"
+     :value.sync="formCreate.value"
+    />
   </div>
 </template>
 
@@ -125,7 +134,6 @@ import {isBoolean, isArray} from './type'
 import operate from './mixin/operete'
 import ElementsMapping from './ElementsMapping'
 import ComponentsMapping from './ComponentsMapping'
-import formCreate from '@form-create/element-ui'
 import create from '@/components/Catch/Table/mixin/create'
 import update from '@/components/Catch/Table/mixin/update'
 import del from '@/components/Catch/Table/mixin/del'
@@ -137,8 +145,7 @@ export default {
   mixins: [operate, create, update, del, view, to],
   components: {
     ElementsMapping,
-    ComponentsMapping,
-    'form-create': formCreate.component('form-create')
+    ComponentsMapping
   },
   props: {
     // 获取表格元数据时携带的参数
@@ -293,22 +300,21 @@ export default {
           },
           submitBtn: {
             col: {
-              span: 3,
-              push: 21
+              span: 24,
+              pull: 24
             },
             icon: '',
             innerText: '确定',
             click: this.handleFormSubmit
           },
           resetBtn: {
-            width: '95%',
             col: {
-              span: 3,
-              push: 15
+              span: 24,
+              offset: 100
             },
             innerText: '取消',
             show: true,
-            icon: '',
+            icon: 'el-icon-refresh',
             click: this.handleCancel
           }
         }
@@ -316,8 +322,15 @@ export default {
     }
   },
   computed: {
+    // 获取可用 refs 为止
     getParent() {
-      return this.$parent
+      let parent = this.$parent
+
+      while (!Object.keys(parent.$refs).length) {
+        parent = parent.$parent
+      }
+
+      return parent
     },
     getForm() {
       return this.formCreate.fApi
@@ -341,6 +354,7 @@ export default {
     },
     // dialog 打开后渲染表单
     dialogOpened() {
+      this.getForm.clearValidateState()
       // 创建时候填充数据
       if (this.form.isCreatedFillData) {
         this.getForm.setValue(this.form.data)
@@ -351,6 +365,10 @@ export default {
       } else {
         // 更新时
         this.getForm.setValue(this.form.data)
+      }
+      // 渲染完成之后钩子
+      if (this.getParent.renderAfter !== undefined) {
+        this.getParent.renderAfter()
       }
     },
     getValue(scope, configItem) {
