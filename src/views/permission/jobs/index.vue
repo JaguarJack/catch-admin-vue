@@ -6,7 +6,7 @@
     :border="true"
     :search="table.search"
     :filterParams="table.filterParams"
-    :hide-pagination="true"
+    :hide-pagination="false"
     :table-events="table.events"
     :formCreate="formCreate"
     :actions="table.actions"
