@@ -31,7 +31,10 @@ export default {
       const data = {}
       data[this.field] = v
 
-      this.$http.put(this.table.apiRoute + '/' + this.$attrs.row.id, data)
+      this.$http.put(this.table.apiRoute + '/' + this.$attrs.row.id, data).then(() => {
+        this.table.getList()
+      })
+
     }
   }
 }
