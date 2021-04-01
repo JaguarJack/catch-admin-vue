@@ -24,7 +24,6 @@
           :border="true"
           :search="table.search"
           :filterParams="table.filterParams"
-          :hide-pagination="true"
           :formCreate="formCreate"
           :actions="table.actions"
           :table-events="table.events"
