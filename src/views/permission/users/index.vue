@@ -73,6 +73,13 @@ export default {
       return row.id !== 1
     },
 
+    beforeSubmit(row) {
+      if (row.form.department_id instanceof Array) {
+        row.form.department_id = row.form.department_id.length > 0 ? row.form.department_id.pop() : 0
+      }
+      return row
+    },
+
     beforeDelete(row) {
       if (row.id === 1) {
         this.$message.error('超级管理员不允许删除')
