@@ -47,6 +47,8 @@
           :data="source"
           style="width: 100%"
           v-bind="$attrs"
+          :default-sort = "{prop: 'job_name', order: 'descending'}"
+
           v-on="getTableEvents"
         >
           <el-table-column
@@ -95,7 +97,7 @@
             <el-pagination
               class="pagination-container"
               background
-              layout="prev, pager, next"
+              layout="total, sizes, prev, pager, next"
               :current-page="pagination.currentPage"
               :page-size="pagination.pageSize"
               :page-sizes="pagination.sizes"
@@ -113,9 +115,15 @@
         :modal="dialogModal"
         @opened="dialogOpened"
         @close="handleHiddenDialog"
+        class="catch-form"
         append-to-body
       >
-        <form-create v-model="formCreate.fApi" :rule="formCreate.rule" :option="form.options" :value.sync="formCreate.value" />
+        <form-create
+          v-model="formCreate.fApi"
+          :rule="formCreate.rule"
+          :option="form.options"
+          :value.sync="formCreate.value"
+        />
       </el-dialog>
       </div>
     <!-- 页面初始化需要渲染 form-create 目前只能这么做 看看之后有什么更好的方案 -->
@@ -299,23 +307,23 @@ export default {
             }
           },
           submitBtn: {
-            col: {
-              span: 24,
-              pull: 24
-            },
-            icon: '',
+            icon: 'el-icon-s-promotion',
             innerText: '确定',
-            click: this.handleFormSubmit
+            click: this.handleFormSubmit,
+            col: {
+              span: 12,
+              offset: 2,
+            }
           },
           resetBtn: {
-            col: {
-              span: 24,
-              offset: 100
-            },
             innerText: '取消',
             show: true,
-            icon: 'el-icon-refresh',
-            click: this.handleCancel
+            icon: 'el-icon-switch-button',
+            click: this.handleCancel,
+            col: {
+              span: 12,
+              offset: 12
+            }
           }
         }
       }

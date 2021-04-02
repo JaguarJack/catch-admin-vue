@@ -147,7 +147,7 @@ aside {
 
   //如果不喜欢页数大小选择在左侧去掉并调整上面的margin即可
   .el-pagination__sizes {
-    float:left;
+    float: revert;
   }
 }
 
@@ -227,4 +227,12 @@ aside {
 .el-table th {
   color:#646464;
   background-color: #fafafa;
+}
+
+.catch-form .el-row div:last-child{
+  .el-form-item--small{
+    .el-form-item__content {
+      text-align: right;
+    }
+  }
 }

@@ -133,7 +133,8 @@ export default {
       this.getList()
     },
     handleSizeChange(val) {
-      this.$emit('getList', Object.assign(this.filterParams, { pageSize: val }))
+      Object.assign(this.filterParams, { limit: val })
+      this.getList()
     },
 
     /**
