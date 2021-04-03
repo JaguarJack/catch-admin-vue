@@ -1,24 +1,31 @@
 <template>
   <catch-table
+    v-if="table"
     :ref="table.ref"
     :headers="table.headers"
     :border="true"
     :search="table.search"
-    :filterParams="table.filterParams"
     :formCreate="formCreate"
-    :actions="table.actions"
     :table-events="table.events"
-    :table-actions="['edit', 'delete']"
-    apiRoute="sensitive/word"
+    :table-actions="table.actions"
+    :api-route="table.apiRoute"
+    :dialog-width="table.dialog.width"
   />
 </template>
 <script>
-import CatchTable from '@/components/Catch/Table'
-import config from './config'
+
 export default {
-  mixins:[config],
-  components: {
-    CatchTable: CatchTable,
+  data() {
+    return {
+      table: null,
+      formCreate: {}
+    }
+  },
+  created() {
+    this.$http.get('table/system/sensitiveWord').then(response => {
+      this.table = response.data.table;
+      this.formCreate.rule = response.data.form
+    })
   }
 }
 </script>

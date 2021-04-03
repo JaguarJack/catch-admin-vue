@@ -1,4 +1,15 @@
 <template>
+  <div>
+  <catch-table
+    v-if="table"
+    :ref="table.ref"
+    :headers="table.headers"
+    :border="true"
+    :search="table.search"
+    :table-events="table.events"
+    :api-route="table.apiRoute"
+  />
+  <!--
   <div class="app-container">
     <div class="filter-container">
       <el-input v-model="queryParam.tablename" placeholder="表名" clearable class="filter-item form-search-input" />
@@ -42,14 +53,15 @@
       :page-size="paginate.limit"
       :layout="paginate.layout"
       :total="paginate.total"/>
-    <!--------------------------------- 查看表结构 ------------------------------------------------------->
-    <el-dialog title="表结构" :visible.sync="visable">
-      <el-table :data="table" tooltip-effect="dark" style="width: 100%" border fit>
+-->
+  <!--------------------------------- 查看表结构 ------------------------------------------------------->
+  <el-dialog title="表结构" :visible.sync="visable">
+      <el-table :data="fields" tooltip-effect="dark" style="width: 100%" border fit>
         <el-table-column label="字段名称" prop="name" />
         <el-table-column prop="type" label="类型" width="150"/>
         <el-table-column prop="notnull" label="NULL" width="150">
           <template slot-scope="field">
-            <el-tag type="primary">{{ field.row.notnull == true ? '是' : '否'}}</el-tag>
+            <el-tag type="primary">{{ field.row.notnull === true ? '是' : '否'}}</el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="default" label="默认值" width="150"/>
@@ -60,25 +72,24 @@
 </template>
 
 <script>
-import formOperate from '@/layout/mixin/formOperate'
 export default {
-  mixins: [formOperate],
   data() {
     return {
-      url: 'tables',
-      queryParam: {
-        tablename: '',
-        engine: ''
-      },
+      table: null,
       visable: false,
-      table: []
+      fields: null
     }
   },
+  created() {
+    this.$http.get('table/system/database').then(response => {
+      this.table = response.data.table;
+    })
+  },
   methods: {
-    viewTable(tablename) {
+    handleView(row) {
       this.visable = true
-      this.$http.get('table/view/' + tablename).then(res => {
-        this.table = res.data
+      this.$http.get('table/view/' + row.name).then(res => {
+        this.fields = res.data
       })
     }
   }

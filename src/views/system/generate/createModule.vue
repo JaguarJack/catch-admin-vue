@@ -8,34 +8,22 @@
 </template>
 
 <script>
-import formCreate from '@form-create/element-ui'
-
 export default {
-  components: {
-    'form-create': formCreate.component('form-create')
-  },
   data() {
     return {
       form: {
         options: {
           submitBtn: {
-            col: {
-              span: 3,
-              push: 21,
-            },
-            icon: '',
+            icon: 'el-icon-s-promotion',
             innerText: '确定',
-            click: this.handleRequest
+          },
+          onSubmit:(formData)=>{
+            this.handleRequest()
           },
           resetBtn: {
-            width: '95%',
-            col: {
-              span: 3,
-              push: 15,
-            },
             innerText: '取消',
             show: true,
-            icon: '',
+            icon: 'el-icon-switch-button',
             click: this.handleClose
           }
         },
@@ -81,7 +69,7 @@ export default {
           },
 
         ],
-        value: []
+        value: {}
       }
     }
   },
