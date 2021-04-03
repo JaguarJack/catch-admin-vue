@@ -142,15 +142,17 @@ import {isBoolean, isArray} from './type'
 import operate from './mixin/operete'
 import ElementsMapping from './ElementsMapping'
 import ComponentsMapping from './ComponentsMapping'
-import create from '@/components/Catch/Table/mixin/create'
-import update from '@/components/Catch/Table/mixin/update'
-import del from '@/components/Catch/Table/mixin/del'
-import view from '@/components/Catch/Table/mixin/view'
-import to from '@/components/Catch/Table/mixin/to'
+import create from './mixin/create'
+import update from './mixin/update'
+import del from './mixin/del'
+import view from './mixin/view'
+import to from './mixin/to'
+import _import from './mixin/import'
+import _export from './mixin/export'
 
 export default {
   name: 'Table',
-  mixins: [operate, create, update, del, view, to],
+  mixins: [operate, create, update, del, view, to, _import, _export],
   components: {
     ElementsMapping,
     ComponentsMapping
@@ -211,7 +213,7 @@ export default {
         return {
           fApi: null,
           value: {},
-          rule: {}
+          rule: []
         }
       }
     },
