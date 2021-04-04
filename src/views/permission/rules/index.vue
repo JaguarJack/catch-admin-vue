@@ -59,11 +59,16 @@ export default {
       if (row.form.parent_id instanceof Array) {
         row.form.parent_id = row.form.parent_id.length > 0 ? row.form.parent_id.pop() : 0
       }
+      if (row.form.component instanceof Array) {
+        row.form.component = row.form.component.length > 0 ? row.form.component.pop() : ''
+      }
       return row
     },
     afterHandleResponse() {
       this.$http.get('table/permissions/permission', {params: { only: 'form'}}).then(response => {
         this.formCreate.rule = response.data.form
+        this.formCreate.rule[1]['control'][0]['rule'][5].props.options= this.getComponents()
+        this.formCreate.rule[1]['control'][0]['rule'][3].on = { focus : this.selectIcon }
       })
     },
     getComponents() {
