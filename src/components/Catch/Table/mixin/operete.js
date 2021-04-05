@@ -5,10 +5,13 @@ export default {
   methods: {
     // 列表
     getList() {
-      this.$http.get(this.apiRoute, { params: this.queryParams }).then(response => {
-        this.source = response.data
-        this.handlePaginateResponse(response)
-      })
+      // 这里的判断防止 table 的 api route 是异步获取，在页面渲染的时候没有获取到，导致列表数据无法获取
+      if (this.apiRoute) {
+        this.$http.get(this.apiRoute, { params: this.queryParams }).then(response => {
+          this.source = response.data
+          this.handlePaginateResponse(response)
+        })
+      }
     },
     // 创建
     create(formData) {

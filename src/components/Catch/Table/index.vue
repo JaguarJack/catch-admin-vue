@@ -33,7 +33,7 @@
           style="width: 100%"
           v-bind="$attrs"
           :default-sort = "{prop: 'job_name', order: 'descending'}"
-
+          :key="updateKey"
           v-on="getTableEvents"
         >
           <el-table-column
@@ -266,6 +266,7 @@ export default {
           target: 'components-mapping'
         }
       },
+      updateKey: 0,
       source: [],
       queryParams: this.filterParams,
       pagination: {
