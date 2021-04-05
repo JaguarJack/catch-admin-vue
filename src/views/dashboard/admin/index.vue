@@ -1,6 +1,5 @@
 <template>
   <div class="dashboard-editor-container">
-    <github-corner class="github-corner" />
     <!--<panel-group @handleSetLineChartData="handleSetLineChartData" />-->
     <el-row :gutter="12">
       <el-col :span="16">
