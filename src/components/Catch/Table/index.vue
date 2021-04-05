@@ -2,30 +2,15 @@
   <div>
     <div class="search-container search-form">
       <el-card v-if="search.length > 0" shadow="never">
-        <component
-          v-for="(item, k) in search"
-          :is="'el-' + item.type"
-          class="filter-item form-search-input"
-          v-model="queryParams[item.field]"
-          :placeholder="item.props === undefined ? '' : item.props.placeholder"
-          clearable
-          :key="item.field"
-        >
-          <component
-            v-if="item.type === 'select'"
-            is="el-option"
-            v-for="(i, k) in item.options"
-            :value="i.value"
-            :label="i.label"
-            :key="i.value"
-          />
-        </component>
-        <!-- 搜索按钮  --->
-        <el-button type="primary" class="filter-item search" icon="el-icon-search" @click="handleSearch">搜索</el-button>
-        <el-button class="filter-item" icon="el-icon-refresh" @click="handleReset">刷新</el-button>
+        <form-create
+          :rule="search"
+          v-model="searchOptions.fApi"
+          :option="searchOptions"
+          :value.sync="queryParams"
+        />
       </el-card>
     </div>
-    <div class="app-container" style="margin: 15px 24px;">
+    <div class="app-container" style="margin: 5px 15px;">
         <div class="filter-container">
           <!-- 表头的 actions -->
           <component
@@ -327,6 +312,24 @@ export default {
               offset: 12
             }
           }
+        },
+      },
+      searchOptions: {
+        fApi:{},
+        form: {
+          inline: true,
+          labelWidth: 'auto'
+        },
+        submitBtn: {
+          icon: 'el-icon-search',
+          innerText: '搜索',
+          click: this.handleSearch,
+        },
+        resetBtn: {
+          innerText: '重置',
+          show: true,
+          icon: 'el-icon-refresh',
+          click: this.handleReset,
         }
       }
     }
@@ -438,7 +441,7 @@ export default {
 
 <style lang="scss" scoped>
 .search-container {
-  margin: 5px 24px;
+  margin: 2px 15px;
   background: white;
 }
 
@@ -449,6 +452,7 @@ export default {
   .filter-item {
     display: inline-block;
     vertical-align: middle;
+    margin-top: 3px;
   }
   .form-search-input {
     width: 200px;

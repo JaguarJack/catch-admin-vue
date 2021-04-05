@@ -16,7 +16,7 @@ body {
 }
 
 label {
-  font-weight: 700;
+  font-weight: 500;
 }
 
 html {
@@ -128,7 +128,7 @@ aside {
 
 //main-container全局样式
 .app-container {
-  padding: 20px;
+  padding: 12px;
   margin: 24px 24px;
   background: white;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
@@ -190,8 +190,8 @@ aside {
 }
 
 .filter-container {
-  padding-bottom: 20px;
-  text-align: right;
+  padding-bottom: 3px;
+  text-align: left;
 
   .filter-item {
     display: inline-block;
@@ -235,4 +235,8 @@ aside {
       text-align: right;
     }
   }
+}
+
+.search-container .el-card__body {
+  text-align: left;
 }

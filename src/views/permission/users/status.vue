@@ -10,6 +10,7 @@
   />
   <el-switch
     v-else
+    v-model="$attrs.row[field]"
     active-text="启用"
     inactive-text="禁用"
     :active-value="1"

@@ -65,7 +65,7 @@ export default {
   methods: {
     // 获取部门用户
     getDepartmentUsers(data, node, self) {
-      this.table.filterParams.department_id = data.id
+      this.$refs[this.table.ref].queryParams.department_id = data.id
       this.$refs[this.table.ref].handleSearch()
     },
     selectable(row) {
