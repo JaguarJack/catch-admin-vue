@@ -133,7 +133,7 @@ export default {
       this.getList()
     },
     handleSizeChange(val) {
-      Object.assign(this.filterParams, { limit: val })
+      Object.assign(this.queryParams, { limit: val })
       this.getList()
     },
 
