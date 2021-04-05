@@ -1,6 +1,5 @@
 <template>
   <catch-table
-    v-if="table"
     :ref="table.ref"
     :headers="table.headers"
     :border="true"
@@ -17,22 +16,14 @@
   />
 </template>
 <script>
+import renderTable from '@/views/render-table-form'
 
 export default {
+  mixins: [renderTable],
   data() {
       return {
-        table: null,
-        formCreate: {
-          fApi: {}
-        },
-        loading: true
+        tableFrom: 'table/permissions/department',
       }
-  },
-  created() {
-    this.$http.get('table/permissions/department').then(response => {
-        this.table = response.data.table;
-        this.formCreate.rule = response.data.form
-    })
   },
   methods: {
     beforeSubmit(row) {

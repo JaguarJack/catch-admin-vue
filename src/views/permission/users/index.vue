@@ -35,16 +35,18 @@
   </div>
 </template>
 <script>
-
+import renderTable from '@/views/render-table-form'
 import status from './status'
+
 export default {
   components: {
     status
   },
+  mixins: [renderTable],
+
   data() {
     return {
-      table: null,
-      formCreate: {},
+      tableFrom: 'table/permissions/user',
       // 部门
       departments: [],
       departmentProps: {
@@ -53,11 +55,6 @@ export default {
     }
   },
   created() {
-    this.$http.get('table/permissions/user').then(response => {
-      this.table = response.data.table;
-      this.formCreate.rule = response.data.form
-    })
-
     this.$http.get('departments').then(response => {
       this.departments = response.data
     })
