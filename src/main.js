@@ -20,7 +20,7 @@ import './utils/error-log' // error log
 import request from '@/utils/request'
 import * as filters from './filters' // global filters
 import VueHighlightJS from 'vue-highlight.js'
-import './utils/registerCatchTable'
+import './utils/register-catch-table'
 import formCreate from '@form-create/element-ui'
 
 Vue.use(Element, {
