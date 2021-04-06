@@ -10,7 +10,7 @@
         />
       </el-card>
     </div>
-    <div class="app-container" style="margin: 5px 15px;">
+    <div class="app-container" style="margin: 5px 5px;">
         <div class="filter-container">
           <!-- 表头的 actions -->
           <component
@@ -442,7 +442,7 @@ export default {
 
 <style lang="scss" scoped>
 .search-container {
-  margin: 2px 15px;
+  margin: 2px 5px;
   background: white;
 }
 

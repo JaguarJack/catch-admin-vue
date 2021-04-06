@@ -1,31 +1,24 @@
 <template>
   <catch-table
-    v-if="table"
     :ref="table.ref"
     :headers="table.headers"
     :border="true"
     :search="table.search"
     :formCreate="formCreate"
     :table-events="table.events"
-    :table-actions="table.actions"
+    :actions="table.actions"
     :api-route="table.apiRoute"
     :dialog-width="table.dialog.width"
   />
 </template>
 <script>
-
+import renderForm from '@/views/render-table-form'
 export default {
+  mixins: [renderForm],
   data() {
     return {
-      table: null,
-      formCreate: {}
+      tableFrom: 'table/system/sensitiveWord'
     }
-  },
-  created() {
-    this.$http.get('table/system/sensitiveWord').then(response => {
-      this.table = response.data.table;
-      this.formCreate.rule = response.data.form
-    })
   }
 }
 </script>
