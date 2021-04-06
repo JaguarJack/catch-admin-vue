@@ -14,7 +14,6 @@
     :actions="table.actions"
     :api-route="table.apiRoute"
     :row-key="table.tree.row_key"
-    default-expand-all
     :tree-props="table.tree.props"
   />
     <el-dialog title="选择菜单图标" :visible.sync="iconViable" width="70%">

@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import store from '@/store'
+import { updateRouters } from '@/utils/update-router'
 
 export default {
   name: 'status',
@@ -34,10 +34,7 @@ export default {
       data[this.field] = v
       this.$http.put('/permissions/show/' + this.$attrs.row.id, data).then(() => {
         this.table.getList()
-        store.dispatch('user/getInfo').then(response => {
-          const { roles, permissions } = response
-          store.dispatch('permission/generateRoutes', [roles, permissions]).then(r => {})
-        })
+        updateRouters()
       })
     }
   }

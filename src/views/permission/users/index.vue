@@ -1,7 +1,7 @@
 <template>
   <div style="margin: 15px 24px;">
     <el-row :gutter="20">
-      <el-col :span="6" style="margin-top: 6px;">
+      <el-col :span="6" style="margin-top: 3px;padding-right: 0;">
       <div slot="header" class="clearfix">
           <span>部门</span>
         </div>

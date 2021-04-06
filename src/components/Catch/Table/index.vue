@@ -10,7 +10,7 @@
         />
       </el-card>
     </div>
-    <div class="app-container" style="margin: 5px 5px;">
+    <div class="app-container" style="margin: 3px 5px;">
         <div class="filter-container">
           <!-- 表头的 actions -->
           <component
@@ -74,7 +74,7 @@
           type="flex"
         >
           <el-col :span="8" style="padding-top: 14px">
-            <el-button v-if="this.selectedIds.length > 0" style="float: left" type="danger" size="small" @click="handleDelete(selectedIds)">批量删除</el-button>
+            <el-button v-if="this.selectedIds.length > 0" icon="el-icon-delete" style="float: left" type="danger" size="small" @click="handleDelete(selectedIds)">批量删除</el-button>
           </el-col>
           <el-col
             :span="16"

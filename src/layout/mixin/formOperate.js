@@ -1,5 +1,5 @@
 import * as curd from './curd'
-import store from '@/store'
+import { updateRouters } from '@/utils/update-router'
 
 export default {
   data() {
@@ -167,10 +167,7 @@ export default {
     },
     // 更新用户信息
     handleUpdateUserInfo() {
-      store.dispatch('user/getInfo').then(response => {
-        const { roles, permissions } = response
-        store.dispatch('permission/generateRoutes', [roles, permissions]).then(r => {})
-      })
+      updateRouters()
     },
     handleSizeChange(val) {
       this.handlePaginateParams(val)

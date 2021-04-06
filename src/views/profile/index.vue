@@ -41,8 +41,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import store from '@/store'
 import Images from '@/components/Images'
+import { updateRouters } from '@/utils/update-router'
 
 export default {
   name: 'Profile',
@@ -100,11 +100,7 @@ export default {
       this.$refs['user'].validate(valid => {
         if (valid) {
           this.$http.put('user/profile', this.user).then(response => {
-            store.dispatch('user/getInfo').then(response => {
-              const { roles, permissions } = response
-              store.dispatch('permission/generateRoutes', [roles, permissions]).then(r => {
-              })
-            })
+            updateRouters()
             this.$message.success(response.message)
           })
         }
