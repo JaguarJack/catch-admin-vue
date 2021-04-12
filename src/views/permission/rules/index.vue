@@ -97,6 +97,9 @@ export default {
     handleSelectIcon(item) {
       this.$refs[this.table.ref].getForm.setValue({ icon: item })
       this.iconViable = false
+    },
+    beforeUpdate() {
+      this.formCreate.fApi.disabled(true, 'type')
     }
   }
 }
