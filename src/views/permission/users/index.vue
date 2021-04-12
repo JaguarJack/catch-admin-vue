@@ -82,6 +82,12 @@ export default {
 
         return false
       }
+    },
+    beforeCreate() {
+      this.formCreate.fApi.updateValidate('password', [{ required: true, message: '密码必须填写'}], true)
+    },
+    beforeUpdate() {
+      this.formCreate.fApi.updateValidate('password', [{ required: false}])
     }
   }
 }
