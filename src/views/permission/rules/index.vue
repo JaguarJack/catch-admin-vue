@@ -99,7 +99,7 @@ export default {
       this.iconViable = false
     },
     beforeUpdate() {
-      this.formCreate.fApi.disabled(true, 'type')
+      this.formCreate.fApi.disabled(true, 'type', true)
     }
   }
 }
