@@ -3,6 +3,7 @@ import switch_ from '@/components/Catch/Table/columns/switch'
 import editNumber from '@/components/Catch/Table/columns/editNumber'
 import edit from '@/components/Catch/Table/columns/edit'
 import select_ from '@/components/Catch/Table/columns/select'
+import tinymce from '@/components/Tinymce'
 
 import Vue from 'vue'
 
@@ -11,3 +12,4 @@ Vue.component('switch_', switch_)
 Vue.component('editNumber', editNumber)
 Vue.component('edit', edit)
 Vue.component('select_', select_)
+Vue.component('editor', tinymce)
