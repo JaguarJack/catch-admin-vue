@@ -25,7 +25,6 @@ export default {
   data() {
     return {
       tableFrom: 'table/permissions/role',
-      updateKey: 0
     }
   },
   methods: {

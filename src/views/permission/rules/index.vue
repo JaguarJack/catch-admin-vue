@@ -1,7 +1,6 @@
 <template>
   <div>
   <catch-table
-    v-if="table"
     :ref="table.ref"
     :headers="table.headers"
     :border="true"

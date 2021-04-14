@@ -4,14 +4,14 @@
     :headers="table.headers"
     :border="true"
     :search="table.search"
-    :filterParams="table.filterParams"
+    :filter-params="table.filterParams"
     :hide-pagination="true"
-    :formCreate="formCreate"
+    :form-create="formCreate"
     :actions="table.actions"
     :api-route="table.apiRoute"
-    :row-key="table.tree.row_key"
     :dialog-width="table.dialog.width"
     default-expand-all
+    row-key="id"
     :tree-props="table.tree.props"
   />
 </template>
