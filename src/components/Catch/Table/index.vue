@@ -369,6 +369,9 @@ export default {
     // dialog 打开后渲染表单
     dialogOpened() {
       this.getForm.clearValidateState()
+      // 往表单设置一个弹出层的状态
+      this.getForm['dialogVisible'] = this.dialog.visible;
+      console.log(this.getForm)
       // 创建时候填充数据
       if (this.form.isCreatedFillData) {
         this.getForm.setValue(this.form.data)
