@@ -43,8 +43,6 @@ export default {
 
       const permissions = this.$refs[this.table.ref].getForm.el('_permissions').$refs.tree;
 
-      console.log(permissions.getCheckedKeys())
-      console.log(permissions.getHalfCheckedKeys())
       row.form.permissions = permissions.getCheckedKeys().concat(permissions.getHalfCheckedKeys())
 
       return row
