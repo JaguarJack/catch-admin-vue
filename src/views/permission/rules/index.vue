@@ -27,6 +27,7 @@ import icons from './icons/index'
 import componentsSelect from '@/config/componentsSelect'
 import actions from './actions'
 import status from './status'
+import { updateRouters } from '@/utils/update-router'
 
 export default {
   name: 'Index',
@@ -64,6 +65,7 @@ export default {
       return row
     },
     afterHandleResponse() {
+      updateRouters()
       this.$http.get('table/permissions/permission', {params: { only: 'form'}}).then(response => {
         this.formCreate.rule = response.data.form
         this.formCreate.rule[1]['control'][0]['rule'][5].props.options= this.getComponents()
