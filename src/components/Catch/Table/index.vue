@@ -20,7 +20,7 @@
             :class="item.class"
             :icon="item.icon"
             :type="item.type === undefined ? 'primary' : item.type"
-            @click="getTableObject()[item.click]()"
+            @click="actionClick(item.click)"
             style="margin-bottom: 5px;"
           >
             {{ item.label }}
@@ -116,8 +116,6 @@
      v-show=false
      v-model="formCreate.fApi"
      :rule="formCreate.rule"
-     :option="form.options"
-     :value.sync="formCreate.value"
     />
   </div>
 </template>
@@ -369,9 +367,6 @@ export default {
     // dialog 打开后渲染表单
     dialogOpened() {
       this.getForm.clearValidateState()
-      // 往表单设置一个弹出层的状态
-      this.getForm['dialogVisible'] = this.dialog.visible;
-      console.log(this.getForm)
       // 创建时候填充数据
       if (this.form.isCreatedFillData) {
         this.getForm.setValue(this.form.data)
@@ -439,6 +434,14 @@ export default {
     getTableObject() {
       return this
     },
+    // 表头按钮事件触发
+    actionClick(clickEvent) {
+      if (this[clickEvent] === undefined) {
+        this.getParent[clickEvent]()
+      } else {
+        this[clickEvent]()
+      }
+    }
   }
 }
 </script>
