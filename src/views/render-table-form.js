@@ -12,18 +12,22 @@ export default {
       tableFrom: ''
     }
   },
-   created() {
-     this.$http.get(this.tableFrom).then(response => {
-      this.table = response.data.table;
-      this.formCreate.rule = response.data.form
-
-       // 创建后的一些操作
-       if (this.afterMixinsCreated) {
-         this.afterMixinsCreated()
-       }
-    })
+  created() {
+     this.getTableFrom()
   },
+  methods: {
+    getTableFrom() {
+      this.$http.get(this.tableFrom).then(response => {
+        this.table = response.data.table;
+        this.formCreate.rule = response.data.form
 
+        // 创建后的一些操作
+        if (this.afterMixinsCreated) {
+          this.afterMixinsCreated()
+        }
+      })
+    }
+  },
   // 这里使用 watch 监听 table 数据变化，重新获取列表数据
   watch: {
     table: function() {

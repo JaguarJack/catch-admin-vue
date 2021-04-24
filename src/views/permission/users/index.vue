@@ -85,6 +85,7 @@ export default {
     },
     beforeCreate() {
       this.formCreate.fApi.updateValidate('password', [{ required: true, message: '密码必须填写'}], true)
+      this.formCreate.fApi.refresh()
     },
     beforeUpdate() {
       this.formCreate.fApi.updateValidate('password', [{ required: false}])

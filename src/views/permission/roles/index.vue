@@ -4,9 +4,9 @@
     :headers="table.headers"
     :border="true"
     :search="table.search"
-    :filterParams="table.filterParams"
+    :filter-params="table.filterParams"
     :hide-pagination="true"
-    :formCreate="formCreate"
+    :form-create="formCreate"
     :actions="table.actions"
     :row-key="table.tree.row_key"
     :table-events="table.events"
@@ -30,7 +30,6 @@ export default {
   methods: {
     beforeUpdate(row) {
       const permissions = this.$refs[this.table.ref].getForm.el('_permissions').$refs.tree;
-      console.log(permissions)
       row._permissions = row._permissions.filter(permission => {
         const node = permissions.getNode(permission)
         return node.isLeaf
