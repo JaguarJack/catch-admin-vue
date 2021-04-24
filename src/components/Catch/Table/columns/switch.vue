@@ -1,12 +1,20 @@
 <template>
     <el-switch
+      v-if="options.length > 0"
       v-model="$attrs.row[field]"
-      active-text="启用"
-      inactive-text="禁用"
-      :active-value="1"
-      :inactive-value="2"
+      :active-text="options[0].label"
+      :inactive-text="options[1].label"
+      :active-value="options[0].value"
+      :inactive-value="options[1].value"
       @change="disOrEnable"
     />
+  <el-switch
+    v-else
+    v-model="$attrs.row[field]"
+    :active-value="1"
+    :inactive-value="2"
+    @change="disOrEnable"
+  />
 </template>
 
 <script>
@@ -17,6 +25,12 @@ export default {
       value: Object,
       default() {
         return null
+      }
+    },
+    options: {
+      value: Array,
+      default() {
+        return []
       }
     },
     field: {

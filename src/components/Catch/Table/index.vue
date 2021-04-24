@@ -26,6 +26,8 @@
             {{ item.label }}
           </component>
           <el-button v-if="this.selectedIds.length > 0 && hidePagination" type="danger" size="small" @click="handleDelete(selectedIds)">批量删除</el-button>
+
+          <el-button icon="el-icon-refresh" class="fr" circle @click="refreshPage"/>
         </div>
         <el-table
           v-loading="loading"
@@ -94,6 +96,7 @@
         </el-row>
 
       <el-dialog
+        v-show="showDialog"
         :title="dialog.title"
         :visible.sync="dialog.visible"
         :width="dialogWidth"
@@ -111,12 +114,48 @@
         />
       </el-dialog>
       </div>
-    <!-- 页面初始化需要渲染 form-create 目前只能这么做 看看之后有什么更好的方案 -->
+
     <form-create
-     v-show=false
-     v-model="formCreate.fApi"
-     :rule="formCreate.rule"
+      v-show="false"
+      v-model="formCreate.fApi"
+      :rule="[]"
     />
+    <!--- 导入  -->
+    <el-dialog
+      title="导入"
+      :visible.sync="importVisible"
+      width="30%"
+      class="_import_"
+    >
+      <el-alert
+        title="请按照模版要求填写对应数据"
+        type="warning"/>
+      <el-divider/>
+      <el-button size="small" type="danger" @click="exportExcelTemplate" class="fr">下载导出模版</el-button>
+
+      <div style="color: #909399"> <i class="el-icon-warning-outline"/> 请按照模板样式填写</div>
+      <div style="color: #909399"> <i class="el-icon-warning-outline"/> 请勿出现整行为空、单元格为空的情形</div>
+      <div style="color: #909399"> <i class="el-icon-warning-outline"/> 为确保您的订单数据导入正常，建议下载新的模板导入</div>
+      <el-divider/>
+      <el-upload
+        ref="importUpload"
+        :action="importAction"
+        :show-file-list="true"
+        :multiple="false"
+        :limit="1"
+        :data="extraImport"
+        :file-list="importList"
+        :headers="importHeaders"
+        :auto-upload="false"
+        :on-success="importSuccess"
+        v-loading="importLoading"
+      >
+        <div>
+          <el-button slot="trigger" size="small" type="primary" >选取导入文件</el-button>
+        </div>
+      </el-upload>
+      <el-button size="small" type="success" class="fr" @click="handleSubmitImport">导入</el-button>
+    </el-dialog>
   </div>
 </template>
 
@@ -132,10 +171,11 @@ import view from './mixin/view'
 import to from './mixin/to'
 import _import from './mixin/import'
 import _export from './mixin/export'
+import excel from './mixin/excel'
 
 export default {
   name: 'Table',
-  mixins: [operate, create, update, del, view, to, _import, _export],
+  mixins: [operate, create, update, del, view, to, _import, _export, excel],
   components: {
     ElementsMapping,
     ComponentsMapping
@@ -265,6 +305,7 @@ export default {
         }
       },
       updateKey: 0,
+      showDialog: false,
       source: [],
       queryParams: this.filterParams,
       pagination: {
@@ -344,15 +385,16 @@ export default {
 
       return parent
     },
-    getForm() {
-      return this.formCreate.fApi
-    },
+
     getTableEvents() {
       let events = this.tableEvents
       for (let key in events) {
         events[key] = this[events[key]]
       }
       return events
+    },
+    getForm() {
+      return this.formCreate.fApi
     },
   },
   methods: {
@@ -364,9 +406,10 @@ export default {
       delete result.prop
       return result
     },
-    // dialog 打开后渲染表单
     dialogOpened() {
       this.getForm.clearValidateState()
+      // 表单渲染后的操作
+      this.dialogOpenedFirstDo()
       // 创建时候填充数据
       if (this.form.isCreatedFillData) {
         this.getForm.setValue(this.form.data)
@@ -382,6 +425,17 @@ export default {
       if (this.getParent.renderAfter !== undefined) {
         this.getParent.renderAfter()
       }
+    },
+    dialogOpenedFirstDo() {
+        // 创建前操作
+        if (this.getParent.beforeCreate !== undefined) {
+            this.getParent.beforeCreate()
+        }
+
+        // 更新前数据操作
+        if (this.form.data && this.getParent.beforeUpdate !== undefined) {
+          this.getParent.beforeUpdate(this.form.data)
+        }
     },
     getValue(scope, configItem) {
       const prop = configItem.prop
@@ -434,6 +488,9 @@ export default {
     getTableObject() {
       return this
     },
+    refreshPage() {
+      this.getParent.getTableFrom()
+    },
     // 表头按钮事件触发
     actionClick(clickEvent) {
       if (this[clickEvent] === undefined) {
@@ -446,12 +503,19 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .search-container {
   margin: 2px 5px;
   background: white;
 }
-
+._import_ {
+  .el-dialog__body {
+    padding: 5px 20px 60px 20px;
+  }
+  .el-divider {
+    margin: 8px 0;
+  }
+}
 .search-form {
   // padding-bottom: 20px;
   text-align: right;
