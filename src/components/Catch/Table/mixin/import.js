@@ -41,9 +41,12 @@ export default {
       }
     },
     importSuccess(response, file, fileList) {
-      console.log(123)
         this.importLoading = false;
-
+        if (response.data.code === 10000) {
+            this.$message.success('导入成功')
+        } else {
+          this.$message.error(response.data.message)
+        }
     }
   }
 }

@@ -27,14 +27,13 @@
           </component>
           <el-button v-if="this.selectedIds.length > 0 && hidePagination" type="danger" size="small" @click="handleDelete(selectedIds)">批量删除</el-button>
 
-          <el-button icon="el-icon-refresh" class="fr" circle @click="refreshPage"/>
+          <el-button icon="el-icon-refresh" class="fr" @click="refreshPage"/>
         </div>
         <el-table
           v-loading="loading"
           :data="source"
           style="width: 100%"
           v-bind="$attrs"
-          :default-sort = "{prop: 'job_name', order: 'descending'}"
           :key="updateKey"
           v-on="getTableEvents"
         >
