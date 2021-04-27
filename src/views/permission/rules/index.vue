@@ -14,7 +14,7 @@
     :actions="table.actions"
     :api-route="table.apiRoute"
     :row-key="table.tree.row_key"
-    default-expand-all
+     default-expand-all
     :tree-props="table.tree.props"
   />
     <el-dialog title="选择菜单图标" :visible.sync="iconViable" width="70%">
@@ -39,13 +39,7 @@ export default {
   },
 
   created() {
-    this.$http.get('table/permissions/permission').then(response => {
-      this.table = response.data.table;
-      this.formCreate.rule = response.data.form
-
-      this.formCreate.rule[1]['control'][0]['rule'][5].props.options= this.getComponents()
-      this.formCreate.rule[1]['control'][0]['rule'][3].on = { focus : this.selectIcon }
-    })
+    this.getTableFrom()
   },
   data() {
     return {
@@ -56,6 +50,15 @@ export default {
     }
   },
   methods: {
+    getTableFrom() {
+      this.$http.get('table/permissions/permission').then(response => {
+        this.table = response.data.table;
+        this.formCreate.rule = response.data.form
+
+        this.formCreate.rule[1]['control'][0]['rule'][5].props.options= this.getComponents()
+        this.formCreate.rule[1]['control'][0]['rule'][3].on = { focus : this.selectIcon }
+      })
+    },
     beforeSubmit(row) {
       if (row.form.parent_id instanceof Array) {
         row.form.parent_id = row.form.parent_id.length > 0 ? row.form.parent_id.pop() : 0

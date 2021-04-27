@@ -1,19 +1,8 @@
 <template>
   <catch-table
-    :ref="table.ref"
-    :headers="table.headers"
-    :border="true"
-    :search="table.search"
-    :filter-params="table.filterParams"
-    :hide-pagination="true"
     :form-create="formCreate"
-    :actions="table.actions"
-    :row-key="table.tree.row_key"
-    :table-events="table.events"
-    :dialog-width="table.dialog.width"
-    :api-route="table.apiRoute"
+    v-bind="table"
     default-expand-all
-    :tree-props="table.tree.props"
   />
 </template>
 
