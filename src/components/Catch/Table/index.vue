@@ -40,7 +40,7 @@
           <el-table-column
             v-for="(item, k) in headers"
             v-if="item.type !== 'selection'"
-            :key="item.name"
+            :key="item.prop"
             v-bind="getAttrsValue(item)"
           >
             <template v-slot="scope">
@@ -327,7 +327,7 @@ export default {
             upload: {
               props: {
                 onSuccess: function(res, file) {
-                  file.url = res.data.filePath
+                  file.url = res.data
                 }
               }
             }
@@ -399,11 +399,11 @@ export default {
   methods: {
     getAttrsValue(item) {
       const { attrs } = { attrs: item }
-      const result = {
+      return  {
         ...attrs
       }
-      delete result.prop
-      return result
+      // delete result.prop
+     // return result
     },
     dialogOpened() {
       this.getForm.clearValidateState()
