@@ -1,4 +1,24 @@
 <template>
+  <catch-table
+    :form-create="formCreate"
+    v-bind="table"
+  />
+</template>
+
+<script>
+import renderForm from '@/views/render-table-form'
+
+export default {
+  mixins: [renderForm],
+
+  data() {
+    return {
+      tableFrom: 'table/monitor/crontab'
+    }
+  }
+}
+</script>
+<!--<template>
   <div class="app-container">
     <div class="filter-container">
       <el-input v-model="queryParam.name" placeholder="任务名称" clearable class="filter-item form-search-input" />
@@ -69,7 +89,6 @@
       :page-size="paginate.limit"
       :layout="paginate.layout"
       :total="paginate.total" />
-    <!----------------------------------- 任务 ---------------------------------------------->
     <el-dialog :title="title" :visible.sync="formVisible" width="40%" @close="handleCancel">
       <el-form :ref="formName" :model="formFieldsData" :rules="rules">
         <el-form-item label="任务名称" :label-width="formLabelWidth" prop="name">
@@ -154,4 +173,4 @@ export default {
     }
   }
 }
-</script>
+</script>-->
