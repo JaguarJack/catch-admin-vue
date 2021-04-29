@@ -113,7 +113,7 @@
       <el-input v-model="table.comment" placeholder="表注释" style="width: 250px;margin-left: 5px;">
         <template slot="prepend">表注释</template>
       </el-input>
-      <el-button type="primary" class="fr" icon="el-icon-plus" @click="addField">新增新段</el-button>
+      <el-button type="primary" class="fr" icon="el-icon-plus" @click="addField">新增字段</el-button>
     </p>
     <el-divider></el-divider>
     <el-checkbox v-model="create.controller" label="创建控制器"/>
