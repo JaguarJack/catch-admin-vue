@@ -12,18 +12,22 @@ export default {
           this.getParent.beforeExport()
         }
 
-        let params = {}
-        const filterParams = this.getParent.table.filterParams
 
-        Object.keys(filterParams).forEach(function(k) {
+        let params = {}
+        const filterParams = this.getParent.$refs[this.getParent.table.ref].queryParams
+        Object.keys(filterParams).forEach(k => {
           if (k !== 'limit' && k !== 'page') {
             params[k] = filterParams[k]
           }
         })
 
-        this.$http.get(this.getParent.table.exportRoute, this.filterParams).then(response => {
-          window.open(response.data.url)
-        })
+        if (this.getParent.table.exportRoute === undefined) {
+          this.$message.error('请设置导出路由')
+        } else {
+          this.$http.get(this.getParent.table.exportRoute, params).then(response => {
+            window.open(response.data.url)
+          })
+        }
       }
     }
   }
