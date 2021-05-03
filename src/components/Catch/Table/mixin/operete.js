@@ -17,6 +17,9 @@ export default {
     create(formData) {
       this.$http.post(this.apiRoute, formData.form).then(response => {
         this.handleResponse(response)
+        if (this.getParent.afterSubmit !== undefined) {
+          this.getParent.afterSubmit(formData);
+        }
       }).catch(e => {
          //
       })
@@ -25,6 +28,9 @@ export default {
     update(formData) {
       this.$http.put(this.apiRoute + '/' + formData.form.id, formData.form).then(response => {
         this.handleResponse(response)
+        if (this.getParent.afterSubmit !== undefined) {
+          this.getParent.afterSubmit(formData);
+        }
       }).catch(e => {
           //
       })
