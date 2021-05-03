@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="search-container search-form">
-      <el-card v-if="search.length > 0" shadow="never">
+      <el-card v-show="isShowSearch()" shadow="never">
         <form-create
           :rule="search"
           v-model="searchOptions.fApi"
@@ -95,7 +95,6 @@
         </el-row>
 
       <el-dialog
-        v-show="showDialog"
         :title="dialog.title"
         :visible.sync="dialog.visible"
         :width="dialogWidth"
@@ -397,6 +396,11 @@ export default {
     },
   },
   methods: {
+    isShowSearch() {
+      return this.search.filter(function(item){
+          return item.type !== 'hidden'
+      }).length;
+    },
     getAttrsValue(item) {
       const { attrs } = { attrs: item }
       return  {
