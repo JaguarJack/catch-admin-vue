@@ -11,10 +11,6 @@
 export default {
   name: 'edit',
   props: {
-    value: Object,
-    default() {
-      return null
-    },
     table: {
       value: Object,
       default() {
