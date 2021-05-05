@@ -1,6 +1,7 @@
 <template>
   <div>
   <catch-table
+    v-if="table"
     :ref="table.ref"
     :headers="table.headers"
     :border="true"
@@ -13,6 +14,7 @@
     :actions="table.actions"
     :api-route="table.apiRoute"
     :row-key="table.tree.row_key"
+     default-expand-all
     :tree-props="table.tree.props"
   />
     <el-dialog title="选择菜单图标" :visible.sync="iconViable" width="70%">
@@ -26,6 +28,7 @@ import icons from './icons/index'
 import componentsSelect from '@/config/componentsSelect'
 import actions from './actions'
 import status from './status'
+import { updateRouters } from '@/utils/update-router'
 
 export default {
   name: 'Index',
@@ -36,13 +39,7 @@ export default {
   },
 
   created() {
-    this.$http.get('table/permissions/permission').then(response => {
-      this.table = response.data.table;
-      this.formCreate.rule = response.data.form
-
-      this.formCreate.rule[1]['control'][0]['rule'][5].props.options= this.getComponents()
-      this.formCreate.rule[1]['control'][0]['rule'][3].on = { focus : this.selectIcon }
-    })
+    this.getTableFrom()
   },
   data() {
     return {
@@ -53,6 +50,15 @@ export default {
     }
   },
   methods: {
+    getTableFrom() {
+      this.$http.get('table/permissions/permission').then(response => {
+        this.table = response.data.table;
+        this.formCreate.rule = response.data.form
+
+        this.formCreate.rule[1]['control'][0]['rule'][5].props.options= this.getComponents()
+        this.formCreate.rule[1]['control'][0]['rule'][3].on = { focus : this.selectIcon }
+      })
+    },
     beforeSubmit(row) {
       if (row.form.parent_id instanceof Array) {
         row.form.parent_id = row.form.parent_id.length > 0 ? row.form.parent_id.pop() : 0
@@ -63,6 +69,7 @@ export default {
       return row
     },
     afterHandleResponse() {
+      updateRouters()
       this.$http.get('table/permissions/permission', {params: { only: 'form'}}).then(response => {
         this.formCreate.rule = response.data.form
         this.formCreate.rule[1]['control'][0]['rule'][5].props.options= this.getComponents()
@@ -96,9 +103,6 @@ export default {
     handleSelectIcon(item) {
       this.$refs[this.table.ref].getForm.setValue({ icon: item })
       this.iconViable = false
-    },
-    beforeUpdate() {
-      this.formCreate.fApi.disabled(true, 'type', true)
     }
   }
 }

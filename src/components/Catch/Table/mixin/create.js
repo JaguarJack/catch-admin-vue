@@ -1,7 +1,7 @@
 export default {
   methods: {
      handleCreate(row) {
-       if (this.getParent.beforeCreate !== undefined) {
+       /** if (this.getParent.beforeCreate !== undefined) {
          const p = this.getParent.beforeCreate(row)
 
          if (p instanceof Promise) {
@@ -11,7 +11,7 @@ export default {
 
            return false
          }
-       }
+       }*/
 
        this.handleShowDialog()
      }

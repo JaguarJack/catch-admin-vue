@@ -1,4 +1,35 @@
 <template>
+  <catch-table
+    :form-create="formCreate"
+    v-bind="table"
+  />
+</template>
+
+<script>
+import renderForm from '@/views/render-table-form'
+import status from './status'
+export default {
+  mixins: [renderForm],
+  components: { status },
+
+  data() {
+    return {
+      tableFrom: 'table/monitor/crontabLog'
+    }
+  },
+  methods: {
+    afterMixinsCreated() {
+      this.table.search.forEach( item => {
+        if (item.field === 'crontab_id') {
+          item.value = this.$route.params.crontab_id
+        }
+      })
+    }
+  },
+}
+</script>
+<!--
+<template>
   <div class="app-container">
     <div class="filter-container">
       <el-input v-model="queryParam.name" placeholder="任务名称" clearable class="filter-item form-search-input" />
@@ -111,3 +142,4 @@ export default {
   }
 }
 </script>
+-->

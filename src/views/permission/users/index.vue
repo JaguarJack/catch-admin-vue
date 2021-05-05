@@ -1,7 +1,7 @@
 <template>
   <div style="margin: 5px 5px;">
     <el-row :gutter="20">
-      <el-col :span="6" style="margin-top: 3px;padding-right: 0;">
+      <el-col :span="5" style="margin-top: 3px;padding-right: 0;">
       <div slot="header" class="clearfix">
           <span>部门</span>
         </div>
@@ -11,12 +11,13 @@
             :props="departmentProps"
             node-key="id"
             default-expand-all
+            highlight-current
             :expand-on-click-node="false"
             @node-click="getDepartmentUsers"
           />
         </div>
       </el-col>
-      <el-col :span="18">
+      <el-col :span="19">
         <catch-table
           v-if="table"
           :ref="table.ref"
@@ -36,7 +37,7 @@
 </template>
 <script>
 import renderTable from '@/views/render-table-form'
-import status from './status'
+import status from './component/status'
 
 export default {
   components: {
@@ -85,6 +86,7 @@ export default {
     },
     beforeCreate() {
       this.formCreate.fApi.updateValidate('password', [{ required: true, message: '密码必须填写'}], true)
+      this.formCreate.fApi.refresh()
     },
     beforeUpdate() {
       this.formCreate.fApi.updateValidate('password', [{ required: false}])
@@ -105,5 +107,12 @@ export default {
   .department .el-tree {
     padding: 10px 10px;
     height: 360px;
+  }
+  .department .el-tree .el-tree-node__content {
+      height: 35px;
+  }
+
+  .department .el-tree .el-tree-node__content .el-tree-node__label {
+    font-size: 15px;
   }
 </style>
