@@ -50,6 +50,8 @@ export default {
           })
           this.handleReset()
         })
+      }).catch(e => {
+        //
       })
     },
     // 表单提交
