@@ -23,6 +23,10 @@ import VueHighlightJS from 'vue-highlight.js'
 import './utils/register-catch-table'
 import formCreate from '@form-create/element-ui'
 
+// 权限指令
+import { action } from '@/directive/permission/index.js'
+Vue.directive('action', action)
+
 Vue.use(Element, {
   size: 'small'// set element-ui default size
   // locale: enLang // 如果使用中文，无需设置，请删除
