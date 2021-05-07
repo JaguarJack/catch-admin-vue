@@ -2,10 +2,14 @@ import store from '@/store'
 
 function checkAction(el, action) {
   const { value } = action
+  // 如果是 undefined 说明没有设置
+  if (value === undefined) {
+    return true
+  }
+
   const permissions = store.state && store.state.user.permissions
   if (value && typeof value === 'string') {
     const hasAction = permissions.some(permission => {
-      console.log(permission.module)
       // eslint-disable-next-line no-unused-vars
       const action = value.indexOf('.') !== -1 ? value.replace('.', '@') : value
       const actionArr = action.split('@')

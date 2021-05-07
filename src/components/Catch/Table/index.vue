@@ -19,6 +19,7 @@
             :key="item.name"
             :class="item.class"
             :icon="item.icon"
+            v-action="item.permission"
             :type="item.type === undefined ? 'primary' : item.type"
             @click="actionClick(item.click)"
             style="margin-bottom: 5px;"
