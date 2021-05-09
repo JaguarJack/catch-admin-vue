@@ -1,13 +1,7 @@
 <template>
-  <el-tag type="danger">
-    <el-link
-      :underline="false"
-      :href="$attrs.row[field]"
-      target="_blank"
-    >
-      <i class="el-icon-link"/> 链接
-    </el-link>
-  </el-tag>
+  <el-input :value="$attrs.row[field]">
+    <el-button slot="append" icon="el-icon-link" @click="hrefto($attrs.row[field])"/>
+  </el-input>
 </template>
 
 <script>
@@ -20,6 +14,11 @@ export default {
       default() {
         return '';
       }
+    }
+  },
+  methods: {
+    hrefto(url) {
+      window.open(url)
     }
   }
 }
