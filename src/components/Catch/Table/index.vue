@@ -28,7 +28,23 @@
           </component>
           <el-button v-if="this.selectedIds.length > 0 && hidePagination" type="danger" size="small" @click="handleDelete(selectedIds)">批量删除</el-button>
 
-          <el-button icon="el-icon-refresh" class="fr" @click="refreshPage"/>
+          <div class="fr">
+            <el-button icon="el-icon-refresh"  @click="refreshPage" class="mr-5" size="mini"/>
+            <el-dropdown :hide-on-click="false">
+              <span class="el-dropdown-link">
+                 <el-button icon="el-icon-menu" size="mini"/>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item
+                  v-for="(item, k) in headers"
+                  :key="item.prop"
+                  v-if="item.label.length > 0"
+                >
+                  <el-checkbox v-model="item.show">{{  item.label }}</el-checkbox>
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </div>
         </div>
         <el-table
           v-loading="loading"
@@ -39,7 +55,7 @@
           v-on="getTableEvents"
         >
           <el-table-column
-            v-for="(item, k) in headers"
+            v-for="(item, k) in getHeaders"
             v-if="item.type !== 'selection'"
             :key="item.prop"
             v-bind="getAttrsValue(item)"
@@ -395,6 +411,11 @@ export default {
     getForm() {
       return this.formCreate.fApi
     },
+
+    // headers
+    getHeaders() {
+      return this.headers.filter(header=> header.show);
+    }
   },
   methods: {
     isShowSearch() {
