@@ -1,15 +1,12 @@
 <template>
   <div>
-    <div class="search-container search-form">
-      <el-card v-show="isShowSearch()" shadow="never">
-        <form-create
-          :rule="search"
-          v-model="searchOptions.fApi"
-          :option="searchOptions"
-          :value.sync="queryParams"
-        />
-      </el-card>
-    </div>
+    <search
+      :search="search"
+      @handleSearch="this.handleSearch"
+      @handleReset="this.handleReset"
+      ref="search"
+    />
+
     <div class="app-container" style="margin: 3px 5px;">
       <el-alert
         v-if="tips"
@@ -100,9 +97,7 @@
           <el-col :span="8" style="padding-top: 14px">
             <el-button v-if="this.selectedIds.length > 0" icon="el-icon-delete" style="float: left" type="danger" size="small" @click="handleDelete(selectedIds)">批量删除</el-button>
           </el-col>
-          <el-col
-            :span="16"
-          >
+          <el-col :span="16">
             <el-pagination
               class="pagination-container"
               background
@@ -142,146 +137,40 @@
       :rule="[]"
     />
     <!--- 导入  -->
-    <el-dialog
-      title="导入"
-      :visible.sync="importVisible"
-      width="30%"
-      class="_import_"
-    >
-      <el-alert
-        title="请按照模版要求填写对应数据"
-        type="warning"/>
-      <el-divider/>
-      <el-button size="small" type="danger" @click="exportExcelTemplate" class="fr">下载导出模版</el-button>
-
-      <div style="color: #909399"> <i class="el-icon-warning-outline"/> 请按照模板样式填写</div>
-      <div style="color: #909399"> <i class="el-icon-warning-outline"/> 请勿出现整行为空、单元格为空的情形</div>
-      <div style="color: #909399"> <i class="el-icon-warning-outline"/> 为确保您的订单数据导入正常，建议下载新的模板导入</div>
-      <el-divider/>
-      <el-upload
-        ref="importUpload"
-        :action="importAction"
-        :show-file-list="true"
-        :multiple="false"
-        :limit="1"
-        :data="extraImport"
-        :file-list="importList"
-        :headers="importHeaders"
-        :auto-upload="false"
-        :on-success="importSuccess"
-        v-loading="importLoading"
-      >
-        <div>
-          <el-button slot="trigger" size="small" type="primary" >选取导入文件</el-button>
-        </div>
-      </el-upload>
-      <el-button size="small" type="success" class="fr" @click="handleSubmitImport">导入</el-button>
-    </el-dialog>
+    <import-excel ref="import"/>
   </div>
 </template>
 
 <script>
 import {isBoolean, isArray} from './type'
 import operate from './mixin/operete'
-import ElementsMapping from './ElementsMapping'
-import ComponentsMapping from './ComponentsMapping'
+
+// components
+import ElementsMapping from './components/ElementsMapping'
+import ComponentsMapping from './components/ComponentsMapping'
+import search from './components/search'
+import importExcel from './components/import'
+
+// mixins
 import create from './mixin/create'
 import update from './mixin/update'
 import del from './mixin/del'
 import view from './mixin/view'
 import to from './mixin/to'
-import _import from './mixin/import'
 import _export from './mixin/export'
 import excel from './mixin/excel'
 import props from './mixin/props'
+import tableData from './mixin/tableData'
+
 
 export default {
   name: 'Table',
-  mixins: [operate, create, update, del, view, to, _import, _export, excel, props],
+  mixins: [operate, create, update, del, view, to, _export, excel, props, tableData],
   components: {
     ElementsMapping,
-    ComponentsMapping
-  },
-  data() {
-    return {
-      renderTypeList: {
-        render: {},
-        action: {
-          target: 'elements-mapping'
-        },
-        component: {
-          target: 'components-mapping'
-        }
-      },
-      updateKey: 0,
-      showDialog: false,
-      source: [],
-      queryParams: this.filterParams,
-      pagination: {
-        currentPage: 1,
-        pageSize: 10,
-        total: 0,
-        sizes: [10, 20, 30, 50]
-      },
-      // 多选
-      selectedIds: [],
-      // form data 数据, 为了渲染 Dialog 打开后渲染
-      form: {
-        // form data
-        data: null,
-        // form create fill data
-        isCreatedFillData: false,
-        // form create options
-        options: {
-          global: {
-            upload: {
-              props: {
-                onSuccess: function(res, file) {
-                  file.url = res.data
-                }
-              }
-            }
-          },
-          submitBtn: {
-            icon: 'el-icon-s-promotion',
-            innerText: '确定',
-            click: this.handleFormSubmit,
-            col: {
-              span: 12,
-              offset: 2,
-            }
-          },
-          resetBtn: {
-            innerText: '取消',
-            show: true,
-            icon: 'el-icon-switch-button',
-            click: this.handleCancel,
-            col: {
-              span: 12,
-              offset: 12
-            }
-          }
-        },
-      },
-      searchOptions: {
-        fApi:{},
-        form: {
-          inline: true,
-          labelWidth: 'auto'
-        },
-        submitBtn: {
-          icon: 'el-icon-search',
-          innerText: '搜索',
-          click: this.handleSearch,
-        },
-        resetBtn: {
-          innerText: '重置',
-          show: true,
-          icon: 'el-icon-refresh',
-          click: this.handleReset,
-        }
-      }
-    }
+    ComponentsMapping,
+    search,
+    importExcel
   },
   computed: {
     // 获取可用 refs 为止
@@ -294,7 +183,10 @@ export default {
 
       return parent
     },
-
+    // 搜索参数
+    queryParams() {
+      return this.$refs.search.queryParams
+    },
     getTableEvents() {
       let events = this.tableEvents
       for (let key in events) {
@@ -312,11 +204,6 @@ export default {
     }
   },
   methods: {
-    isShowSearch() {
-      return this.search.filter(function(item){
-          return item.type !== 'hidden'
-      }).length;
-    },
     getAttrsValue(item) {
       const { attrs } = { attrs: item }
       return  {
@@ -417,6 +304,9 @@ export default {
       } else {
         this[clickEvent]()
       }
+    },
+    handleImport() {
+      this.$refs.import.handleImport()
     }
   }
 }

@@ -1,5 +1,5 @@
 export default {
-  created() {
+  mounted() {
     this.getList()
   },
   methods: {
