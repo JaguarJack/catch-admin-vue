@@ -6,7 +6,6 @@
     :headers="table.headers"
     :border="true"
     :search="table.search"
-    :filterParams="table.filterParams"
     :default-query-params="table.defaultQueryParams"
     :hide-pagination="true"
     :table-events="table.events"
