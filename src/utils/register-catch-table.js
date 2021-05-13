@@ -7,6 +7,7 @@ import tinymce from '@/components/Tinymce'
 import preview from '@/components/Catch/Table/columns/preview'
 import download from '@/components/Catch/Table/columns/download'
 import url from '@/components/Catch/Table/columns/url'
+import copy from '@/components/Catch/Table/columns/copy'
 
 import Vue from 'vue'
 
@@ -18,5 +19,6 @@ Vue.component('select_', select_)
 Vue.component('preview', preview)
 Vue.component('download', download)
 Vue.component('url', url)
+Vue.component('copy', copy)
 
 Vue.component('editor', tinymce)
