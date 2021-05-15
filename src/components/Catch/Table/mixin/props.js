@@ -1,7 +1,7 @@
 export default {
   props: {
     tips: {
-      type: String,
+      type: Object,
       default() {
         return null
       }
