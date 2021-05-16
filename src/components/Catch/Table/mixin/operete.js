@@ -22,6 +22,9 @@ export default {
         }
       }).catch(e => {
          //
+        if (this.getParent.afterSubmit !== undefined) {
+          this.getParent.afterSubmit(formData);
+        }
       })
     },
     // 更新
@@ -33,6 +36,9 @@ export default {
         }
       }).catch(e => {
           //
+        if (this.getParent.afterSubmit !== undefined) {
+          this.getParent.afterSubmit(formData);
+        }
       })
     },
     // 删除

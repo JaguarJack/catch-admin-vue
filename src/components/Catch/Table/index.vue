@@ -119,6 +119,7 @@
         :modal="dialogModal"
         @opened="dialogOpened"
         @close="handleHiddenDialog"
+        :show-header="false"
         class="catch-form"
         append-to-body
       >
@@ -150,7 +151,6 @@ import ElementsMapping from './components/ElementsMapping'
 import ComponentsMapping from './components/ComponentsMapping'
 import search from './components/search'
 import importExcel from './components/import'
-
 // mixins
 import create from './mixin/create'
 import update from './mixin/update'
@@ -185,6 +185,7 @@ export default {
     },
     // 搜索参数
     queryParams() {
+      console.log(this.$refs.search)
       return this.$refs.search.queryParams
     },
     getTableEvents() {
@@ -216,6 +217,8 @@ export default {
       this.getForm.clearValidateState()
       // 表单渲染后的操作
       this.dialogOpenedFirstDo()
+
+      this.getForm.refresh()
       // 创建时候填充数据
       if (this.form.isCreatedFillData) {
         this.getForm.setValue(this.form.data)
@@ -229,7 +232,7 @@ export default {
       }
       // 渲染完成之后钩子
       if (this.getParent.renderAfter !== undefined) {
-        this.getParent.renderAfter()
+        this.getParent.renderAfter(this.form.data)
       }
     },
     dialogOpenedFirstDo() {
