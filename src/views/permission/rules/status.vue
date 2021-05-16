@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import { updateRouters } from '@/utils/update-router'
 
 export default {
   name: 'status',
@@ -32,9 +31,10 @@ export default {
     disOrEnable(v) {
       const data = {}
       data[this.field] = v
-      this.$http.put('/permissions/show/' + this.$attrs.row.id, data).then(() => {
+
+      this.admin.put('/permissions/show/' + this.$attrs.row.id, data).then(() => {
         this.table.getList()
-        updateRouters()
+        this.admin.updateRouters()
       })
     }
   }
