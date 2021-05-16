@@ -93,6 +93,12 @@ export default {
           label = label === undefined ? '<icon class="' + attributes.props.icon + '">' : '<icon class="' + attributes.props.icon + '"> ' + label
         }
 
+        // 绑定指令
+        attributes.directives.push({
+          name: 'action',
+          value: cellItem.permission
+        })
+
         return createElement(
           this.elementsMapping[cellItem.el],
           {

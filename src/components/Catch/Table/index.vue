@@ -11,6 +11,12 @@
       </el-card>
     </div>
     <div class="app-container" style="margin: 3px 5px;">
+      <el-alert
+        v-if="tips"
+        :title="tips.content"
+        :type="tips.type"
+        style="margin-bottom: 5px;"
+      />
         <div class="filter-container">
           <!-- 表头的 actions -->
           <component
@@ -19,6 +25,7 @@
             :key="item.name"
             :class="item.class"
             :icon="item.icon"
+            v-action="item.permission"
             :type="item.type === undefined ? 'primary' : item.type"
             @click="actionClick(item.click)"
             style="margin-bottom: 5px;"
@@ -27,7 +34,23 @@
           </component>
           <el-button v-if="this.selectedIds.length > 0 && hidePagination" type="danger" size="small" @click="handleDelete(selectedIds)">批量删除</el-button>
 
-          <el-button icon="el-icon-refresh" class="fr" @click="refreshPage"/>
+          <div class="fr">
+            <el-button icon="el-icon-refresh"  @click="refreshPage" class="mr-5" size="mini"/>
+            <el-dropdown :hide-on-click="false">
+              <span class="el-dropdown-link">
+                 <el-button icon="el-icon-menu" size="mini"/>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item
+                  v-for="(item, k) in headers"
+                  :key="item.prop"
+                  v-if="item.label.length > 0"
+                >
+                  <el-checkbox v-model="item.show">{{  item.label }}</el-checkbox>
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </div>
         </div>
         <el-table
           v-loading="loading"
@@ -38,7 +61,7 @@
           v-on="getTableEvents"
         >
           <el-table-column
-            v-for="(item, k) in headers"
+            v-for="(item, k) in getHeaders"
             v-if="item.type !== 'selection'"
             :key="item.prop"
             v-bind="getAttrsValue(item)"
@@ -170,126 +193,14 @@ import to from './mixin/to'
 import _import from './mixin/import'
 import _export from './mixin/export'
 import excel from './mixin/excel'
+import props from './mixin/props'
 
 export default {
   name: 'Table',
-  mixins: [operate, create, update, del, view, to, _import, _export, excel],
+  mixins: [operate, create, update, del, view, to, _import, _export, excel, props],
   components: {
     ElementsMapping,
     ComponentsMapping
-  },
-  props: {
-    // 获取表格元数据时携带的参数
-    filterParams: {
-      type: Object,
-      default() {
-        return {}
-      }
-    },
-    // 默认不清除的搜索参数
-    defaultQueryParams: {
-      type: Array,
-      default() {
-        return []
-      }
-    },
-    // api 路由地址
-    apiRoute: {
-      type: String,
-      default() {
-        return ''
-      }
-    },
-    // 表格加载 loading
-    loading: {
-      type: Boolean,
-      default: false
-    },
-    // 弹窗
-    dialog: {
-      type: Object,
-      default() {
-        return {
-          title: '新增',
-          visible: false
-        }
-      }
-    },
-    dialogWidth: {
-      type: String,
-      default() {
-        return '50%'
-      }
-    },
-    dialogModal: {
-      type: Boolean,
-      default() {
-        return true
-      }
-    },
-    // 表单数据
-    formCreate: {
-      type: Object,
-      default() {
-        return {
-          fApi: null,
-          value: {},
-          rule: []
-        }
-      }
-    },
-    // 是否隐藏分页
-    hidePagination: {
-      type: Boolean,
-      default: false
-    },
-    // 表格头部配置
-    headers: {
-      type: Array,
-      default() {
-        return []
-      }
-    },
-    // 搜索列表
-    search: {
-      type: Array,
-      default() {
-        return []
-      }
-    },
-    actions: {
-      type: Array,
-      default() {
-        return []
-      }
-    },
-    // element table 原生事件
-    tableEvents: {
-      type: Object,
-      default() {
-        return {}
-      }
-    },
-    // 表格事件
-    tableActions: {
-      type: Array,
-      default() {
-        return []
-      }
-    },
-    // 树状表格
-    tableTree: {
-      type: Object,
-      default() {
-        return null
-      }
-    },
-    selectable: {
-      type: Function,
-      default() {
-        return function() { return true }
-      }
-    }
   },
   data() {
     return {
@@ -394,6 +305,11 @@ export default {
     getForm() {
       return this.formCreate.fApi
     },
+
+    // headers
+    getHeaders() {
+      return this.headers.filter(header=> header.show);
+    }
   },
   methods: {
     isShowSearch() {

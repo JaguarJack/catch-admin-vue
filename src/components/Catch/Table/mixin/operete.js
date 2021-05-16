@@ -44,12 +44,10 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$http.delete(this.apiRoute + '/' + id).then(response => {
-          this.$message({
-            type: 'success',
-            message: response.message
-          })
-          this.handleReset()
+          this.handleResponse(response)
         })
+      }).catch(e => {
+        //
       })
     },
     // 表单提交
