@@ -212,7 +212,14 @@ class CatchAdmin
   delete(url) {
     return request({
       url: url,
-      method: 'delete',
+      method: 'delete'
+    })
+  }
+  closeTagView(route, to) {
+    store.dispatch('tagsView/delView', route).then(() => {
+      router.push({
+        path: to
+      })
     })
   }
 }

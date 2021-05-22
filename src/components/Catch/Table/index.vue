@@ -24,7 +24,7 @@
             :icon="item.icon"
             v-action="item.permission"
             :type="item.type === undefined ? 'primary' : item.type"
-            @click="actionClick(item.click)"
+            @click="actionClick(item)"
             style="margin-bottom: 5px;"
           >
             {{ item.label }}
@@ -143,7 +143,7 @@
 </template>
 
 <script>
-import {isBoolean, isArray} from './type'
+import { isBoolean, isArray } from './type'
 import operate from './mixin/operete'
 
 // components
@@ -161,7 +161,6 @@ import _export from './mixin/export'
 import excel from './mixin/excel'
 import props from './mixin/props'
 import tableData from './mixin/tableData'
-
 
 export default {
   name: 'Table',
@@ -185,7 +184,6 @@ export default {
     },
     // 搜索参数
     queryParams() {
-      console.log(this.$refs.search)
       return this.$refs.search.queryParams
     },
     getTableEvents() {
@@ -301,11 +299,17 @@ export default {
       this.getParent.getTableFrom()
     },
     // 表头按钮事件触发
-    actionClick(clickEvent) {
-      if (this[clickEvent] === undefined) {
-        this.getParent[clickEvent]()
+    actionClick(item) {
+      // 如果没有路由跳转 触发事件
+      if (item.route === undefined) {
+        if (this[item.click] === undefined) {
+          this.getParent[item.click]()
+        } else {
+          this[item.click]()
+        }
       } else {
-        this[clickEvent]()
+        // 路由跳转
+        this.$router.push(item.route)
       }
     },
     handleImport() {
