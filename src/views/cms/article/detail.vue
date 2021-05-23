@@ -16,14 +16,24 @@ export default {
     const id = this.$route.params.id
     if (id !== undefined) {
       this.admin.get('cms/articles/' + id).then(r => {
-        r.data.category_id = [r.data.category_id]
-        r.data.tags = r.data.tags.length > 0 ? r.data.tags.split(',') : ''
+        //r.data.category_id = [r.data.category_id]
+        let tags = [];
+        r.data.tag.forEach(item => {
+         tags.push(item.name)
+        })
+
+        r.data.tags = tags
         r.data.images = r.data.images.length > 0 ? r.data.images.split(',') : ''
-        this.$refs.form.formCreate.fApi.setValue(r.data)
+
+        const form = this.$refs.form.formCreate.fApi
+        form.setValue(r.data)
+       
         const editor = this.$refs.form.formCreate.fApi.el('content')
         if (editor !== undefined) {
           editor.setContent(r.data.content)
         }
+
+        console.log(r.data)
       })
     }
   },

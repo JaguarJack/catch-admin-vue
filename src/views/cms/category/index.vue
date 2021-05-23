@@ -35,6 +35,11 @@ export default {
       }
       return row
     },
+     afterHandleResponse() {
+      this.admin.get(this.tableFrom, {params: { only: 'form'}}).then(response => {
+        this.formCreate.rule = response.data.form
+      })
+    },
   }
 }
 </script>
