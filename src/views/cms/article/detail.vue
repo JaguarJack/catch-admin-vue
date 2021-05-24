@@ -16,10 +16,10 @@ export default {
     const id = this.$route.params.id
     if (id !== undefined) {
       this.admin.get('cms/articles/' + id).then(r => {
-        //r.data.category_id = [r.data.category_id]
-        let tags = [];
+        r.data.category_id = [r.data.category_id]
+        const tags = []
         r.data.tag.forEach(item => {
-         tags.push(item.name)
+          tags.push(item.name)
         })
 
         r.data.tags = tags
@@ -27,13 +27,11 @@ export default {
 
         const form = this.$refs.form.formCreate.fApi
         form.setValue(r.data)
-       
+
         const editor = this.$refs.form.formCreate.fApi.el('content')
         if (editor !== undefined) {
           editor.setContent(r.data.content)
         }
-
-        console.log(r.data)
       })
     }
   },
