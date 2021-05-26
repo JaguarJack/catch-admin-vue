@@ -9,5 +9,7 @@ export default {
   cmsArticle: () => import('./article'),
   cmsArticleDetail: () => import('./article/detail'),
   cmsTag: () => import('./tag'),
-  cmsComments: () => import('./comments')
+  cmsComments: () => import('./comments'),
+  cmsBanners: () => import('./banners')
+
 }
