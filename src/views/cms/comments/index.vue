@@ -12,7 +12,7 @@ export default {
   mixins: [renderFrom],
   data() {
     return {
-      tableFrom: 'table/cms/users'
+      tableFrom: 'table/cms/comments?only=table'
     }
   }
 }

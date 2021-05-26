@@ -8,6 +8,6 @@ export default {
   cmsSiteLinks: () => import('./siteLinks'),
   cmsArticle: () => import('./article'),
   cmsArticleDetail: () => import('./article/detail'),
-  cmsTag: () => import('./tag')
-
+  cmsTag: () => import('./tag'),
+  cmsComments: () => import('./comments')
 }
