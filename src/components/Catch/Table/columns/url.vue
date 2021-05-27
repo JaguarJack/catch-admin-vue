@@ -1,7 +1,8 @@
 <template>
-  <el-input :value="$attrs.row[field]">
+  <el-input :value="$attrs.row[field]" v-if="$attrs.row[field]">
     <el-button slot="append" icon="el-icon-link" @click="hrefto($attrs.row[field])"/>
   </el-input>
+  <span v-else>无</span>
 </template>
 
 <script>
