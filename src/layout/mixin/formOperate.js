@@ -1,5 +1,4 @@
 import * as curd from './curd'
-import { updateRouters } from '@/utils/update-router'
 
 export default {
   data() {
@@ -167,7 +166,7 @@ export default {
     },
     // 更新用户信息
     handleUpdateUserInfo() {
-      updateRouters()
+      this.admin.updateRouters()
     },
     handleSizeChange(val) {
       this.handlePaginateParams(val)

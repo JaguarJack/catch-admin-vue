@@ -1,5 +1,5 @@
 export default {
-  created() {
+  mounted() {
     this.getList()
   },
   methods: {
@@ -18,10 +18,13 @@ export default {
       this.$http.post(this.apiRoute, formData.form).then(response => {
         this.handleResponse(response)
         if (this.getParent.afterSubmit !== undefined) {
-          this.getParent.afterSubmit(formData);
+          this.getParent.afterSubmit(formData)
         }
       }).catch(e => {
-         //
+        //
+        if (this.getParent.afterSubmit !== undefined) {
+          this.getParent.afterSubmit(formData)
+        }
       })
     },
     // 更新
@@ -29,15 +32,18 @@ export default {
       this.$http.put(this.apiRoute + '/' + formData.form.id, formData.form).then(response => {
         this.handleResponse(response)
         if (this.getParent.afterSubmit !== undefined) {
-          this.getParent.afterSubmit(formData);
+          this.getParent.afterSubmit(formData)
         }
       }).catch(e => {
-          //
+        //
+        if (this.getParent.afterSubmit !== undefined) {
+          this.getParent.afterSubmit(formData);
+        }
       })
     },
     // 删除
     delete(id, isMulti = false) {
-      let title = isMulti ? '确定批量删除吗' : '确定删除吗';
+      const title = isMulti ? '确定批量删除吗' : '确定删除吗';
       this.$confirm(title, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -56,25 +62,25 @@ export default {
         formData = this.getParent.beforeSubmit(formData);
       }
       formData.validate((valid, fail) => {
-        if(valid){
+        if (valid) {
           if (formData.form.id !== undefined && formData.form.id) {
             this.update(formData)
           } else {
             this.create(formData)
           }
-        }else{
-          //todo 表单验证未通过
+        } else {
+          // todo 表单验证未通过
           return false
         }
       })
     },
     // 删除
     handleDelete(id) {
-       if (id instanceof Array && id.length > 0) {
-         this.delete(id.join(','), true)
-       } else {
-         this.delete(id)
-       }
+      if (id instanceof Array && id.length > 0) {
+        this.delete(id.join(','), true)
+      } else {
+        this.delete(id)
+      }
     },
     // 查看
     handleView(id) {
@@ -186,6 +192,4 @@ export default {
     }
   }
 }
-
-
 

@@ -1,6 +1,9 @@
 import { constantRoutes } from '@/router'
 // import role from '@/views/permission/role'
-import components from '@/config/componentsMap'
+// import components from '@/config/componentsMap'
+import catchAdmin from '@/components/Catch'
+const components = catchAdmin.loadViewComponents()
+
 /**
  * Use meta.role to determine if the current user has permission
  * @param roles

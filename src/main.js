@@ -19,33 +19,24 @@ import './permission' // permission control
 import './utils/error-log' // error log
 import request from '@/utils/request'
 import * as filters from './filters' // global filters
-import VueHighlightJS from 'vue-highlight.js'
-import './utils/register-catch-table'
-import formCreate from '@form-create/element-ui'
-
-// 权限指令
-import { action } from '@/directive/permission/index.js'
-Vue.directive('action', action)
+import catchAdmin from '@/components/Catch'
 
 Vue.use(Element, {
   size: 'small'// set element-ui default size
   // locale: enLang // 如果使用中文，无需设置，请删除
 })
 
-Vue.use(VueHighlightJS)
-Vue.use(formCreate)
-
 // register global utility filters
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
 
-// 全局注册 CatchTable 组件
-// import CatchTable from '@/components/Catch/Table'
-// Vue.component('CatchTable', CatchTable)
+// 后台启动
+catchAdmin.boot()
 
 Vue.config.productionTip = false
 Vue.prototype.$http = request
+Vue.prototype.admin = catchAdmin
 
 new Vue({
   el: '#app',

@@ -46,14 +46,8 @@ export default {
     handleUpdate(action) {
       this.table.getForm.setValue({type: 2})
 
-      action.permission_mark = action.permission_mark.indexOf('@') === -1 ? action.permission_mark : action.permission_mark.split('@')[1]
-
       this.table.handleUpdate(action)
     }
   }
 }
 </script>
-
-<style scoped>
-
-</style>

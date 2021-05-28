@@ -42,7 +42,6 @@
 <script>
 import { mapGetters } from 'vuex'
 import Images from '@/components/Images'
-import { updateRouters } from '@/utils/update-router'
 
 export default {
   name: 'Profile',
@@ -100,7 +99,7 @@ export default {
       this.$refs['user'].validate(valid => {
         if (valid) {
           this.$http.put('user/profile', this.user).then(response => {
-            updateRouters()
+            this.admin.updateRouters()
             this.$message.success(response.message)
           })
         }

@@ -210,7 +210,6 @@ export default {
       }
     },
     addField() {
-      console.log(this.getColumn())
       this.fields.push(this.getColumn())
     },
     getData() {

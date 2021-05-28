@@ -6,7 +6,6 @@
     :headers="table.headers"
     :border="true"
     :search="table.search"
-    :filterParams="table.filterParams"
     :default-query-params="table.defaultQueryParams"
     :hide-pagination="true"
     :table-events="table.events"
@@ -25,10 +24,8 @@
 
 <script>
 import icons from './icons/index'
-import componentsSelect from '@/config/componentsSelect'
 import actions from './actions'
 import status from './status'
-import { updateRouters } from '@/utils/update-router'
 
 export default {
   name: 'Index',
@@ -40,16 +37,20 @@ export default {
 
   created() {
     this.getTableFrom()
+    this.getComponentsSelect()
   },
   data() {
     return {
       table: null,
       formCreate: {},
-      components: componentsSelect,
+      components: null,
       iconViable: false,
     }
   },
   methods: {
+    getComponentsSelect() {
+      this.components = this.admin.loadComponentsSelect()
+    },
     getTableFrom() {
       this.$http.get('table/permissions/permission').then(response => {
         this.table = response.data.table;
@@ -68,8 +69,16 @@ export default {
       }
       return row
     },
+    renderAfter(form) {
+      if (form !== null) {
+        this.formCreate.fApi.setValue({
+          permission_mark: form.permission_mark.indexOf('@') === -1 ? form.permission_mark : form.permission_mark.split('@')[1],
+          permission_name: form.permission_name
+        })
+      }
+    },
     afterHandleResponse() {
-      updateRouters()
+      this.admin.updateRouters()
       this.$http.get('table/permissions/permission', {params: { only: 'form'}}).then(response => {
         this.formCreate.rule = response.data.form
         this.formCreate.rule[1]['control'][0]['rule'][5].props.options= this.getComponents()
