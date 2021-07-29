@@ -17,12 +17,39 @@ export default {
     }
   },
   methods: {
+    afterMixinsCreated() {
+      this.getFormField('parent_id').on = { change: this.selectParentRoles }
+    },
+    beforeCreate() {
+      this.formCreate.fApi.disabled(false, 'parent_id')
+    },
     beforeUpdate(row) {
+      this.formCreate.fApi.disabled(true, 'parent_id')
+      // 重新渲染 页面可能会闪一下
+      if (row.parent_id) {
+        this.selectParentRoles([row.parent_id])
+      }
       const permissions = this.$refs[this.table.ref].getForm.el('_permissions').$refs.tree;
       row._permissions = row._permissions.filter(permission => {
         const node = permissions.getNode(permission)
         return node.isLeaf
       })
+    },
+    selectParentRoles(value) {
+      this.$http.get('role/permissions/' + value[value.length - 1]).then(r => {
+        this.getFormField('_permissions').props.data = r.data
+      })
+    },
+    getFormField(name) {
+      let parent = null
+
+      this.formCreate.rule.forEach(item => {
+        if (item.field === name) {
+          parent = item
+        }
+      })
+
+      return parent
     },
     beforeSubmit(row) {
       if (row.form.parent_id instanceof Array) {
