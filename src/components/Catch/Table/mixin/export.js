@@ -24,7 +24,7 @@ export default {
         if (this.getParent.table.exportRoute === undefined) {
           this.$message.error('请设置导出路由')
         } else {
-          this.$http.get(this.getParent.table.exportRoute, params).then(response => {
+          this.$http.get(this.getParent.table.exportRoute, {params:params}).then(response => {
             window.open(response.data.url)
           })
         }
