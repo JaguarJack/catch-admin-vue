@@ -321,5 +321,7 @@ const mysqlTypes = [
 </script>
 
 <style scoped>
-
+::v-deep .el-drawer__body {
+  overflow: auto;
+}
 </style>
