@@ -49,14 +49,11 @@
           <div slot="header" class="clearfix">
             <span>☕️ Buy me a coffee</span>
           </div>
-            <el-alert
-              title="如果觉得项目对你有帮助，或者帮你节省了开发时间，可以通过以下方式 [wechat]/[alipay] 赞助开发者。开源不易，感谢支持🙏"
-              type="success"
-              :closable="false" />
-            <el-divider/>
-            <div class="block">
-              <el-image src="https://cdn.learnku.com/uploads/images/202008/11/18206/e6qAAM8Bod.jpg!large"></el-image>
-            </div>
+          <el-alert
+            title="如果觉得项目对你有帮助，或者帮你节省了开发时间，可以通过以下方式 [wechat]/[alipay] 赞助开发者。开源不易，感谢支持🙏"
+            type="success"
+            :closable="false" />
+          <el-divider/>
         </el-card>
       </el-col>
     </el-row>
