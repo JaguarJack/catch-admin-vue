@@ -145,16 +145,13 @@ export default {
     height: 40px;
     font-size: 16px;
   }
-
-  .login .el-card {
-    border-radius: 5%;
-  }
   @media screen and (max-device-width: 1920px) {
     .login .el-card {
       width: 28%;
       margin: 10% auto;
       height: 65%;
       padding: 40px 10px;
+      border-radius: 4%;
     }
     .login .el-card .el-button{
       position: relative;
@@ -166,7 +163,8 @@ export default {
       width: 100%;
       height: 100%;
       margin: auto;
-     padding-top: 25%;
+      padding-top: 25%;
+     border-radius: 0;
     }
     .login .el-card .el-button{
       position: relative;
