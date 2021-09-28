@@ -44,7 +44,7 @@ export default {
             click: this.handleFormSubmit,
             col: {
               span: 12,
-              offset: 2,
+              offset: 2
             }
           },
           resetBtn: {
@@ -57,7 +57,7 @@ export default {
               offset: 12
             }
           }
-        },
+        }
       }
     }
   }

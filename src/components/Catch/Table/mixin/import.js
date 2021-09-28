@@ -3,7 +3,7 @@ import { mapGetters } from 'vuex'
 export default {
   computed: {
     ...mapGetters([
-      'token',
+      'token'
     ])
   },
   data() {
@@ -13,13 +13,13 @@ export default {
       importHeaders: {},
       importList: [],
       extraImport: {},
-      importLoading: false,
+      importLoading: false
     }
   },
   methods: {
     handleSubmitImport() {
-      this.importLoading = true;
-      this.$refs.importUpload.submit();
+      this.importLoading = true
+      this.$refs.importUpload.submit()
     },
     handleImport() {
       this.importHeaders.authorization = 'Bearer ' + this.token
@@ -35,18 +35,18 @@ export default {
 
       // 切换 action
       if (this.getParent.table.usedModel !== undefined) {
-         this.importAction = process.env.VUE_APP_BASE_API + '/excel/import';
+        this.importAction = process.env.VUE_APP_BASE_API + '/excel/import'
       } else {
-        this.importAction = process.env.VUE_APP_BASE_API +  this.getParent.table.importRoute;
+        this.importAction = process.env.VUE_APP_BASE_API + this.getParent.table.importRoute;
       }
     },
     importSuccess(response, file, fileList) {
-        this.importLoading = false;
-        if (response.data.code === 10000) {
-            this.$message.success('导入成功')
-        } else {
-          this.$message.error(response.data.message)
-        }
+      this.importLoading = false
+      if (response.data.code === 10000) {
+        this.$message.success('导入成功')
+      } else {
+        this.$message.error(response.data.message)
+      }
     }
   }
 }

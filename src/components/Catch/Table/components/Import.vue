@@ -41,7 +41,7 @@ import _import from '../mixin/import'
 import excel from '@/components/Catch/Table/mixin/excel'
 
 export default {
-  name: 'importExcel',
+  name: 'ImportExcel',
   mixins: [_import, excel],
   computed: {
     getParent() {

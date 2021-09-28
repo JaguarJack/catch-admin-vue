@@ -1,5 +1,5 @@
 <script>
-import {isFunction} from "@/components/Catch/Table/type";
+import { isFunction } from '@/components/Catch/Table/type'
 
 export default {
   props: {

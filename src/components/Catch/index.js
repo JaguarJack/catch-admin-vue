@@ -23,24 +23,20 @@ import request from '@/utils/request'
 /**
  * catchAdmin 包装类
  */
-class CatchAdmin
-{
-
+class CatchAdmin {
   /**
    * admin 启动
    */
-  boot()
-  {
+  boot() {
     this.registerCatchTableComponents()
     this.registerAdminDirectives()
     this.registerUsedPlugins()
   }
 
   /**
-   * 注册 catchadmin 组件
+   * 注册 catch admin 组件
    */
-  registerCatchTableComponents()
-  {
+  registerCatchTableComponents() {
     this.installComponent('CatchTable', CatchTable)
     this.installComponent('switch_', switch_)
     this.installComponent('editNumber', editNumber)
@@ -56,18 +52,16 @@ class CatchAdmin
   /**
    * 注册使用的插件
    */
-  registerUsedPlugins()
-  {
-     Vue.use(formCreate)
-     Vue.use(VueHighlightJS)
+  registerUsedPlugins() {
+    Vue.use(formCreate)
+    Vue.use(VueHighlightJS)
   }
 
   /**
    * 注册 admin 的指令
    */
-  registerAdminDirectives()
-  {
-     this.installDirective('action', action)
+  registerAdminDirectives() {
+    this.installDirective('action', action)
   }
 
   /**
@@ -76,9 +70,8 @@ class CatchAdmin
    * @param name
    * @param component
    */
-  installComponent(name, component)
-  {
-     Vue.component(name, component)
+  installComponent(name, component) {
+    Vue.component(name, component)
   }
 
   /**
@@ -87,8 +80,7 @@ class CatchAdmin
    * @param name
    * @param directive
    */
-  installDirective(name, directive)
-  {
+  installDirective(name, directive) {
     Vue.directive(name, directive)
   }
 
@@ -97,9 +89,8 @@ class CatchAdmin
    *
    * @returns {{layout: (function(): Promise<*>), routeView: (function(): Promise<*>)}}
    */
-  loadViewComponents()
-  {
-     // find router.js from views/
+  loadViewComponents() {
+    // find router.js from views/
     const routeFiles = require.context('@/views/', true, /router.js$/)
 
     let routers = {
@@ -120,8 +111,7 @@ class CatchAdmin
    *
    * @returns {{base: {layout: (function(): Promise<*>), routeView: (function(): Promise<*>)}}}
    */
-  loadComponentsSelect()
-  {
+  loadComponentsSelect() {
     const routeFiles = require.context('@/views/', true, /router.js$/)
 
     let routers = {
@@ -134,7 +124,7 @@ class CatchAdmin
     routeFiles.keys().map(item => {
       // require route.js
       // eslint-disable-next-line no-const-assign
-      let router = {}
+      const router = {}
       router[item.split('/')[1]] = routeFiles(item).default
 
       routers = Object.assign(routers, router)
@@ -224,4 +214,4 @@ class CatchAdmin
   }
 }
 
-export default new CatchAdmin
+export default new CatchAdmin()

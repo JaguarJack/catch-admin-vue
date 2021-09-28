@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container" style="margin: 3px 5px;">
+  <div class="app-container" style="margin: 3px 15px;">
     <form-create
       v-model="formCreate.fApi"
       :rule="formCreate.rule"

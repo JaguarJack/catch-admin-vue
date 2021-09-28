@@ -117,5 +117,5 @@ export default {
         return function() { return true }
       }
     }
-  },
+  }
 }

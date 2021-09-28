@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: 'search',
+  name: 'Search',
   props: {
     search: {
       type: Array,
@@ -34,22 +34,22 @@ export default {
         submitBtn: {
           icon: 'el-icon-search',
           innerText: '搜索',
-          click: this.handleSearch,
+          click: this.handleSearch
         },
         resetBtn: {
           innerText: '重置',
           show: true,
           icon: 'el-icon-refresh',
-          click: this.handleReset,
+          click: this.handleReset
         }
       }
     }
   },
   methods: {
     isShowSearch() {
-      return this.search.filter(function(item){
+      return this.search.filter(function(item) {
         return item.type !== 'hidden'
-      }).length;
+      }).length
     },
     handleSearch() {
       this.$emit('handleSearch')

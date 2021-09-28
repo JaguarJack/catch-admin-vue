@@ -17,10 +17,10 @@
       </router-link>
     </scroll-pane>
     <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
-      <li @click="refreshSelectedTag(selectedTag)"><i class="el-icon-refresh"/> 刷新页面</li>
-      <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)"><i class="el-icon-close"/> 关闭页面</li>
-      <li @click="closeOthersTags"><i class="el-icon-right"/> 关闭其他</li>
-      <li @click="closeAllTags(selectedTag)"><i class="el-icon-switch-button"/> 关闭所有</li>
+      <li @click="refreshSelectedTag(selectedTag)"><i class="el-icon-refresh" /> 刷新页面</li>
+      <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)"><i class="el-icon-close" /> 关闭页面</li>
+      <li @click="closeOthersTags"><i class="el-icon-right" /> 关闭其他</li>
+      <li @click="closeAllTags(selectedTag)"><i class="el-icon-switch-button" /> 关闭所有</li>
     </ul>
   </div>
 </template>
@@ -199,7 +199,7 @@ export default {
 
 <style lang="scss" scoped>
 .tags-view-container {
-  height: 40px;
+  height: 33px;
   width: 100%;
   background: #fff;
   border-bottom: 1px solid #d8dce5;
@@ -209,9 +209,9 @@ export default {
       display: inline-block;
       position: relative;
       cursor: pointer;
-      height: 30px;
-      line-height: 30px;
-      border: 1px solid #d8dce5;
+      height: 25px;
+      line-height: 25px;
+      border: 1px solid #eae4d7;
       color: #495060;
       background: #fff;
       padding: 0 8px;
@@ -225,14 +225,14 @@ export default {
         margin-right: 15px;
       }
       &.active {
-        // background-color: #1890ff;
-        color: #1890ff;
+        background-color: #0960bd;
+        color: #fff;
         border-color: #1890ff;
         font-size: 13px;
         border-radius: 2px;
         &::before {
           content: '';
-          background: #1890ff;
+          background: #ffffff;
           display: inline-block;
           width: 8px;
           height: 8px;
@@ -285,7 +285,7 @@ export default {
         vertical-align: -3px;
       }
       &:hover {
-        background-color: #b4bccc;
+        background-color: #bfc4cb;
         color: #fff;
       }
     }

@@ -82,12 +82,18 @@
 
     & .nest-menu .el-submenu>.el-submenu__title,
     & .el-submenu .el-menu-item {
+      color: #fff;
       min-width: $sideBarWidth !important;
       background-color: $subMenuBg !important;
 
       &:hover {
-        background-color: $subMenuHover !important;
+        color: #fff !important;
+        // background-color: $subMenuHover !important;
       }
+    }
+
+    & .nest-menu .el-menu-item.is-active {
+      background-color: #0960bd!important;
     }
   }
 

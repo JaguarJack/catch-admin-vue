@@ -1,127 +1,127 @@
 <template>
   <div>
     <search
-      :search="search"
-      @handleSearch="this.handleSearch"
-      @handleReset="this.handleReset"
       ref="search"
+      :search="search"
+      @handleSearch="handleSearch"
+      @handleReset="handleReset"
     />
 
-    <div class="app-container" style="margin: 3px 5px;">
+    <div class="app-container" style="margin: 3px 15px;">
       <el-alert
         v-if="tips"
         :title="tips.content"
         :type="tips.type"
         style="margin-bottom: 5px;"
       />
-        <div class="filter-container">
-          <!-- 表头的 actions -->
-          <component
-            :is="'el-' + item.el"
-            v-for="item in actions"
-            :key="item.name"
-            :class="item.class"
-            :icon="item.icon"
-            v-action="item.permission"
-            :type="item.type === undefined ? 'primary' : item.type"
-            @click="actionClick(item)"
-            style="margin-bottom: 5px;"
-          >
-            {{ item.label }}
-          </component>
-          <el-button v-if="this.selectedIds.length > 0 && hidePagination" type="danger" size="small" @click="handleDelete(selectedIds)">批量删除</el-button>
+      <div class="filter-container">
+        <!-- 表头的 actions -->
+        <component
+          :is="'el-' + item.el"
+          v-for="item in actions"
+          :key="item.name"
+          v-action="item.permission"
+          :class="item.class"
+          :icon="item.icon"
+          :type="item.type === undefined ? 'primary' : item.type"
+          style="margin-bottom: 5px;"
+          @click="actionClick(item)"
+        >
+          {{ item.label }}
+        </component>
+        <el-button v-if="selectedIds.length > 0 && hidePagination" type="danger" size="small" @click="handleDelete(selectedIds)">批量删除</el-button>
 
-          <div class="fr">
-            <el-button icon="el-icon-refresh"  @click="refreshPage" class="mr-5" size="mini"/>
-            <el-dropdown :hide-on-click="false">
-              <span class="el-dropdown-link">
-                 <el-button icon="el-icon-menu" size="mini"/>
-              </span>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item
-                  v-for="(item, k) in headers"
-                  :key="item.prop"
-                  v-if="item.label.length > 0"
-                >
-                  <el-checkbox v-model="item.show">{{  item.label }}</el-checkbox>
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </div>
+        <div class="fr">
+          <el-button icon="el-icon-refresh" class="mr-2" size="mini" @click="refreshPage" />
+          <el-dropdown :hide-on-click="false">
+            <span class="el-dropdown-link">
+              <el-button icon="el-icon-menu" size="mini" />
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item
+                v-for="(item, k) in headers"
+                v-if="item.label.length > 0"
+                :key="item.prop"
+              >
+                <el-checkbox v-model="item.show" />   {{ item.label }}
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
         </div>
-        <el-table
-          v-loading="loading"
-          :data="source"
-          style="width: 100%"
-          v-bind="$attrs"
-          :key="updateKey"
-          v-on="getTableEvents"
+      </div>
+      <el-table
+        :key="updateKey"
+        v-loading="loading"
+        :data="source"
+        style="width: 100%"
+        v-bind="$attrs"
+        v-on="getTableEvents"
+      >
+        <el-table-column
+          v-for="(item, k) in getHeaders"
+          v-if="item.type !== 'selection'"
+          :key="item.prop"
+          v-bind="getAttrsValue(item)"
         >
-          <el-table-column
-            v-for="(item, k) in getHeaders"
-            v-if="item.type !== 'selection'"
-            :key="item.prop"
-            v-bind="getAttrsValue(item)"
-          >
-            <template v-slot="scope">
-              <div v-if="isActionOrComponent(getValue(scope, item))">
-                <component
-                  :is="renderTypeList[getMatchRenderFunction(item)].target"
-                  :cell-list="getValue(scope, item)"
-                  :row="scope.row"
-                  :parent="getParent"
-                  :catch-table="getTableObject()"
-                  @click.native="($event) => {
-                    handleNativeClick(getAttrsValue(item), $event)
-                  }"
-                />
-              </div>
-              <span v-else>
-                {{ getValue(scope, item) }}
-              </span>
-            </template>
-          </el-table-column>
-          <el-table-column
-            v-else
-            type="selection"
-            width="50px"
-            :selectable="selectable"
-          />
-        </el-table>
+          <template v-slot="scope">
+            <div v-if="isActionOrComponent(getValue(scope, item))">
+              <component
+                :is="renderTypeList[getMatchRenderFunction(item)].target"
+                :cell-list="getValue(scope, item)"
+                :row="scope.row"
+                :parent="getParent"
+                :catch-table="getTableObject()"
+                @click.native="($event) => {
+                  handleNativeClick(getAttrsValue(item), $event)
+                }"
+              />
+            </div>
+            <span v-else>
+              {{ getValue(scope, item) }}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          v-else
+          type="selection"
+          width="50px"
+          :selectable="selectable"
+        />
+      </el-table>
 
-        <el-row
-          v-if="!hidePagination"
-          justify="end"
-          type="flex"
-        >
-          <el-col :span="8" style="padding-top: 14px">
-            <el-button v-if="this.selectedIds.length > 0" icon="el-icon-delete" style="float: left" type="danger" size="small" @click="handleDelete(selectedIds)">批量删除</el-button>
-          </el-col>
-          <el-col :span="16">
-            <el-pagination
-              class="pagination-container"
-              background
-              layout="total, sizes, prev, pager, next"
-              :current-page="pagination.currentPage"
-              :page-size="pagination.pageSize"
-              :page-sizes="pagination.sizes"
-              :total="pagination.total"
-              @size-change="handleSizeChange"
-              @current-change="handlePageChange"
-            />
-          </el-col>
-        </el-row>
+      <el-row
+        v-if="!hidePagination"
+        justify="end"
+        type="flex"
+      >
+        <el-col :span="8" style="padding-top: 14px">
+          <el-button v-if="this.selectedIds.length > 0" icon="el-icon-delete" style="float: left" type="danger" size="small" @click="handleDelete(selectedIds)">批量删除</el-button>
+        </el-col>
+        <el-col :span="16">
+          <el-pagination
+            class="pagination-container"
+            background
+            layout="total, sizes, prev, pager, next"
+            :current-page="pagination.currentPage"
+            :page-size="pagination.pageSize"
+            :page-sizes="pagination.sizes"
+            :total="pagination.total"
+            @size-change="handleSizeChange"
+            @current-change="handlePageChange"
+          />
+        </el-col>
+      </el-row>
 
       <el-dialog
         :title="dialog.title"
         :visible.sync="dialog.visible"
         :width="dialogWidth"
         :modal="dialogModal"
-        @opened="dialogOpened"
-        @close="handleHiddenDialog"
         :show-header="false"
         class="catch-form"
         append-to-body
+        @opened="dialogOpened"
+        @close="handleHiddenDialog"
       >
         <form-create
           v-model="formCreate.fApi"
@@ -130,7 +130,7 @@
           :value.sync="formCreate.value"
         />
       </el-dialog>
-      </div>
+    </div>
 
     <form-create
       v-show="false"
@@ -138,7 +138,7 @@
       :rule="[]"
     />
     <!--- 导入  -->
-    <import-excel ref="import"/>
+    <import-excel ref="import" />
   </div>
 </template>
 
@@ -149,8 +149,8 @@ import operate from './mixin/operete'
 // components
 import ElementsMapping from './components/ElementsMapping'
 import ComponentsMapping from './components/ComponentsMapping'
-import search from './components/search'
-import importExcel from './components/import'
+import search from './components/Search'
+import importExcel from './components/Import'
 // mixins
 import create from './mixin/create'
 import update from './mixin/update'
@@ -164,13 +164,13 @@ import tableData from './mixin/tableData'
 
 export default {
   name: 'Table',
-  mixins: [operate, create, update, del, view, to, _export, excel, props, tableData],
   components: {
     ElementsMapping,
     ComponentsMapping,
     search,
     importExcel
   },
+  mixins: [operate, create, update, del, view, to, _export, excel, props, tableData],
   computed: {
     // 获取可用 refs 为止
     getParent() {
@@ -187,8 +187,8 @@ export default {
       return this.$refs.search.queryParams
     },
     getTableEvents() {
-      let events = this.tableEvents
-      for (let key in events) {
+      const events = this.tableEvents
+      for (const key in events) {
         events[key] = this[events[key]]
       }
       return events
@@ -199,17 +199,17 @@ export default {
 
     // headers
     getHeaders() {
-      return this.headers.filter(header=> header.show);
+      return this.headers.filter(header => header.show)
     }
   },
   methods: {
     getAttrsValue(item) {
       const { attrs } = { attrs: item }
-      return  {
+      return {
         ...attrs
       }
       // delete result.prop
-     // return result
+      // return result
     },
     dialogOpened() {
       this.getForm.clearValidateState()
@@ -234,15 +234,15 @@ export default {
       }
     },
     dialogOpenedFirstDo() {
-        // 创建前操作
-        if (this.getParent.beforeCreate !== undefined) {
-            this.getParent.beforeCreate()
-        }
+      // 创建前操作
+      if (this.getParent.beforeCreate !== undefined) {
+        this.getParent.beforeCreate()
+      }
 
-        // 更新前数据操作
-        if (this.form.data && this.getParent.beforeUpdate !== undefined) {
-          this.getParent.beforeUpdate(this.form.data)
-        }
+      // 更新前数据操作
+      if (this.form.data && this.getParent.beforeUpdate !== undefined) {
+        this.getParent.beforeUpdate(this.form.data)
+      }
     },
     getValue(scope, configItem) {
       const prop = configItem.prop
@@ -321,7 +321,7 @@ export default {
 
 <style lang="scss">
 .search-container {
-  margin: 2px 5px;
+  margin: 5px 15px;
   background: white;
 }
 ._import_ {

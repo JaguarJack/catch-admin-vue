@@ -12,10 +12,9 @@
 
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
 
-        <!--<el-tooltip content="Global Size" effect="dark" placement="bottom">
+        <el-tooltip content="Global Size" effect="dark" placement="bottom">
           <size-select id="size-select" class="right-menu-item hover-effect" />
-        </el-tooltip>-->
-
+        </el-tooltip>
       </template>
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
@@ -53,6 +52,7 @@ import Hamburger from '@/components/Hamburger'
 import ErrorLog from '@/components/ErrorLog'
 import Screenfull from '@/components/Screenfull'
 import Search from '@/components/HeaderSearch'
+import SizeSelect from '@/components/SizeSelect'
 
 export default {
   components: {
@@ -60,6 +60,7 @@ export default {
     Hamburger,
     ErrorLog,
     Screenfull,
+    SizeSelect,
     Search
   },
   computed: {
@@ -83,7 +84,7 @@ export default {
 
 <style lang="scss" scoped>
 .navbar {
-  height: 50px;
+  height: 45px;
   overflow: hidden;
   position: relative;
   background: #fff;
@@ -133,7 +134,7 @@ export default {
         transition: background .3s;
 
         &:hover {
-          background: rgba(0, 0, 0, .025)
+          background: rgba(0, 0, 0, .050)
         }
       }
     }
@@ -142,21 +143,21 @@ export default {
       margin-right: 30px;
 
       .avatar-wrapper {
-        margin-top: 5px;
+        margin-top: 10px;
         position: relative;
 
         .user-avatar {
           cursor: pointer;
-          width: 40px;
-          height: 40px;
-          border-radius: 10px;
+          width: 30px;
+          height: 30px;
+          border-radius: 30px;
         }
 
         .el-icon-caret-bottom {
           cursor: pointer;
           position: absolute;
-          right: -20px;
-          top: 25px;
+          right: -15px;
+          top: 13px;
           font-size: 12px;
         }
       }

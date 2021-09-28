@@ -18,29 +18,29 @@ export default {
   props: {
     parent: {
       type: Object,
-      default () {
+      default() {
         return {}
       }
     },
     row: {
       type: Object,
-      default () {
+      default() {
         return {}
       }
     },
     cellList: {
       type: Array,
-      default () {
+      default() {
         return []
       }
     }
   },
-  data () {
+  data() {
     return {
       getCellList: this.cellList
     }
   },
-  created () {
+  created() {
     this.$options.components = this.parent.$options.components
   }
 }
