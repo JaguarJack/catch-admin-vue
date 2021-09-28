@@ -1,58 +1,57 @@
 <template>
   <div class="login" style="background-color: #e9ecef;height: 100%;  overflow-y:hidden;">
-    <el-card shadow="hover" class="login-card">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
-      <div class="title-container">
-        <h3 class="title" align="center">CatchAdmin 后台管理系统</h3>
-      </div>
-      <h2>登 录</h2>
-      <el-divider/>
-      <el-form-item prop="email">
-        <span class="svg-container">
-          邮 箱
-        </span>
-        <el-input
-          prefix-icon="el-icon-user"
-          ref="email"
-          v-model="loginForm.email"
-          placeholder="请输入邮箱"
-          name="email"
-          type="text"
-          tabindex="1"
-          autocomplete="on"
-        />
-      </el-form-item>
-
-      <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
-        <el-form-item prop="password">
-          <span class="svg-container">
-            密 码
+    <el-card shadow="always" class="login-card">
+      <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
+        <div class="title-container">
+          <h3 class="title" style="text-align: center">CatchAdmin 后台管理系统</h3>
+        </div>
+        <h2>登 录</h2>
+        <el-divider/>
+        <el-form-item prop="email">
+          <span class="svg-container" style="font-size: 16px;">
+            邮 箱
           </span>
           <el-input
-            :key="passwordType"
-            prefix-icon="el-icon-lock"
-            ref="password"
-            show-password
-            v-model="loginForm.password"
-            :type="passwordType"
-            placeholder="请输入密码"
-            name="password"
-            tabindex="2"
+            ref="email"
+            v-model="loginForm.email"
+            prefix-icon="el-icon-user"
+            placeholder="请输入邮箱"
+            name="email"
+            type="text"
+            tabindex="1"
             autocomplete="on"
-            @keyup.native="checkCapslock"
-            @blur="capsTooltip = false"
-            @keyup.enter.native="handleLogin"
           />
         </el-form-item>
-      </el-tooltip>
 
-      <el-button :loading="loading" type="primary"  @click.native.prevent="handleLogin"><i class="el-icon-s-promotion"/> 登 录</el-button>
+        <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+          <el-form-item prop="password">
+            <span class="svg-container" style="font-size: 16px;">
+              密 码
+            </span>
+            <el-input
+              :key="passwordType"
+              ref="password"
+              v-model="loginForm.password"
+              prefix-icon="el-icon-lock"
+              show-password
+              :type="passwordType"
+              placeholder="请输入密码"
+              name="password"
+              tabindex="2"
+              autocomplete="on"
+              @keyup.native="checkCapslock"
+              @blur="capsTooltip = false"
+              @keyup.enter.native="handleLogin"
+            />
+          </el-form-item>
+        </el-tooltip>
 
-      <el-divider></el-divider>
-      <div style="position:relative;color: darkgrey;font-size: 14px;">
-        <a href="http://doc.catchadmin.com/">CatchAdmin 管理系统</a> @copyright 2018-2020
-      </div>
-    </el-form>
+        <el-button :loading="loading" type="primary" @click.native.prevent="handleLogin"><i class="el-icon-s-promotion"/> 登 录</el-button>
+        <el-divider></el-divider>
+        <div style="color: darkgrey; font-size: 14px;text-align: center;height: 50px;line-height: 50px;">
+          <a href="https://catchadmin.com/">CatchAdmin 管理系统</a> @copyright 2018-2020
+        </div>
+      </el-form>
     </el-card>
   </div>
 </template>
@@ -63,20 +62,6 @@
 export default {
   name: 'Login',
   data() {
-    /** const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
-      } else {
-        callback()
-      }
-    }
-    const validatePassword = (rule, value, callback) => {
-      if (value.length < 5) {
-        callback(new Error('The password can not be less than 5 digits'))
-      } else {
-        callback()
-      }
-    }*/
     return {
       loginForm: {
         email: 'catch@admin.com',
@@ -124,16 +109,6 @@ export default {
       const { key } = e
       this.capsTooltip = key && key.length === 1 && (key >= 'A' && key <= 'Z')
     },
-    showPwd() {
-      if (this.passwordType === 'password') {
-        this.passwordType = ''
-      } else {
-        this.passwordType = 'password'
-      }
-      this.$nextTick(() => {
-        this.$refs.password.focus()
-      })
-    },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
@@ -160,24 +135,6 @@ export default {
         return acc
       }, {})
     }
-    // afterQRScan() {
-    //   if (e.key === 'x-admin-oauth-code') {
-    //     const code = getQueryObject(e.newValue)
-    //     const codeMap = {
-    //       wechat: 'code',
-    //       tencent: 'code'
-    //     }
-    //     const type = codeMap[this.auth_type]
-    //     const codeName = code[type]
-    //     if (codeName) {
-    //       this.$store.dispatch('LoginByThirdparty', codeName).then(() => {
-    //         this.$router.push({ path: this.redirect || '/' })
-    //       })
-    //     } else {
-    //       alert('第三方登录失败')
-    //     }
-    //   }
-    // }
   }
 }
 </script>
@@ -185,15 +142,19 @@ export default {
 <style lang="scss">
   .login .el-input .el-input__inner {
     padding-left: 35px;
+    height: 40px;
+    font-size: 16px;
   }
 
   .login .el-card {
-    border-radius: 8px;
+    border-radius: 5%;
   }
   @media screen and (max-device-width: 1920px) {
     .login .el-card {
-      width: 30%;
-      margin: 12% auto;
+      width: 28%;
+      margin: 10% auto;
+      height: 65%;
+      padding: 40px 10px;
     }
     .login .el-card .el-button{
       position: relative;
@@ -205,10 +166,11 @@ export default {
       width: 100%;
       height: 100%;
       margin: auto;
+     padding-top: 25%;
     }
     .login .el-card .el-button{
       position: relative;
-      left: 35%;
+      // left: 35%;
     }
   }
 /* 修复input 背景不协调 和光标变色 */
