@@ -13,7 +13,7 @@ export default {
   mixins: [renderTable],
   data() {
     return {
-      tableFrom: 'table/permissions/role',
+      tableFrom: 'table/permissions/role'
     }
   },
   methods: {
@@ -29,7 +29,7 @@ export default {
       if (row.parent_id) {
         this.selectParentRoles([row.parent_id])
       }
-      const permissions = this.$refs[this.table.ref].getForm.el('_permissions').$refs.tree;
+      const permissions = this.$refs[this.table.ref].getForm.el('_permissions').$refs.tree
       row._permissions = row._permissions.filter(permission => {
         const node = permissions.getNode(permission)
         return node.isLeaf
@@ -55,15 +55,12 @@ export default {
       if (row.form.parent_id instanceof Array) {
         row.form.parent_id = row.form.parent_id.length > 0 ? row.form.parent_id.pop() : 0
       }
-
-      const permissions = this.$refs[this.table.ref].getForm.el('_permissions').$refs.tree;
-
+      const permissions = this.$refs[this.table.ref].getForm.el('_permissions').$refs.tree
       row.form.permissions = permissions.getCheckedKeys().concat(permissions.getHalfCheckedKeys())
-
       return row
     },
     afterHandleResponse() {
-      this.$http.get('table/permissions/role', {params: { only: 'form'}}).then(response => {
+      this.$http.get('table/permissions/role', { params: { only: 'form' }}).then(response => {
         this.formCreate.rule = response.data.form
       })
     }

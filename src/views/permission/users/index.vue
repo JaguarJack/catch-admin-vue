@@ -1,8 +1,8 @@
 <template>
   <div style="margin: 5px 5px;">
     <el-row :gutter="20">
-      <el-col :span="5" style="margin-top: 3px;padding-right: 0;">
-      <div slot="header" class="clearfix">
+      <el-col :span="5" style="margin-top: 10px;padding-right: 0; padding-left: 30px;">
+        <div slot="header" class="clearfix">
           <span>部门</span>
         </div>
         <div class="block department">
@@ -17,7 +17,7 @@
           />
         </div>
       </el-col>
-      <el-col :span="19">
+      <el-col :span="19" style="padding-left: 0;">
         <catch-table
           v-if="table"
           :ref="table.ref"

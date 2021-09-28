@@ -1,7 +1,7 @@
 <template>
   <el-dropdown trigger="click" @command="handleSetSize">
     <div>
-      <svg-icon class-name="size-icon" icon-class="size" />
+      <svg-icon class-name="size-icon" style="font-size: 14px;" icon-class="size" />
     </div>
     <el-dropdown-menu slot="dropdown">
       <el-dropdown-item v-for="item of sizeOptions" :key="item.value" :disabled="size===item.value" :command="item.value">
@@ -17,10 +17,10 @@ export default {
   data() {
     return {
       sizeOptions: [
-        { label: 'Default', value: 'default' },
-        { label: 'Medium', value: 'medium' },
-        { label: 'Small', value: 'small' },
-        { label: 'Mini', value: 'mini' }
+        { label: '默认', value: 'default' },
+        { label: '中等', value: 'medium' },
+        { label: '小号', value: 'small' },
+        { label: '迷你', value: 'mini' }
       ]
     }
   },
@@ -35,7 +35,7 @@ export default {
       this.$store.dispatch('app/setSize', size)
       this.refreshView()
       this.$message({
-        message: 'Switch Size Success',
+        message: '切换成功',
         type: 'success'
       })
     },
