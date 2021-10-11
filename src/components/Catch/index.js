@@ -14,7 +14,7 @@ import url from '@/components/Catch/Table/columns/url'
 import copy from '@/components/Catch/Table/columns/copy'
 
 import formCreate from '@form-create/element-ui'
-import VueHighlightJS from 'vue-highlight.js'
+import VueHighlightJS from 'vue-highlightjs'
 import store from '@/store'
 import router from '@/router'
 
