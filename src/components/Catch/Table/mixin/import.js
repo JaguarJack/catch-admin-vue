@@ -37,7 +37,7 @@ export default {
       if (this.getParent.table.usedModel !== undefined) {
         this.importAction = process.env.VUE_APP_BASE_API + '/excel/import'
       } else {
-        this.importAction = process.env.VUE_APP_BASE_API + this.getParent.table.importRoute;
+        this.importAction = process.env.VUE_APP_BASE_API + '/' + this.getParent.table.importRoute;
       }
     },
     importSuccess(response, file, fileList) {
