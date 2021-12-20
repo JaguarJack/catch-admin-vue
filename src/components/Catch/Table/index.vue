@@ -118,6 +118,7 @@
         :width="dialogWidth"
         :modal="dialogModal"
         :show-header="false"
+        :close-on-click-modal="false"
         class="catch-form"
         append-to-body
         @opened="dialogOpened"
