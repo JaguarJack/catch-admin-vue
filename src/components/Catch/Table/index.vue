@@ -139,7 +139,7 @@
       :rule="[]"
     />
     <!--- 导入  -->
-    <import-excel ref="import" />
+    <import-excel ref="import" @ok="refreshPage"/>
   </div>
 </template>
 
