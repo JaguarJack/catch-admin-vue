@@ -17,7 +17,11 @@
     :tree-props="table.tree.props"
   />
     <el-dialog title="选择菜单图标" :visible.sync="iconViable" width="70%">
+     <div style="height:500px;" class="scrollbar">
+        <el-scrollbar style="height:100%">
       <icons @selectIcon="handleSelectIcon" />
+        </el-scrollbar>
+      </div>
     </el-dialog>
   </div>
 </template>
