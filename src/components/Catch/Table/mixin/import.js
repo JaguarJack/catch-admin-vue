@@ -43,6 +43,9 @@ export default {
     importSuccess(response, file, fileList) {
       this.importLoading = false
       if (response.data.code === 10000) {
+        this.importVisible = false
+        this.importList = []
+        this.$emit('ok')
         this.$message.success('导入成功')
       } else {
         this.$message.error(response.data.message)

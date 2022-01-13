@@ -118,6 +118,7 @@
         :width="dialogWidth"
         :modal="dialogModal"
         :show-header="false"
+        :close-on-click-modal="false"
         class="catch-form"
         append-to-body
         @opened="dialogOpened"
@@ -138,7 +139,7 @@
       :rule="[]"
     />
     <!--- 导入  -->
-    <import-excel ref="import" />
+    <import-excel ref="import" @ok="refreshPage"/>
   </div>
 </template>
 
