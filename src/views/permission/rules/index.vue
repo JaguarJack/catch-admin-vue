@@ -76,7 +76,6 @@ export default {
     renderAfter(form) {
       if (form !== null) {
         this.formCreate.fApi.setValue({
-          permission_mark: form.permission_mark.indexOf('@') === -1 ? form.permission_mark : form.permission_mark.split('@')[1],
           permission_name: form.permission_name
         })
       }
