@@ -22,49 +22,31 @@ export default {
       const importFields = []
       const defaultOptions = [{ value: 1, label: '是' }, { value: 2, label: '否' }]
       const headers = this.filterExcelFields()
-      headers.forEach(function(header) {
-        if (header.export === undefined) {
-          if (header.component !== undefined) {
-            const name = header.component[0].name
-            if (name === 'switch_' || name === 'select_') {
-              importFields.push({
-                name: header.label,
-                field: header.prop,
-                options: header.component[0].options.length > 0 ? header.component[0].options : defaultOptions
-              })
-            } else {
-              importFields.push({
-                name: header.label,
-                field: header.prop
-              })
+
+      headers.forEach(header => {
+        if (header.import !== false) {
+          const fieldObj = {
+            name: header.label,
+            field: header.prop
+          }
+
+          if (header.component && header.component[0]) {
+            const component = header.component[0]
+            if (component.name === 'switch_' || component.name === 'select_') {
+              fieldObj.options = component.options.length > 0 ? component.options : defaultOptions
             }
-          } else {
-            importFields.push({
-              name: header.label,
-              field: header.prop
-            })
           }
+          importFields.push(fieldObj)
         }
       })
 
-      extraExcelFields.forEach(function(item) {
-        if (item.import !== undefined) {
-          if (item.import === true) {
-            importFields.push({
-              name: item.label,
-              field: item.prop,
-              options: item.options === undefined ? [] : item.options
-            })
-          }
-        } else {
-          importFields.push({
-            name: item.label,
-            field: item.prop,
-            options: item.options === undefined ? [] : item.options
-          })
-        }
+      extraExcelFields.forEach(item => {
+        item.import !== false && importFields.push({
+          name: item.label,
+          field: item.prop,
+          options: item.options === undefined ? [] : item.options
+        })
       })
-
       return importFields
     },
 
