@@ -42,13 +42,13 @@ export default {
     },
     importSuccess(response, file, fileList) {
       this.importLoading = false
-      if (response.data.code === 10000) {
-        this.importVisible = false
-        this.importList = []
+      this.importVisible = false
+      this.importList = []
+      if (response.code === 10000) {
         this.$emit('ok')
         this.$message.success('导入成功')
       } else {
-        this.$message.error(response.data.message)
+        this.$message.error(response.message)
       }
     }
   }
