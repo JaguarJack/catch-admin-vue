@@ -1,15 +1,14 @@
 <template>
   <div>
-  <catch-table
-    v-if="table"
-    :ref="table.ref"
-    :headers="table.headers"
-    :border="true"
-    :search="table.search"
-    :table-events="table.events"
-    :api-route="table.apiRoute"
-  />
-  <!--
+    <catch-table
+      :ref="table.ref"
+      :headers="table.headers"
+      :border="true"
+      :search="table.search"
+      :table-events="table.events"
+      :api-route="table.apiRoute"
+    />
+    <!--
   <div class="app-container">
     <div class="filter-container">
       <el-input v-model="queryParam.tablename" placeholder="表名" clearable class="filter-item form-search-input" />
@@ -54,17 +53,17 @@
       :layout="paginate.layout"
       :total="paginate.total"/>
 -->
-  <!--------------------------------- 查看表结构 ------------------------------------------------------->
-  <el-dialog title="表结构" :visible.sync="visable">
+    <!--------------------------------- 查看表结构 -------------------------------------->
+    <el-dialog title="表结构" :visible.sync="visable">
       <el-table :data="fields" tooltip-effect="dark" style="width: 100%" border fit>
         <el-table-column label="字段名称" prop="name" />
-        <el-table-column prop="type" label="类型" width="150"/>
+        <el-table-column prop="type" label="类型" width="150" />
         <el-table-column prop="notnull" label="NULL" width="150">
           <template slot-scope="field">
-            <el-tag type="primary">{{ field.row.notnull === true ? '是' : '否'}}</el-tag>
+            <el-tag type="primary">{{ field.row.notnull === true ? '是' : '否' }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="default" label="默认值" width="150"/>
+        <el-table-column prop="default" label="默认值" width="150" />
         <el-table-column prop="comment" label="注释" />
       </el-table>
     </el-dialog>
@@ -72,18 +71,15 @@
 </template>
 
 <script>
+import renderForm from '@/views/render-table-form'
 export default {
+  mixins: [renderForm],
   data() {
     return {
-      table: null,
+      tableFrom: 'table/system/database',
       visable: false,
       fields: null
     }
-  },
-  created() {
-    this.$http.get('table/system/database').then(response => {
-      this.table = response.data.table;
-    })
   },
   methods: {
     handleView(row) {
