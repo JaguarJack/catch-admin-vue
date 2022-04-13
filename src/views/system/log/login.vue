@@ -1,6 +1,5 @@
 <template>
   <catch-table
-    v-if="table"
     :ref="table.ref"
     :headers="table.headers"
     :border="true"
@@ -11,21 +10,18 @@
 </template>
 
 <script>
+import renderForm from '@/views/render-table-form'
 import status from './component/status'
 import loginAt from './component/loginAt'
 export default {
   components: {
     status, loginAt
   },
+  mixins: [renderForm],
   data() {
     return {
-      table: null,
+      tableFrom: 'table/system/loginLog'
     }
-  },
-  created() {
-    this.$http.get('table/system/loginLog').then(response => {
-      this.table = response.data.table;
-    })
   }
 }
 </script>

@@ -1,6 +1,5 @@
 <template>
   <catch-table
-    v-if="table"
     :ref="table.ref"
     :headers="table.headers"
     :border="true"
@@ -11,21 +10,17 @@
 </template>
 
 <script>
-
+import renderForm from '@/views/render-table-form'
 import params from './component/params'
 export default {
   components: {
     params,
   },
+  mixins: [renderForm],
   data() {
     return {
-        table: null
+      tableFrom: 'table/system/operateLog'
     }
-  },
-  created() {
-    this.$http.get('table/system/operateLog').then(response => {
-      this.table = response.data.table;
-    })
   }
 }
 </script>
