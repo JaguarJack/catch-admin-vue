@@ -25,7 +25,7 @@ export const usePermissionsStore = defineStore('PermissionsStore', {
 
       permissions: [],
 
-      menuPathMap: new Map(),
+      menuPathMap: new Map()
     }
   },
 
@@ -47,7 +47,7 @@ export const usePermissionsStore = defineStore('PermissionsStore', {
 
     getMenuPathMap(): Map<string, string> {
       return this.menuPathMap
-    },
+    }
   },
 
   /**
@@ -131,14 +131,14 @@ export const usePermissionsStore = defineStore('PermissionsStore', {
           if (permission.type === MenuType.TOP_TYPE) {
             importComponent = () => import('@/layout/index.vue')
           } else {
-            importComponent = viewComponents['/modules' + permission.component]
+            importComponent = viewComponents.get(permission.component)
           }
           const menu: Menu = Object.assign({
             path: this.resolveRoutePathRoutePath(permission.route, path),
-            name: permission.module + '_' + permission.permission_mark,
+            name: permission.module + '_' + permission.permission_mark + permission.route.replace('/', '_'),
             component: importComponent,
             redirect: permission.redirect,
-            meta: Object.assign({ title: permission.permission_name, icon: permission.icon, hidden: permission.hidden, active_menu: permission.active_menu }),
+            meta: Object.assign({ title: permission.permission_name, icon: permission.icon, hidden: permission.hidden, active_menu: permission.active_menu })
           })
 
           // child menu
@@ -171,7 +171,7 @@ export const usePermissionsStore = defineStore('PermissionsStore', {
           path: this.resolveRoutePathRoutePath(route.path, path),
           name: route.name,
           meta: route.meta,
-          component: route.component,
+          component: route.component
         })
 
         if (route.children?.length) {
@@ -196,6 +196,6 @@ export const usePermissionsStore = defineStore('PermissionsStore', {
 
       // 去除尾部的 /
       return route.replace(/\/$/g, '')
-    },
-  },
+    }
+  }
 })

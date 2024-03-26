@@ -16,6 +16,15 @@ export function getModuleRoutes() {
   return moduleRoutes
 }
 
+// 获取初用户和开发模块的 view component
 export function getModuleViewComponents() {
-  return import.meta.glob(['@/module/**/views/**/*.vue', '@/module/!User/views/**/*.vue', '@/module/!Develop/views/**/*.vue', '@/module/!Options/views/**/*.vue'])
+  const components = new Map()
+
+  const importComponents: any = import.meta.glob(['@/views/**/*.vue'])
+
+  for (const k in importComponents) {
+    components.set(k.replace('/src/views', ''), importComponents[k])
+  }
+
+  return components
 }

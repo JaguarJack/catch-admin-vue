@@ -20,16 +20,16 @@ function getVNodes(menus: Menu[] | undefined, _subMenuClass: string | undefined)
           MenuItem,
           {
             subMenuClass: _subMenuClass,
-            menu,
+            menu
           },
           {
-            default: () => getVNodes(menu.children, 'children-menu'),
-          },
+            default: () => getVNodes(menu.children, 'children-menu')
+          }
         )
       } else {
         vnode = h(MenuItem, {
           subMenuClass: _subMenuClass,
-          menu,
+          menu
         })
       }
       vnodes.push(vnode)
@@ -57,8 +57,8 @@ function filterMenus(menus: Menu[] | undefined): Menu[] {
         Object.assign({
           path: m.children[0].path,
           meta: m.children[0].meta,
-          name: m.name,
-        }),
+          name: m.name
+        })
       )
     } else {
       newMenus.push(m)
@@ -93,12 +93,12 @@ export default defineComponent({
   props: {
     subMenuClass: {
       type: String,
-      require: true,
+      require: true
     },
     menuClass: {
       type: String,
-      require: true,
-    },
+      require: true
+    }
   },
   setup(props, ctx) {
     const permissionsStore = usePermissionsStore()
@@ -112,13 +112,13 @@ export default defineComponent({
       return h(
         menus,
         {
-          class: 'border-none side-menu ' + props.menuClass,
+          class: 'border-none side-menu ' + props.menuClass
         },
         {
-          default: () => vnodes,
-        },
+          default: () => vnodes
+        }
       )
     }
-  },
+  }
 })
 </script>

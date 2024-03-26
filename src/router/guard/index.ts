@@ -44,7 +44,7 @@ const guard = (router: Router) => {
               // 在动态路由之后挂载匹配 404 路由
               router.addRoute({
                 path: '/:pathMatch(.*)*',
-                redirect: '/404',
+                redirect: '/404'
               })
             }
             next({ ...to, replace: true })
