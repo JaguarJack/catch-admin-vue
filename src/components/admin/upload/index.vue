@@ -13,7 +13,7 @@
       <slot :name="name"></slot>
     </template>
     <img :src="modelValue" v-if="modelValue" :class="imageClass" />
-    <div v-else class="w-24 h-24 border-blue-100 border-dashed border rounded flex justify-center pt-8">
+    <div v-else class="flex justify-center w-24 h-24 pt-8 border border-blue-100 border-dashed rounded">
       <Icon name="plus" />
     </div>
   </el-upload>
@@ -21,29 +21,29 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { env } from '@/support/helper'
-import { getAuthToken } from '@/support/helper'
+import { env, getAuthToken } from '@/support/helper'
+
 import { Code } from '@/enum/app'
 import Message from '@/support/message'
 
 const props = defineProps({
   action: {
     type: String,
-    default: 'upload/image',
+    default: '/upload/image'
   },
   auto: {
     type: Boolean,
-    default: true,
+    default: true
   },
   modelValue: {
     type: String,
     default: '',
-    require: true,
+    require: true
   },
   imageClass: {
     type: String,
-    default: '',
-  },
+    default: ''
+  }
 })
 
 const emits = defineEmits(['update:modelValue'])
