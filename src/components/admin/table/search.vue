@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full min-h-0 bg-white dark:bg-regal-dark pl-5 pt-5 pr-5 rounded-lg">
+  <div class="w-full min-h-0 pt-5 pl-5 pr-5 bg-white rounded-lg dark:bg-regal-dark">
     <el-form :inline="true">
       <slot name="body" />
       <el-form-item>
@@ -20,14 +20,18 @@
 defineProps({
   search: {
     type: Function,
-    required: true,
+    required: true
   },
 
   reset: {
     type: Function,
-    required: true,
-  },
+    required: true
+  }
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+:deep(.el-form-item) {
+  min-width: 240px;
+}
+</style>
