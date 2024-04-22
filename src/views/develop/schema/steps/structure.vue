@@ -118,6 +118,7 @@ const updateField = (id: number) => {
       structure.value = s
     }
   })
+  schemaStore.setStructures(structures.value)
 }
 
 const form = ref<FormInstance>()
@@ -135,7 +136,10 @@ const submitStructure = (formEl: FormInstance | undefined) => {
 }
 
 const deleteField = (id: number) => {
-  schemaStore.filterStructures(id)
+  structures.value = structures.value.filter((s: Structure) => {
+    return !(s.id === id)
+  })
+  schemaStore.setStructures(structures.value)
 }
 
 const next = () => {
@@ -143,7 +147,7 @@ const next = () => {
     Message.error('请先填写表结构数据')
   } else {
     http.post('schema', schemaStore.$state).then(r => {
-      if (r.data.code == Code.SUCCESS) {
+      if (r.data.code === Code.SUCCESS) {
         Message.success('创建成功')
         schemaStore.finished()
       }
@@ -152,7 +156,6 @@ const next = () => {
 }
 // 调整数据结构
 const onEnd = () => {
-  console.log(structures.value)
   schemaStore.setStructures(structures.value)
 }
 const types: string[] = [
@@ -206,7 +209,6 @@ const types: string[] = [
   'tinyIncrements',
   'tinyInteger',
   'tinyText',
-  'unsignedDecimal',
   'uuid',
   'year'
 ]
