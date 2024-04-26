@@ -17,6 +17,31 @@ export const constantRoutes: RouteRecordRaw[] = [
         component: () => import('@/views/dashboard/index.vue')
       }
     ]
+  },
+  {
+    path: '/develop',
+    component: () => import('@/layout/index.vue'),
+    meta: { title: '开发工具', icon: 'wrench-screwdriver' },
+    children: [
+      {
+        path: 'modules',
+        name: 'modules',
+        meta: { title: '模块管理' },
+        component: () => import('@/views/develop/module/index.vue')
+      },
+      {
+        path: 'schemas',
+        name: 'schemas',
+        meta: { title: 'Schemas' },
+        component: () => import('@/views/develop/schema/index.vue')
+      },
+      {
+        path: 'generate/:schema',
+        name: 'generate',
+        meta: { title: '代码生成', hidden: true, active_menu: '/develop/schemas' },
+        component: () => import('@/views/develop/generate/index.vue')
+      }
+    ]
   }
 ]
   // @ts-ignore
