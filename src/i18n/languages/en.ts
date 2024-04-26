@@ -14,6 +14,8 @@ const en = {
     finish: 'Finish',
     back: 'Back',
     update: 'Update',
+    search: 'Search',
+    reset: 'Reset'
   },
 
   login: {
@@ -26,17 +28,17 @@ const en = {
     verify: {
       email: {
         required: 'Please input email first',
-        invalid: 'Email address is invalid',
+        invalid: 'Email address is invalid'
       },
 
       password: {
-        required: 'Please input password first',
-      },
-    },
+        required: 'Please input password first'
+      }
+    }
   },
 
   register: {
-    sign_up: 'Sign Up',
+    sign_up: 'Sign Up'
   },
 
   generate: {
@@ -47,31 +49,31 @@ const en = {
       engine: {
         name: 'Search Engine',
         verify: 'please select schema engine',
-        placeholder: 'select schema engine',
+        placeholder: 'select schema engine'
       },
       default_field: {
         name: 'Default Field',
         created_at: 'Create time',
         updated_at: 'Update Time',
         creator: 'Creator',
-        delete_at: 'SoftDelete',
+        delete_at: 'SoftDelete'
       },
       comment: {
         name: 'Schema Comment',
-        verify: 'please input schema comment',
+        verify: 'please input schema comment'
       },
 
       structure: {
         title: 'Create Schema Structure',
         field_name: {
           name: 'Field Name',
-          verify: 'please input field name',
+          verify: 'please input field name'
         },
         length: 'Length',
         type: {
           name: 'Field Type',
           placeholder: 'select field type',
-          verify: 'please select field type',
+          verify: 'please select field type'
         },
         form_label: 'Form Label',
         form_component: 'Component',
@@ -81,37 +83,37 @@ const en = {
         search: 'Search',
         search_op: {
           name: 'Search Operate',
-          placeholder: 'select search operate',
+          placeholder: 'select search operate'
         },
         nullable: 'Nullable',
         default: 'Default',
         rules: {
           name: 'Verify Rules',
-          placeholder: 'select verify rules',
+          placeholder: 'select verify rules'
         },
         operate: 'Operate',
-        comment: 'Field Comment',
-      },
+        comment: 'Field Comment'
+      }
     },
     code: {
       title: 'Code Gen',
       module: {
         name: 'module',
         placeholder: 'please select module',
-        verify: 'please select module first',
+        verify: 'please select module first'
       },
       controller: {
         name: 'Controller',
         placeholder: 'please input controller name',
-        verify: 'please input Controller name  first',
+        verify: 'please input Controller name  first'
       },
       model: {
         name: 'Model',
         placeholder: 'please input model name',
-        verify: 'please input model name  first',
+        verify: 'please input model name  first'
       },
-      paginate: 'Paginate',
-    },
+      paginate: 'Paginate'
+    }
   },
 
   module: {
@@ -120,20 +122,20 @@ const en = {
     form: {
       name: {
         title: 'Module Name',
-        required: 'module name required',
+        required: 'module name required'
       },
 
       path: {
         title: 'Module Path',
-        required: 'module Path required',
+        required: 'module Path required'
       },
 
       desc: {
-        title: 'Description',
+        title: 'Description'
       },
 
       keywords: {
-        title: 'Keywords',
+        title: 'Keywords'
       },
 
       dirs: {
@@ -141,10 +143,10 @@ const en = {
         Controller: 'Controller',
         Model: 'Model',
         Database: 'Database',
-        Request: 'Request',
-      },
-    },
-  },
+        Request: 'Request'
+      }
+    }
+  }
 }
 
 export default en

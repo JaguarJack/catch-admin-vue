@@ -12,6 +12,8 @@ import { bootstrapI18n } from '@/i18n'
 import guard from '@/router/guard'
 import { bootstrapDirectives } from '@/directives'
 import { Language } from 'element-plus/es/locale'
+import { bootstrapCatchForm } from '@/components/catchForm'
+import http from '@/support/http'
 
 /**
  * catchadmin
@@ -35,7 +37,7 @@ export default class CatchAdmin {
    * admin boot
    */
   bootstrap(): void {
-    this.useElementPlus().usePinia().useI18n().installDirectives().useRouter().mount()
+    this.useElementPlus().usePinia().useI18n().installDirectives().bootstrapCatchForm().useRouter().mount()
   }
 
   /**
@@ -67,7 +69,8 @@ export default class CatchAdmin {
    */
   protected useElementPlus(): CatchAdmin {
     const languages: Record<string, Language> = {
-       zh, en
+      zh,
+      en
     }
 
     const language = Cache.get('language') || 'zh'
@@ -102,6 +105,16 @@ export default class CatchAdmin {
    */
   protected installDirectives(): CatchAdmin {
     bootstrapDirectives(this.app)
+
+    return this
+  }
+
+  /**
+   *
+   * @returns
+   */
+  protected bootstrapCatchForm(): CatchAdmin {
+    bootstrapCatchForm(this.app, { http })
 
     return this
   }

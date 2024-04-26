@@ -8,20 +8,19 @@
         <el-tag type="danger" v-else>否</el-tag>
       </template>
     </el-table-column>
-    <el-table-column prop="default" label="默认值">
-      <template #default="scope"> </template>
-    </el-table-column>
+    <el-table-column prop="default" label="默认值" />
     <el-table-column prop="comment" label="注释" />
   </el-table>
 </template>
 
 <script lang="ts" setup>
+// @ts-nocheck
 import { useShow } from '@/composables/curd/useShow'
 const props = defineProps({
   id: {
     type: Number,
-    required: true,
-  },
+    required: true
+  }
 })
 
 // const data = ref<Array<object>>()

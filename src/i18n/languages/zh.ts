@@ -15,6 +15,8 @@ const zh = {
     finish: '完成',
     back: '返回',
     update: '更新',
+    search: '搜索',
+    reset: '重置'
   },
 
   login: {
@@ -27,17 +29,17 @@ const zh = {
     verify: {
       email: {
         required: '请先输入邮箱',
-        invalid: '邮箱地址无效',
+        invalid: '邮箱地址无效'
       },
 
       password: {
-        required: '请先输入密码',
-      },
-    },
+        required: '请先输入密码'
+      }
+    }
   },
 
   register: {
-    sign_up: '注册',
+    sign_up: '注册'
   },
   generate: {
     schema: {
@@ -47,31 +49,31 @@ const zh = {
       engine: {
         name: '表引擎',
         verify: '请选择表引擎',
-        placeholder: '选择表引擎',
+        placeholder: '选择表引擎'
       },
       default_field: {
         name: '默认字段',
         created_at: '创建时间',
         updated_at: '更新时间',
         creator: '创建人',
-        delete_at: '软删除',
+        delete_at: '软删除'
       },
       comment: {
         name: '表注释',
-        verify: '请填写表注释/说明',
+        verify: '请填写表注释/说明'
       },
 
       structure: {
         title: '创建数据结构',
         field_name: {
           name: '字段名称',
-          verify: '请填写字段名称',
+          verify: '请填写字段名称'
         },
         length: '长度',
         type: {
           name: '类型',
           placeholder: '选择字段类型',
-          verify: '请先选择字段类型',
+          verify: '请先选择字段类型'
         },
         form_label: '表单 Label',
         form_component: '表单组件',
@@ -81,42 +83,42 @@ const zh = {
         search: '查询',
         search_op: {
           name: '搜索操作符',
-          placeholder: '选择搜索操作符',
+          placeholder: '选择搜索操作符'
         },
         nullable: 'nullable',
         default: '默认值',
         rules: {
           name: '验证规则',
-          placeholder: '选择验证规则',
+          placeholder: '选择验证规则'
         },
         operate: '操作',
-        comment: '字段注释',
-      },
+        comment: '字段注释'
+      }
     },
     code: {
       title: '生成代码',
       module: {
         name: '模块',
         placeholder: '请选择模块',
-        verify: '请选择模块',
+        verify: '请选择模块'
       },
       controller: {
         name: '控制器',
         placeholder: '请输入控制器名称',
-        verify: '请输入控制器名称',
+        verify: '请输入控制器名称'
       },
       model: {
         name: '模型',
         placeholder: '请输入模型名称',
-        verify: '请输入模型名称',
+        verify: '请输入模型名称'
       },
       paginate: '分页',
       menu: {
         name: '菜单名称',
         placeholder: '请输入菜单名称',
-        verify: '请输入菜单名称',
-      },
-    },
+        verify: '请输入菜单名称'
+      }
+    }
   },
 
   module: {
@@ -125,20 +127,20 @@ const zh = {
     form: {
       name: {
         title: '模块名称',
-        required: '请输入模块名称',
+        required: '请输入模块名称'
       },
 
       path: {
         title: '模块目录',
-        required: '请输入模块目录',
+        required: '请输入模块目录'
       },
 
       desc: {
-        title: '模块描述',
+        title: '模块描述'
       },
 
       keywords: {
-        title: '模块关键字',
+        title: '模块关键字'
       },
 
       dirs: {
@@ -146,10 +148,10 @@ const zh = {
         Controller: 'Controller 目录',
         Model: 'Model 目录',
         Database: 'Database 目录',
-        Request: 'Request 目录',
-      },
-    },
-  },
+        Request: 'Request 目录'
+      }
+    }
+  }
 }
 
 export default zh
