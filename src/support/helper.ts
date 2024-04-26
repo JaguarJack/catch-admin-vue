@@ -50,6 +50,9 @@ export function isMiniScreen(): boolean {
   return window.document.body.clientWidth < 500
 }
 
+export function isGenerate(): boolean {
+  return !env('VITE_GENERATE')
+}
 /**
  * translate
  *
@@ -76,7 +79,11 @@ export function isUndefined(value: any): boolean {
  * @param title
  */
 export function setPageTitle(title: string) {
-  document.title = title + '-' + env('VITE_APP_NAME')
+  if (env('VITE_APP_NAME')) {
+    document.title = title + '-' + env('VITE_APP_NAME')
+  } else {
+    document.title = title
+  }
 }
 
 /**

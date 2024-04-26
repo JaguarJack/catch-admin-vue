@@ -50,8 +50,8 @@ export const useGenerateStore = defineStore('generateStore', {
         controller: '',
         model: '',
         paginate: true,
-        schema: '',
-      }),
+        schema: ''
+      })
     }
   },
 
@@ -67,7 +67,7 @@ export const useGenerateStore = defineStore('generateStore', {
 
     getCodeGen(): CodeGen {
       return this.codeGen
-    },
+    }
   },
 
   // store actions
@@ -102,11 +102,11 @@ export const useGenerateStore = defineStore('generateStore', {
               form: true,
               search: false,
               search_op: '',
-              validates: [],
-            }),
+              validates: []
+            })
           )
         }
       })
-    },
-  },
+    }
+  }
 })

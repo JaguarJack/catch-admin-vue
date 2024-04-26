@@ -1,9 +1,10 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import type { App } from 'vue'
 // module routers
-import { getModuleRoutes, getModuleViewComponents } from './constantRoutes'
+import { getModuleViewComponents } from './constantRoutes'
+import { isGenerate } from '@/support/helper'
 
-const moduleRoutes = getModuleRoutes()
+// const userStore = useUserStore()
 getModuleViewComponents()
 export const constantRoutes: RouteRecordRaw[] = [
   {
@@ -21,18 +22,22 @@ export const constantRoutes: RouteRecordRaw[] = [
   {
     path: '/develop',
     component: () => import('@/layout/index.vue'),
-    meta: { title: '开发工具', icon: 'wrench-screwdriver' },
+    meta: { title: '开发工具', icon: 'wrench-screwdriver', hidden: !isGenerate() },
     children: [
       {
         path: 'modules',
         name: 'modules',
-        meta: { title: '模块管理' },
+        meta: {
+          title: '模块管理'
+        },
         component: () => import('@/views/develop/module/index.vue')
       },
       {
         path: 'schemas',
         name: 'schemas',
-        meta: { title: 'Schemas' },
+        meta: {
+          title: 'Schema'
+        },
         component: () => import('@/views/develop/schema/index.vue')
       },
       {
@@ -42,10 +47,25 @@ export const constantRoutes: RouteRecordRaw[] = [
         component: () => import('@/views/develop/generate/index.vue')
       }
     ]
+  },
+  {
+    path: '/develop',
+    component: () => import('@/layout/index.vue'),
+    meta: { title: '开发工具', icon: 'wrench-screwdriver', hidden: isGenerate() },
+    children: [
+      {
+        path: 'generate',
+        name: 'generate',
+        meta: {
+          title: '生成代码'
+        },
+        component: () => import('@/views/develop/generator/index.vue')
+      }
+    ]
   }
 ]
-  // @ts-ignore
-  .concat(moduleRoutes)
+// @ts-ignore
+// .concat(moduleRoutes)
 
 // default routes, it will not change to menus
 const defaultRoutes: RouteRecordRaw[] = [

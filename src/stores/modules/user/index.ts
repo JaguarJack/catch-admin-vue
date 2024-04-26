@@ -24,6 +24,8 @@ export const useUserStore = defineStore('UserStore', {
       permissions: [] as Permission[],
 
       roles: [] as string[],
+
+      from: ''
     }
   },
 
@@ -46,6 +48,9 @@ export const useUserStore = defineStore('UserStore', {
     getPermissions(): Permission[] | undefined {
       return this.permissions
     },
+    getFrom(): string | undefined {
+      return this.from
+    }
   },
 
   actions: {
@@ -82,6 +87,10 @@ export const useUserStore = defineStore('UserStore', {
 
     setStatus(status: number) {
       this.status = status
+    },
+
+    setFrom(form: string) {
+      this.from = form
     },
 
     /**
@@ -129,8 +138,8 @@ export const useUserStore = defineStore('UserStore', {
       return new Promise((resolve, reject) => {
         http
           .get('/user/online')
-          .then(response => {
-            const { id, username, email, avatar, permissions, roles, rememberToken, status } = response.data.data
+          .then((response: any) => {
+            const { id, username, email, avatar, permissions, roles, rememberToken, status, from } = response.data.data
             // set user info
             this.setId(id)
             this.setUsername(username)
@@ -140,12 +149,13 @@ export const useUserStore = defineStore('UserStore', {
             this.setStatus(status)
             this.setAvatar(avatar)
             this.setPermissions(permissions)
+            this.setFrom(from)
             resolve(response.data.data)
           })
           .catch(e => {
             reject(e)
           })
       })
-    },
-  },
+    }
+  }
 })

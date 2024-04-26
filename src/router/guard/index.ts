@@ -6,7 +6,6 @@ import { Router, RouteRecordRaw } from 'vue-router'
 import { usePermissionsStore } from '@/stores/modules/user/permissions'
 import { Menu } from '@/types/Menu'
 import { toRaw } from 'vue'
-
 const guard = (router: Router) => {
   // white list
   const whiteList: string[] = [WhiteListPage.LOGIN_PATH, WhiteListPage.NOT_FOUND_PATH]
@@ -46,6 +45,7 @@ const guard = (router: Router) => {
                 path: '/:pathMatch(.*)*',
                 redirect: '/404'
               })
+              // router.addRoute(generateRoutes())
             }
             next({ ...to, replace: true })
           } catch (e) {
