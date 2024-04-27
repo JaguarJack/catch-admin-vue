@@ -39,7 +39,7 @@
       </el-form>
     </div>
     <div>
-      <el-table :data="structure.schema">
+      <el-table :data="structure.fields">
         <el-table-column prop="name" label="字段">
           <template #default="scope">
             <el-input v-model="scope.row.name" placeholder="请填写字段" clearable />
@@ -226,25 +226,25 @@ const structure = ref<StructureInterface>({
   comment: '',
   creatorId: true,
   engine: 'innodb',
-  schema: [getField()]
+  fields: [getField()]
 })
 const deleteField = (id: number) => {
-  structure.value.schema = structure.value.schema.filter((field: FieldInterface) => {
+  structure.value.fields = structure.value.fields.filter((field: FieldInterface) => {
     return field.id !== id
   })
 }
 
 const addField = () => {
-  if (structure.value.schema.length) {
+  if (structure.value.fields.length) {
     const field = getField()
-    field.id = structure.value.schema[structure.value.schema.length - 1].id + 1
-    structure.value.schema.push(field)
+    field.id = structure.value.fields[structure.value.fields.length - 1].id + 1
+    structure.value.fields.push(field)
   } else {
-    structure.value.schema.push(getField())
+    structure.value.fields.push(getField())
   }
 }
 const selectType = (id: number) => {
-  structure.value.schema.forEach((field: FieldInterface) => {
+  structure.value.fields.forEach((field: FieldInterface) => {
     if (field.id === id) {
       if (field.type === 'set' || field.type === 'enum') {
         isSet.value = true
@@ -263,7 +263,7 @@ const showTagInput = () => {
   tagVisible.value = true
 }
 const delTag = (id: number, v: string | number) => {
-  structure.value.schema.forEach((field: FieldInterface) => {
+  structure.value.fields.forEach((field: FieldInterface) => {
     if (field.id === id) {
       // @ts-ignore
       field.default = field.default?.filter((t: any) => {
@@ -273,7 +273,7 @@ const delTag = (id: number, v: string | number) => {
   })
 }
 const handleEnumType = (id: number) => {
-  structure.value.schema.forEach((field: FieldInterface) => {
+  structure.value.fields.forEach((field: FieldInterface) => {
     if (field.id === id) {
       if (field.type === 'set' || field.type === 'enum') {
         let hasSame = false
@@ -299,10 +299,12 @@ const submitGenerate = (formEl: FormInstance | undefined) => {
   if (!formEl) return
   formEl.validate(valid => {
     if (valid) {
-      if (!structure.value.schema.length) {
+      if (!structure.value.fields.length) {
         Message.error('清先填写表字段')
       } else {
-        http.post('generate', structure.value).then(r => {})
+        http.post('generate', structure.value).then(r => {
+          Message.success('代码生成成功，如果设置了控制了，请通过菜单添加页面访问')
+        })
         // emits('next')
         // generateStore.$reset()
       }
