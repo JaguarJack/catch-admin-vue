@@ -46,7 +46,6 @@
             </el-form-item>
           </div>
         </div>
-        <el-alert title="创建成功" />
       </el-form>
     </div>
     <div>
