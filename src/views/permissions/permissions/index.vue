@@ -14,14 +14,16 @@
         <el-table-column prop="route" label="菜单路由" />
         <el-table-column prop="permission_mark" label="权限标识" width="330">
           <template #default="scope">
-            <div v-if="scope.row.actions.length" class="flex grid gap-1 grid-cols-4">
-              <el-tag v-for="action in scope.row.actions" class="cursor-pointer min-w-fit" @click="open(action.id)" closable @close="destroy(api, action.id)">{{ action.permission_name }}</el-tag>
+            <div v-if="scope.row.actions.length" class="grid grid-cols-4 gap-1">
+              <el-tag v-for="action in scope.row.actions" :key="action" class="cursor-pointer min-w-fit" @click="open(action.id)" closable @close="destroy(api, action.id)">{{
+                action.permission_name
+              }}</el-tag>
             </div>
             <div v-else>
               <el-popconfirm v-if="scope.row.type === MenuType.PAGE_TYPE" confirm-button-text="确认" title="添加基础actions" @confirm="actionGenerate(scope.row.id)" placement="top">
                 <template #reference>
-                  <el-tag class="cursor-pointer w-8">
-                    <Icon name="cog-6-tooth" class="animate-spin w-5 h-5" v-if="generateId === scope.row.id" />
+                  <el-tag class="w-8 cursor-pointer">
+                    <Icon name="cog-6-tooth" class="w-5 h-5 animate-spin" v-if="generateId === scope.row.id" />
                     <Icon name="plus" className="w-4 h-4" v-else />
                   </el-tag>
                 </template>
@@ -51,6 +53,7 @@
 </template>
 
 <script lang="ts" setup>
+// @ts-nocheck
 import { computed, onMounted, ref } from 'vue'
 import Create from './form/create.vue'
 import { useGetList } from '@/composables/curd/useGetList'
@@ -72,7 +75,6 @@ onMounted(() => {
   deleted(reset)
 })
 
-const actionLoading = ref<boolean>(false)
 const generateId = ref<number>(0)
 const actionGenerate = async (id: number) => {
   generateId.value = id
@@ -84,7 +86,7 @@ const actionGenerate = async (id: number) => {
     })
     .catch(e => {
       generateId.value = 0
-      catchtable.value.reset()
+      reset()
     })
 }
 </script>

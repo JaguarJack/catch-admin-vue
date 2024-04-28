@@ -28,14 +28,25 @@
           <div class="mt-1 text-sm text-gray-400">模型生成在 <span>app/admin/model</span> 目录下</div>
         </el-form-item>
 
-        <div class="flex">
-          <el-form-item :label="$t('generate.code.paginate')" prop="paginate">
-            <el-switch v-model="structure.paginate" inline-prompt :active-text="$t('system.yes')" :inactive-text="$t('system.no')" />
-          </el-form-item>
-          <el-form-item label-width="15px">
-            <div class="text-sm text-gray-300">控制列表是否使用分页功能</div>
-          </el-form-item>
+        <div class="flex justify-between">
+          <div class="flex">
+            <el-form-item :label="$t('generate.code.paginate')" prop="paginate">
+              <el-switch v-model="structure.paginate" inline-prompt :active-text="$t('system.yes')" :inactive-text="$t('system.no')" />
+            </el-form-item>
+            <el-form-item label-width="15px">
+              <div class="text-sm text-gray-300">控制列表是否使用分页功能</div>
+            </el-form-item>
+          </div>
+          <div class="flex">
+            <el-form-item label="Json模式" prop="json">
+              <el-switch v-model="structure.json" inline-prompt :active-text="$t('system.yes')" :inactive-text="$t('system.no')" />
+            </el-form-item>
+            <el-form-item label-width="15px">
+              <div class="text-sm text-gray-300">渲染使用 JSON 模式</div>
+            </el-form-item>
+          </div>
         </div>
+        <el-alert title="创建成功" />
       </el-form>
     </div>
     <div>
@@ -226,6 +237,7 @@ const structure = ref<StructureInterface>({
   comment: '',
   creatorId: true,
   engine: 'innodb',
+  json: true,
   fields: [getField()]
 })
 const deleteField = (id: number) => {
@@ -300,7 +312,7 @@ const submitGenerate = (formEl: FormInstance | undefined) => {
   formEl.validate(valid => {
     if (valid) {
       if (!structure.value.fields.length) {
-        Message.error('清先填写表字段')
+        Message.error('请先填写表字段')
       } else {
         http.post('generate', structure.value).then(r => {
           Message.success('代码生成成功，如果设置了控制了，请通过菜单添加页面访问')

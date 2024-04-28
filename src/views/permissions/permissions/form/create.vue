@@ -8,7 +8,7 @@
               v-for="item in [
                 { label: '目录', value: 1 },
                 { label: '菜单', value: 2 },
-                { label: '按钮', value: 3 },
+                { label: '按钮', value: 3 }
               ]"
               :key="item.value"
               :value="item.value"
@@ -52,7 +52,7 @@
           </el-popover>
         </el-form-item>
         <el-form-item label="所属组件" prop="component" v-if="!isAction">
-          <Select v-model="formData.component" placeholder="请选择" allow-create api="components" :query="{ module: formData.module }" />
+          <Select v-model="formData.component" placeholder="请选择" allow-create api="components" :query="{ module: formData.module, controller: formData.permission_mark }" />
         </el-form-item>
 
         <el-form-item label="Hidden" prop="hidden" v-if="!isAction">
@@ -60,7 +60,7 @@
             <el-radio
               v-for="item in [
                 { label: '显示', value: 1 },
-                { label: '隐藏', value: 2 },
+                { label: '隐藏', value: 2 }
               ]"
               :key="item.value"
               :value="item.value"
@@ -74,7 +74,7 @@
             <el-radio
               v-for="item in [
                 { label: '启用', value: 1 },
-                { label: '禁用', value: 2 },
+                { label: '禁用', value: 2 }
               ]"
               :key="item.value"
               :value="item.value"
@@ -87,10 +87,10 @@
     </div>
     <div>
       <el-form-item label="激活菜单" prop="active_menu" v-if="isMenu">
-        <div class="w-full flex flex-row">
+        <div class="flex flex-row w-full">
           <el-input v-model="formData.active_menu" name="active_menu" clearable class="w-3/4" />
           <el-tooltip effect="dark" :content="activeMenuIntro" raw-content placement="top">
-            <div class="text-red-500 cursor-pointer w-1/4 ml-2 justify-center flex">说明</div>
+            <div class="flex justify-center w-1/4 ml-2 text-red-500 cursor-pointer">说明</div>
           </el-tooltip>
         </div>
       </el-form-item>
@@ -102,6 +102,7 @@
 </template>
 
 <script lang="ts" setup>
+// @ts-nocheck
 import { useCreate } from '@/composables/curd/useCreate'
 import { useShow } from '@/composables/curd/useShow'
 import { useOpen } from '@/composables/curd/useOpen'
@@ -110,8 +111,8 @@ import http from '@/support/http'
 import { MenuType } from '@/enum/app'
 
 const props = defineProps({
-  primary: [String,Number],
-  api: String,
+  primary: [String, Number],
+  api: String
 })
 
 const activeMenuIntro =
@@ -120,7 +121,7 @@ const activeMenuIntro =
 const { formData, form, loading, submitForm, close, beforeCreate, beforeUpdate } = useCreate(props.api, props.primary)
 
 // 选择 icon
-const { open, visible } = useOpen()
+const { visible } = useOpen()
 // 关闭选择 icon
 const closeSelectIcon = () => {
   visible.value = false
@@ -178,7 +179,7 @@ onMounted(() => {
         isTop.value = isMenu.value = false
       }
     },
-    { deep: true },
+    { deep: true }
   )
 })
 

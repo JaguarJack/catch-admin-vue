@@ -23,5 +23,6 @@ export interface Structure {
   comment: string
   creatorId: boolean
   engine: string
+  json: boolean
   fields: Array<Field>
 }
