@@ -21,7 +21,7 @@
         </el-form-item>
         <el-form-item :label="$t('generate.code.controller.name')" prop="controller">
           <el-input v-model="structure.controller" clearable :placeholder="$t('generate.code.controller.placeholder')" />
-          <div class="mt-1 text-sm text-gray-400">控制器生成在 <span>app/admin/acontroller</span> 目录下</div>
+          <div class="mt-1 text-sm text-gray-400">控制器生成在 <span>app/admin/controller</span> 目录下</div>
         </el-form-item>
         <el-form-item :label="$t('generate.code.model.name')" prop="model">
           <el-input v-model="structure.model" clearable :placeholder="$t('generate.code.model.placeholder')" />
