@@ -37,6 +37,7 @@
               <div class="text-sm text-gray-300">控制列表是否使用分页功能</div>
             </el-form-item>
           </div>
+          <!--
           <div class="flex">
             <el-form-item label="Json模式" prop="json">
               <el-switch v-model="structure.json" inline-prompt :active-text="$t('system.yes')" :inactive-text="$t('system.no')" />
@@ -44,7 +45,7 @@
             <el-form-item label-width="15px">
               <div class="text-sm text-gray-300">渲染使用 JSON 模式</div>
             </el-form-item>
-          </div>
+          </div>-->
         </div>
       </el-form>
     </div>
