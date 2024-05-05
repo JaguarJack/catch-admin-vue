@@ -133,9 +133,11 @@ export const usePermissionsStore = defineStore('PermissionsStore', {
           } else {
             importComponent = viewComponents.get(permission.component)
           }
+          // 判断模块是否是默认模块
+          const name = (permission.module === 'default' ? permission.module + '_' : '') + (permission.permission_mark + permission.route.replace('/', '_'))
           const menu: Menu = Object.assign({
             path: this.resolveRoutePathRoutePath(permission.route, path),
-            name: permission.module + '_' + permission.permission_mark + permission.route.replace('/', '_'),
+            name,
             component: importComponent,
             redirect: permission.redirect,
             meta: Object.assign({ title: permission.permission_name, icon: permission.icon, hidden: permission.hidden, active_menu: permission.active_menu })
