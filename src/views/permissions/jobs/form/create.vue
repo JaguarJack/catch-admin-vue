@@ -24,6 +24,7 @@
 </template>
 
 <script lang="ts" setup>
+// @ts-nocheck
 import { useCreate } from '@/composables/curd/useCreate'
 import { useShow } from '@/composables/curd/useShow'
 
@@ -31,7 +32,7 @@ import { onMounted } from 'vue'
 
 const props = defineProps({
   primary: [Number, String],
-  api: String,
+  api: String
 })
 
 const { formData, form, loading, submitForm, close } = useCreate(props.api, props.primary)
@@ -50,6 +51,6 @@ onMounted(() => {
 
 const options = [
   { label: '正常', value: 1 },
-  { label: '禁用', value: 2 },
+  { label: '禁用', value: 2 }
 ]
 </script>

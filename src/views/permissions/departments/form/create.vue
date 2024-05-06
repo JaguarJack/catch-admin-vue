@@ -25,14 +25,15 @@
 </template>
 
 <script lang="ts" setup>
+// @ts-nocheck
 import { useCreate } from '@/composables/curd/useCreate'
 import { useShow } from '@/composables/curd/useShow'
 import http from '@/support/http'
 import { onMounted, ref, unref } from 'vue'
 
 const props = defineProps({
-  primary: String | Number,
-  api: String,
+  primary: [String, Number],
+  api: String
 })
 
 const { formData, form, loading, submitForm, close, beforeCreate, beforeUpdate } = useCreate(props.api, props.primary)

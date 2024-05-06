@@ -76,8 +76,6 @@ const { open, close, title, visible, id } = useOpen()
 const { download } = useExcelDownload()
 
 const tableData = computed(() => data.value?.data)
-
-const roles = ref<Array<Object>>()
 const hasRoles = ref<boolean>(false)
 
 onMounted(() => {

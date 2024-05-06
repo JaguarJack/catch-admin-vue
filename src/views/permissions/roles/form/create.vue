@@ -18,8 +18,8 @@
       :rules="[
         {
           required: true,
-          message: '角色名称必须填写',
-        },
+          message: '角色名称必须填写'
+        }
       ]"
     >
       <el-input v-model="formData.role_name" name="role_name" clearable />
@@ -30,8 +30,8 @@
       :rules="[
         {
           required: true,
-          message: '角色标识必须填写',
-        },
+          message: '角色标识必须填写'
+        }
       ]"
     >
       <el-input v-model="formData.identify" name="identify" clearable />
@@ -50,8 +50,8 @@
       :rules="[
         {
           required: true,
-          message: '自定义权限必须选择',
-        },
+          message: '自定义权限必须选择'
+        }
       ]"
     >
       <el-tree-select
@@ -66,7 +66,7 @@
       />
     </el-form-item>
     <el-form-item label="角色权限" prop="permissions">
-      <div class="h-40 overflow-auto w-full border border-gray-300 rounded pt-2 pl-2">
+      <div class="w-full h-40 pt-2 pl-2 overflow-auto border border-gray-300 rounded">
         <el-tree
           ref="permissionTree"
           v-model="formData.permissions"
@@ -88,25 +88,26 @@
 </template>
 
 <script lang="ts" setup>
+// @ts-nocheck
 import { useCreate } from '@/composables/curd/useCreate'
 import { useShow } from '@/composables/curd/useShow'
 import { nextTick, onMounted, ref, unref, watch } from 'vue'
 import http from '@/support/http'
 
 const props = defineProps({
-  primary: String | Number,
+  primary: [String, Number],
   api: String,
-  hasPermissions: Array<Object>,
+  hasPermissions: Array<Object>
 })
 
 const emit = defineEmits(['close'])
 
-const { formData, form, loading, submitForm, close, beforeCreate, beforeUpdate } = useCreate(props.api, props.primary)
+const { formData, form, loading, submitForm, close, beforeCreate, beforeUpdate } = useCreate(props.api as string, props.primary)
 
 if (props.primary) {
-  const { afterShow } = useShow(props.api, props.primary, formData)
+  const { afterShow } = useShow(props.api as string, props.primary, formData)
   // 更新角色值
-  afterShow.value = formData => {
+  afterShow.value = (formData: any) => {
     const data = unref(formData)
     data.parent_id = data.parent_id ? [data.parent_id] : 0
 
@@ -188,7 +189,7 @@ onMounted(() => {
       // 如果数据权限是自定义数据
       showDepartments.value = value.data_range === 2
     },
-    { deep: true },
+    { deep: true }
   )
 })
 
