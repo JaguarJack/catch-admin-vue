@@ -7,7 +7,7 @@
 import type { formItemsType } from '@/components/catchForm/config/commonType'
 import FormItem from './FormItem.vue'
 
-const props = defineProps<{
+defineProps<{
   formItems: formItemsType
 }>()
 </script>

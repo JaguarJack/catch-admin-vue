@@ -12,9 +12,8 @@
 </template>
 
 <script lang="ts" setup>
-import {  inject, ref, watch } from 'vue'
-import { $global} from '@/components/catchForm/config/symbol'
-
+import { ref, watch } from 'vue'
+import http from '@/support/http'
 const props = defineProps({
   options: {
     type: Array,
@@ -28,8 +27,8 @@ const props = defineProps({
     default: 'label'
   },
   valueKey: {
-      type: String,
-      default: 'value'
+    type: String,
+    default: 'value'
   },
   multiple: {
     type: Boolean,
@@ -61,10 +60,8 @@ interface GroupOption {
 }
 
 const modelValue = defineModel()
-
-const { http } = inject($global)
 const getOptions = () => {
-    http.get(props.api, props.query).then(r => {
+  http.get(props.api, props.query).then((r: any) => {
     elOptions.value = r.data.data
   })
 }

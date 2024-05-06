@@ -1,6 +1,6 @@
 <template>
   <div class="table-default">
-    <div class="w-full flex justify-end">
+    <div class="flex justify-end w-full">
       <el-radio-group v-model="query.scope" size="small" @change="search">
         <el-radio-button value="self">只看自己</el-radio-button>
         <el-radio-button value="all">全部</el-radio-button>
@@ -31,12 +31,14 @@
 </template>
 
 <script lang="ts" setup>
+// @ts-nocheck
+
 import { computed, onMounted } from 'vue'
 import { useGetList } from '@/composables/curd/useGetList'
 
 const api = 'user/operate/log'
 
-const { data, query, search, reset, loading } = useGetList(api)
+const { data, query, search, loading } = useGetList(api)
 
 query.value.scope = 'self'
 

@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col bg-white dark:bg-regal-dark pl-5 pr-5 rounded">
-    <span class="text-lg mt-5">项目依赖</span>
+  <div class="flex flex-col pl-5 pr-5 bg-white rounded dark:bg-regal-dark">
+    <span class="mt-5 text-lg">项目依赖</span>
     <div class="flex mt-3">
       <el-table :data="dependencies" border width="200">
         <el-table-column prop="dependency" label="Dependency" />
@@ -14,7 +14,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import packages from '../../../../package.json'
+import packages from '@/../package.json'
 import { computed } from 'vue'
 
 const dependencies = computed(() => {

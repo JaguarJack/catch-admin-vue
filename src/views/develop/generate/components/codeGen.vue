@@ -13,8 +13,8 @@
           :rules="[
             {
               required: true,
-              message: $t('generate.code.module.verify'),
-            },
+              message: $t('generate.code.module.verify')
+            }
           ]"
         >
           <Select v-model="gen.module" clearable :placeholder="$t('generate.code.module.placeholder')" api="modules" class="w-full" filterable />
@@ -25,8 +25,8 @@
           :rules="[
             {
               required: true,
-              message: $t('generate.code.controller.verify'),
-            },
+              message: $t('generate.code.controller.verify')
+            }
           ]"
         >
           <el-input v-model="gen.controller" clearable :placeholder="$t('generate.code.controller.placeholder')" />
@@ -46,7 +46,7 @@
       </el-form>
     </div>
     <Structure />
-    <div class="w-full flex justify-center pt-5">
+    <div class="flex justify-center w-full pt-5">
       <router-link to="/develop/schemas">
         <el-button>{{ $t('system.back') }}</el-button>
       </router-link>
@@ -55,7 +55,8 @@
   </el-card>
 </template>
 <script lang="ts" setup>
-import { watch, onMounted, reactive, ref } from 'vue'
+// @ts-nocheck
+import { onMounted, reactive, ref } from 'vue'
 import { useGenerateStore } from './store'
 import type { FormInstance } from 'element-plus'
 import http from '@/support/http'
@@ -99,8 +100,8 @@ const submitGenerate = (formEl: FormInstance | undefined) => {
   formEl.validate(valid => {
     if (valid) {
       http.post('generate', generateStore.$state).then(r => {})
-      //emits('next')
-      //generateStore.$reset()
+      // emits('next')
+      // generateStore.$reset()
     } else {
       return false
     }

@@ -1,6 +1,6 @@
 <template>
   <div class="w-full sm:w-[28rem] min-h-[30rem] bg-white">
-    <el-tree :data="departments" :props="{ label: 'department_name', value: 'id'}" @node-click="clickDepartment" class="p-5" :expand-on-click-node="false" :highlight-current="true"/>
+    <el-tree :data="departments" :props="{ label: 'department_name', value: 'id' }" @node-click="clickDepartment" class="p-5" :expand-on-click-node="false" :highlight-current="true" />
   </div>
 </template>
 
@@ -8,11 +8,11 @@
 import { onMounted, ref } from 'vue'
 import http from '@/support/http'
 
-const props = defineProps({
-   modelValue: {
-     type: Number,
-     default: 0
-   }
+defineProps({
+  modelValue: {
+    type: Number,
+    default: 0
+  }
 })
 
 const departments = ref()
@@ -25,7 +25,7 @@ onMounted(() => {
 
 const emits = defineEmits(['update:modelValue', 'searchDepartmentUsers'])
 
-const clickDepartment = (node) => {
+const clickDepartment = (node: any) => {
   emits('update:modelValue', node.id)
 
   emits('searchDepartmentUsers')
@@ -34,10 +34,10 @@ const clickDepartment = (node) => {
 
 <style scoped lang="scss">
 :deep(.el-tree .el-tree-node) {
-  @apply p-0.5
+  @apply p-0.5;
 }
 
 :deep(.el-tree .el-tree-node .el-tree-node__content) {
-  @apply h-8 rounded
+  @apply h-8 rounded;
 }
 </style>

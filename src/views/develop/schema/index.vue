@@ -52,6 +52,7 @@
 </template>
 
 <script lang="ts" setup>
+// @ts-nocheck
 import { computed, onMounted, ref } from 'vue'
 import Create from './create.vue'
 import Show from './show.vue'

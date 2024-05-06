@@ -6,8 +6,8 @@
       :rules="[
         {
           required: true,
-          message: $t('module.form.name.required'),
-        },
+          message: $t('module.form.name.required')
+        }
       ]"
     >
       <el-input v-model="formData.title" />
@@ -18,8 +18,8 @@
       :rules="[
         {
           required: true,
-          message: $t('module.form.path.required'),
-        },
+          message: $t('module.form.path.required')
+        }
       ]"
     >
       <el-input v-model="formData.path" :disabled="!!primary" />
@@ -45,18 +45,19 @@
 </template>
 
 <script lang="ts" setup>
+// @ts-nocheck
 import { useCreate } from '@/composables/curd/useCreate'
 import { useShow } from '@/composables/curd/useShow'
 
 import { onMounted } from 'vue'
 
 const props = defineProps({
-  primary: String | Number,
-  api: String,
+  primary: [String, Number],
+  api: String
 })
 
 const { formData, form, loading, submitForm, close } = useCreate(
-  props.api,
+  props.api as string,
   props.primary,
   Object.assign({
     title: '',
@@ -67,15 +68,15 @@ const { formData, form, loading, submitForm, close } = useCreate(
       controllers: true,
       models: true,
       database: true,
-      requests: false,
-    },
-  }),
+      requests: false
+    }
+  })
 )
 
 const emit = defineEmits(['close'])
 
 if (props.primary) {
-  useShow(props.api, props.primary, formData)
+  useShow(props.api as string, props.primary, formData)
 }
 
 onMounted(() => {

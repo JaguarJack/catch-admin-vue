@@ -42,11 +42,11 @@ const props = defineProps({
     default: 'w-24 h-24'
   },
   requestFrom: {
-   type: String,
-   default: 'Dashboard'
+    type: String,
+    default: 'Dashboard'
   },
-  token:{
-     type: String
+  token: {
+    type: String
   },
   ext: {
     type: Array,
@@ -60,7 +60,7 @@ const fileModel = defineModel({
   default: '',
   required: true
 })
-const { upload, beforeUpload, handleExceed, handleSuccess, file } = uploadImage(props.action, props.ext)
+const { upload, beforeUpload, handleExceed, handleSuccess, file } = uploadImage(props.action as string, props.ext as Array<string>)
 // 更新 model 的 value
 watch(
   () => file.value,

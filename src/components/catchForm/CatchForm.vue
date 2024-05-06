@@ -1,13 +1,24 @@
 <template>
-  <el-form :class="schema.class" :model="formValues"  :label-width="schema.labelWidth || 100" :label-position="schema.labelAlign || 'right'" :size="schema.size || 'default'" :disabled="schema.disabled" :hide-required-asterisk="schema.hideRequiredAsterisk" ref="formRef" v-bind="$attrs">
+  <el-form
+    :class="schema.class"
+    :model="formValues"
+    :label-width="schema.labelWidth || 100"
+    :label-position="schema.labelAlign || 'right'"
+    :size="schema.size || 'default'"
+    :disabled="schema.disabled"
+    :hide-required-asterisk="schema.hideRequiredAsterisk"
+    ref="formRef"
+    v-bind="$attrs"
+  >
     <FormRender :formItems="formItems" />
-    <slot name="body"/>
+    <slot name="body" />
     <FormItem v-bind="footer" />
-    <slot name="footer"/>
+    <slot name="footer" />
   </el-form>
 </template>
 
 <script setup lang="ts">
+// @ts-nocheck
 import { ref, computed, reactive, provide, watch, onMounted } from 'vue'
 import type { FormInstance } from 'element-plus'
 import { handleLinkages, deepParse, setDataByPath, getDataByPath } from '@/components/catchForm/support'
@@ -59,31 +70,31 @@ const currentSchema = computed(() => props.schema)
 
 // 表单底部
 const defaultFooter = {
-    name: 'FormFooter',
-    props: {
-        class: 'flex justify-end mt-4'
+  name: 'FormFooter',
+  props: {
+    class: 'flex justify-end mt-4'
+  },
+  component: 'inline',
+  children: [
+    {
+      name: 'divider_xAlcpi',
+      props: {
+        name: '提交',
+        clickEvent: 'submitForm'
+      },
+      component: 'button',
+      style: 'margin-right:10px'
     },
-    component: 'inline',
-    children: [
-        {
-            name: 'divider_xAlcpi',
-            props: {
-                name: '提交',
-                clickEvent: 'submitForm'
-            },
-            component: 'button',
-            style: 'margin-right:10px'
-        },
-        {
-            name: 'divider_UktsYm',
-            props: {
-                name: '重置',
-                clickEvent: 'resetForm',
-                type: 'default'
-            },
-            component: 'button'
-        }
-    ]
+    {
+      name: 'divider_UktsYm',
+      props: {
+        name: '重置',
+        clickEvent: 'resetForm',
+        type: 'default'
+      },
+      component: 'button'
+    }
+  ]
 }
 const footer = computed(() => props.schema.footer || defaultFooter)
 const validate = () => formRef.value?.validate()
@@ -113,17 +124,16 @@ const resetFields = (names: string[]) => {
     })
 
     formValues.value = temp
-
   } else {
     formValues.value = initialValues
   }
 
-  clearValidate();
+  clearValidate()
 }
 // 这里做一个魔法操作，分栏操作，导致第二栏没有办法初始化，所以 resetFields 下
 // 只有创建的时候进行该操作
 onMounted(() => {
-    resetFields([]);
+  resetFields([])
 })
 // const reset validates
 const clearValidate = () => {

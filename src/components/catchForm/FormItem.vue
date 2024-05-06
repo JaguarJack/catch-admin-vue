@@ -2,7 +2,7 @@
 <template>
   <template v-if="!hidden">
     <div v-if="config.type === 'layout'" :style="itemStyle" :class="thisProps.class">
-      <component :is="config.component"  :name="name" :props="props" :children="children" />
+      <component :is="config.component" :name="name" :props="props" :children="children" />
     </div>
 
     <div v-else-if="config.type === 'assist'" :style="itemStyle" :class="thisProps.class">
@@ -20,7 +20,7 @@
           </div>
         </div>
       </template>-->
-      <component :is="config.component" :class="formItemProps.class" :disabled="schema.disabled" :size="schema.size" v-bind="formItemProps" v-model:[config.modelName]="value" />
+      <component :is="config.component" :class="formItemProps.class" :disabled="schema?.disabled" :size="schema?.size" v-bind="formItemProps" v-model:[config.modelName]="value" />
     </el-form-item>
   </template>
 </template>
@@ -77,9 +77,9 @@ const value = computed({
     return getDataByPath(formValues.value, thisProps.name)
   },
   set(val) {
-      const newValues = setDataByPath(formValues.value, thisProps.name, val)
+    const newValues = setDataByPath(formValues.value, thisProps.name, val)
 
-      updateFormValues(newValues)
+    updateFormValues(newValues)
   }
 })
 
@@ -152,23 +152,23 @@ const formItemProps = computed(() => {
 })
 
 onMounted(() => {
-    if (thisProps.initialValue !== undefined) {
-        if (!value.value || (isArray(value.value) && value.value.length === 0)) {
-            const newInitialValues = setDataByPath(initialValues, thisProps.name, thisProps.initialValue)
-            updateInitialValues(newInitialValues)
-            // select array value
-            if (isArray(value.value)) {
-                nextTick(() => {
-                    value.value = thisProps.initialValue
-                })
-            }
-        }
+  if (thisProps.initialValue !== undefined) {
+    if (!value.value || (isArray(value.value) && value.value.length === 0)) {
+      const newInitialValues = setDataByPath(initialValues, thisProps.name, thisProps.initialValue)
+      updateInitialValues(newInitialValues)
+      // select array value
+      if (isArray(value.value)) {
+        nextTick(() => {
+          value.value = thisProps.initialValue
+        })
+      }
     }
-    /**
+  }
+  /**
     if (!value.value && thisProps.default !== undefined) {
         const newInitialValues = setDataByPath(initialValues, thisProps.name, thisProps.default)
         updateInitialValues(newInitialValues)
-    }*/
+    } */
 })
 </script>
 

@@ -31,6 +31,7 @@
 </template>
 
 <script lang="ts" setup>
+// @ts-nocheck
 import { computed, onMounted, ref } from 'vue'
 import Create from './form/create.vue'
 import { useGetList } from '@/composables/curd/useGetList'

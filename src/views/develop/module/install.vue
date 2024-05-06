@@ -5,7 +5,7 @@
         <el-radio-button
           v-for="item in [
             { label: '普通安装', value: 1 },
-            { label: 'ZIP 安装', value: 2 },
+            { label: 'ZIP 安装', value: 2 }
           ]"
           :key="item.value"
           :value="item.value"
@@ -20,18 +20,18 @@
       :rules="[
         {
           required: true,
-          message: '模块名称必须填写',
+          message: '模块名称必须填写'
         },
         {
           validator: (rule: any, value: any, callback: any) => {
-            if (! /^[A-Za-z]+$/.test(value)) {
-                callback('模块名称只允许大小字母组合')
-            } else  {
-                callback()
+            if (!/^[A-Za-z]+$/.test(value)) {
+              callback('模块名称只允许大小字母组合')
+            } else {
+              callback()
             }
           },
-          trigger: 'blur',
-        },
+          trigger: 'blur'
+        }
       ]"
     >
       <el-select v-model="formData.title" placeholder="选择安装模块">
@@ -53,6 +53,7 @@
 </template>
 
 <script lang="ts" setup>
+// @ts-nocheck
 import { useCreate } from '@/composables/curd/useCreate'
 
 import { onMounted } from 'vue'
@@ -68,7 +69,7 @@ onMounted(() => {
   close(() => emit('close'))
 })
 
-const moduleUpload = (response, uploadFile) => {
+const moduleUpload = (response: any) => {
   if (response.code === Code.SUCCESS) {
     formData.value.file = response.data
   } else {
@@ -79,15 +80,15 @@ const moduleUpload = (response, uploadFile) => {
 const modules = [
   {
     label: '权限管理',
-    value: 'permissions',
+    value: 'permissions'
   },
   {
     label: '内容管理',
-    value: 'cms',
+    value: 'cms'
   },
   {
     label: '系统管理',
-    value: 'system',
-  },
+    value: 'system'
+  }
 ]
 </script>

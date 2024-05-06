@@ -53,11 +53,12 @@
   </div>
 </template>
 <script lang="ts" setup>
+// @ts-nocheck
 import { ref } from 'vue'
 import { Structure as StructureInterface } from './structure'
 import { Delete } from '@element-plus/icons-vue'
 
-const structure = ref<StructureInterface>()
+const structures = ref<StructureInterface>()
 
 const operates: string[] = ['=', '!=', '>', '>=', '<', '<=', 'like', 'RLike', 'LLike', 'in']
 

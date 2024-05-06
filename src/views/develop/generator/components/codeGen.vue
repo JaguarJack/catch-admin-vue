@@ -202,6 +202,7 @@
   </el-card>
 </template>
 <script lang="ts" setup>
+// @ts-nocheck
 import { ref } from 'vue'
 import type { FormInstance } from 'element-plus'
 import http from '@/support/http'

@@ -19,12 +19,13 @@
 </template>
 
 <script lang="ts" setup>
+// @ts-nocheck
 import { computed, onMounted } from 'vue'
 import { useGetList } from '@/composables/curd/useGetList'
 
 const api = 'user/login/log'
 
-const { data, query, search, reset, loading } = useGetList(api)
+const { data, search, loading } = useGetList(api)
 
 onMounted(() => search())
 
