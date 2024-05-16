@@ -7,8 +7,8 @@
         :rules="[
           {
             // required: true,
-            message: $t('generate.code.module.verify'),
-          },
+            message: $t('generate.code.module.verify')
+          }
         ]"
       >
         <Select v-model="schema.module" clearable :placeholder="$t('generate.code.module.placeholder')" api="modules" class="w-full" filterable />
@@ -19,8 +19,8 @@
         :rules="[
           {
             required: true,
-            message: $t('generate.schema.name_verify'),
-          },
+            message: $t('generate.schema.name_verify')
+          }
         ]"
       >
         <el-input v-model="schema.name" clearable />
@@ -31,8 +31,8 @@
         :rules="[
           {
             required: true,
-            message: $t('generate.schema.engine.verify'),
-          },
+            message: $t('generate.schema.engine.verify')
+          }
         ]"
       >
         <el-select class="w-full" v-model="schema.engine" :placeholder="$t('generate.schema.engine.placeholder')" clearable>
@@ -51,22 +51,22 @@
         :rules="[
           {
             required: true,
-            message: $t('generate.schema.comment.verify'),
-          },
+            message: $t('generate.schema.comment.verify')
+          }
         ]"
       >
         <el-input v-model="schema.comment" type="textarea" />
       </el-form-item>
     </el-form>
 
-    <div class="w-full sm:w-96 justify-between mx-auto pl-24 mt-4">
+    <div class="justify-between w-full pl-24 mx-auto mt-4 sm:w-96">
       <el-button class="mt-5" @click="$emit('prev')">{{ $t('system.prev') }}</el-button>
       <el-button class="mt-5" type="primary" @click="submitCreateTable(form)">{{ $t('system.next') }}</el-button>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { reactive, computed, ref, unref } from 'vue'
+import { computed, ref, unref } from 'vue'
 import { useSchemaStore } from '../store'
 import type { FormInstance } from 'element-plus'
 
@@ -79,7 +79,7 @@ const schema = ref(schemaStore.getSchema)
 const form = ref<FormInstance>()
 const submitCreateTable = (formEl: FormInstance | undefined) => {
   if (!formEl) return
-  formEl.validate(valid => {
+  formEl.validate((valid: any) => {
     if (valid) {
       emits('next')
       schemaStore.setSchema(unref(schema))
@@ -92,16 +92,16 @@ const engines = computed(() => {
   return [
     {
       value: 'InnoDB',
-      label: 'InnoDB',
+      label: 'InnoDB'
     },
     {
       value: 'MyISAM',
-      label: 'MyISAM',
+      label: 'MyISAM'
     },
     {
       value: 'Memory',
-      label: 'Memory',
-    },
+      label: 'Memory'
+    }
   ]
 })
 </script>

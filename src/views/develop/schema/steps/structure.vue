@@ -124,7 +124,7 @@ const updateField = (id: number) => {
 const form = ref<FormInstance>()
 const submitStructure = (formEl: FormInstance | undefined) => {
   if (!formEl) return
-  formEl.validate(valid => {
+  formEl.validate((valid: any) => {
     if (valid) {
       visible.value = !visible.value
       schemaStore.addStructure(structure.value)

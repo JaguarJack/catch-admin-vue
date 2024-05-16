@@ -8,7 +8,7 @@ export const useLogin = () => {
   const params = reactive({
     email: 'catch@admin.com',
     password: 'catchadmin',
-    remember: false,
+    remember: false
   })
 
   const loading = ref(false)
@@ -16,9 +16,9 @@ export const useLogin = () => {
   const rules = reactive({
     email: [
       { required: true, message: t('login.verify.email.required'), trigger: 'blur' },
-      { type: 'email', message: t('login.verify.email.invalid'), trigger: 'blur' },
+      { type: 'email', message: t('login.verify.email.invalid'), trigger: 'blur' }
     ],
-    password: [{ required: true, message: t('login.verify.password.required'), trigger: 'blur' }],
+    password: [{ required: true, message: t('login.verify.password.required'), trigger: 'blur' }]
   })
 
   const form = ref<FormInstance>()
@@ -26,7 +26,7 @@ export const useLogin = () => {
   const submit = (loginForm: FormInstance | undefined) => {
     if (!loginForm) return
 
-    loginForm.validate(valid => {
+    loginForm.validate((valid: any) => {
       if (valid) {
         loading.value = true
         const store = useUserStore()
@@ -55,6 +55,6 @@ export const useLogin = () => {
 
     submit,
 
-    form,
+    form
   }
 }
