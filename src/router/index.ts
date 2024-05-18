@@ -54,8 +54,8 @@ export const constantRoutes: RouteRecordRaw[] = [
     meta: { title: '开发工具', icon: 'wrench-screwdriver', hidden: isGenerate() },
     children: [
       {
-        path: 'generate',
-        name: 'generate',
+        path: 'generates',
+        name: 'generates',
         meta: {
           title: '生成代码'
         },
