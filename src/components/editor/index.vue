@@ -51,42 +51,42 @@ const props = defineProps({
   modelValue: {
     type: String,
     default: '',
-    require: true,
+    require: true
   },
   width: {
     type: [Number, String],
     required: false,
-    default: 'auto',
+    default: 'auto'
   },
   height: {
     type: [Number, String],
     required: false,
-    default: 'auto',
+    default: 'auto'
   },
   language: {
     type: String,
-    default: 'zh-CN',
+    default: 'zh-Hans'
   },
 
   placeholder: {
     type: String,
-    default: '在这里输入内容',
+    default: '在这里输入内容'
   },
 
   plugins: {
     type: String,
     default:
       'preview searchreplace autolink directionality visualblocks visualchars fullscreen image link media template code ' +
-      'codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount autosave emoticons',
+      'codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount autosave emoticons'
   },
   toolbar: {
     type: Array,
     default: [
       'undo redo restoredraft cut copy paste pastetext forecolor backcolor bold italic underline strikethrough link anchor alignleft aligncenter alignright alignjustify outdent indent bullist numlist blockquote subscript superscript removeformat styleselect formatselect fontselect fontsizeselect ' +
         'table upload image axupimgs media emoticons charmap hr pagebreak insertdatetime  ' +
-        'selectall visualblocks searchreplace code print preview indent2em fullscreen',
-    ],
-  },
+        'selectall visualblocks searchreplace code print preview indent2em fullscreen'
+    ]
+  }
 })
 
 const aipKey: string = 's1ntkmnev0ggx0hhaqnubrdxhv0ly99uyrdbckeaycx7iz6v'
@@ -95,7 +95,7 @@ const uploaded = (blobInfo: any, progress: any) =>
     if (blobInfo.blob().size / 1024 / 1024 > 10) {
       Message.error('上传失败，图片大小请控制在 10M 以内')
     } else {
-      let params = new FormData()
+      const params = new FormData()
       params.append('image', blobInfo.blob())
       Http.post(env('VITE_BASE_URL') + 'upload/image', params)
         .then(res => {
@@ -120,7 +120,7 @@ const config = {
   toolbar: props.toolbar,
   branding: false,
   // menubar: false,
-  images_upload_handler: uploaded,
+  images_upload_handler: uploaded
 }
 
 const emits = defineEmits(['update:modelValue'])
@@ -135,7 +135,7 @@ watch(
   () => props.modelValue,
   value => {
     content.value = value
-  },
+  }
 )
 </script>
 

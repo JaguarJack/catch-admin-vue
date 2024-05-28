@@ -18,7 +18,7 @@ function checkAction(el: any, action: any) {
       el.parentNode && el.parentNode.removeChild(el)
     }
   } else {
-    throw new Error(`need action! Like v-action="module.controller.action"`)
+    throw new Error('need action! Like v-action="module.controller.action')
   }
 }
 
@@ -29,5 +29,5 @@ export default {
 
   updated(el: any, binding: any) {
     checkAction(el, binding)
-  },
+  }
 }
