@@ -68,7 +68,7 @@ class Request {
   public get(path: string, params: object = {}) {
     this.init()
     return this.request.get(this.baseURL + path, {
-      params,
+      params
     })
   }
 
@@ -206,7 +206,7 @@ class Request {
         if (code === 1e4) {
           return response
         }
-
+        console.log(Code.LOGIN_EXPIRED, code)
         if (code === 10004) {
           Message.error(message || 'Error')
         } else if (code === Code.LOST_LOGIN || code === Code.LOGIN_EXPIRED) {
@@ -228,7 +228,7 @@ class Request {
       error => {
         Message.error(error.message)
         return Promise.reject(error)
-      },
+      }
     )
   }
 }

@@ -1,20 +1,20 @@
 <template>
   <div>
-    <el-dialog :model-value="modelValue" :show-close="false" :fullscreen="isFullscreen" v-bind="$attrs" :width="width" :close="close" :before-close="beforeClose" draggable>
+    <el-dialog :model-value="modelValue" :show-close="false" :fullscreen="isFullscreen" v-bind="$attrs" :width="width" :close="close" :before-close="beforeClose" :draggable="draggable">
       <template #header="{ titleId, titleClass }">
         <div class="flex justify-between w-full">
           <div>
             <h4 :id="titleId" :class="titleClass">{{ title }}</h4>
           </div>
-          <div class="flex w-12 justify-end">
+          <div class="flex justify-end w-12">
             <!--<Icon :name="fullscreenIcon" @click="fullscreen" className="hover:cursor-pointer w-4 h-4" />-->
             <Icon name="x-mark" className="hover:cursor-pointer w-5 h-5" @click="close" />
           </div>
         </div>
       </template>
-        <div class="pt-4">
-            <slot />
-        </div>
+      <div class="pt-4">
+        <slot />
+      </div>
       <template #footer v-if="showFooter">
         <span class="dialog-footer">
           <el-button @click="close">{{ $t('system.cancel') }}</el-button>
@@ -26,40 +26,44 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 
 const props = defineProps({
   modelValue: {
     type: Boolean,
     default: false,
-    require: true,
+    require: true
   },
   showFooter: {
     type: Boolean,
-    default: false,
+    default: false
   },
 
   width: {
     type: String,
     required: false,
-    default: '',
+    default: ''
   },
   title: {
     type: String,
-    default: '',
+    default: ''
   },
+  draggable: {
+    type: Boolean,
+    default: true
+  }
 })
 
 const emits = defineEmits(['update:modelValue'])
 
 const isFullscreen = ref(false)
 
-const fullscreenIcon = computed(() => {
-  return isFullscreen.value ? 'arrows-pointing-in' : 'arrows-pointing-out'
-})
-const fullscreen = () => {
-  isFullscreen.value = !isFullscreen.value
-}
+// const fullscreenIcon = computed(() => {
+//  return isFullscreen.value ? 'arrows-pointing-in' : 'arrows-pointing-out'
+// })
+// const fullscreen = () => {
+// isFullscreen.value = !isFullscreen.value
+// }
 
 const close = () => {
   emits('update:modelValue', false)
