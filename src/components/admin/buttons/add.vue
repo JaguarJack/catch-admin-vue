@@ -6,11 +6,11 @@
 defineProps({
   size: {
     type: String,
-    default: 'default',
+    default: 'default'
   },
   text: {
     type: String,
-    default: '新增',
-  },
+    default: '新增'
+  }
 })
 </script>
