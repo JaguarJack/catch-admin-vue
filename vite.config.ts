@@ -14,6 +14,16 @@ const rootPath = resolve(__dirname)
 export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   return {
+    // css 配置修复warning: Deprecation Warning: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler',
+          // Deprecation Warning: Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+          quietDeps: true // Silence deprecation warnings from dependencies
+        }
+      }
+    },
     plugins: [
       vue({
         script: {
