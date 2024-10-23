@@ -10,16 +10,16 @@
 import http from '@/support/http'
 import { ref } from 'vue'
 import Message from '@/support/message'
-const props = defineProps({
+defineProps({
   auto: {
     type: Boolean,
-    default: true,
+    default: true
   },
   modelValue: {
     type: Boolean,
     default: false,
-    require: true,
-  },
+    require: true
+  }
 })
 
 const action = ref('')
@@ -31,7 +31,7 @@ const data = ref({
   host: '',
   dir: '',
   expire: '',
-  success_action_status: 200,
+  success_action_status: 200
 })
 const emits = defineEmits(['update:modelValue'])
 const initOss = async (file: { size: number; name: any }) => {
