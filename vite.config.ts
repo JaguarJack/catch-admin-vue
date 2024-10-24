@@ -8,7 +8,6 @@ import Components from 'unplugin-vue-components/vite'
 // mock server
 import { viteMockServe } from 'vite-plugin-mock'
 import Icons from 'unplugin-icons/vite'
-import ViteRestart from 'vite-plugin-restart'
 const rootPath = resolve(__dirname)
 
 // https://vitejs.dev/config/
@@ -31,9 +30,6 @@ export default defineConfig(({ command, mode }) => {
           defineModel: true
         }
       }),
-      ViteRestart({
-        restart: ['src/views/**']
-      }),
       vueJsx(),
       alias({
         entries: [
@@ -43,6 +39,15 @@ export default defineConfig(({ command, mode }) => {
           }
         ]
       }),
+      {
+        configureServer(server) {
+          server.watcher.on('add', path => {
+            if (path.includes('views') && path.endsWith('.vue')) {
+              server.restart()
+            }
+          })
+        }
+      },
       viteMockServe({
         mockPath: './mock',
         // localEnabled: env.NODE_ENV === 'development',
