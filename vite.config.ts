@@ -19,7 +19,6 @@ export default defineConfig(({ command, mode }) => {
       preprocessorOptions: {
         scss: {
           api: 'modern-compiler',
-          // Deprecation Warning: Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
           quietDeps: true // Silence deprecation warnings from dependencies
         }
       }
@@ -39,15 +38,6 @@ export default defineConfig(({ command, mode }) => {
           }
         ]
       }),
-      {
-        configureServer(server) {
-          server.watcher.on('add', path => {
-            if (path.includes('views') && path.endsWith('.vue')) {
-              server.restart()
-            }
-          })
-        }
-      },
       viteMockServe({
         mockPath: './mock',
         // localEnabled: env.NODE_ENV === 'development',
