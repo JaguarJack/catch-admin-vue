@@ -26,7 +26,7 @@ export const useLogin = () => {
   const submit = (loginForm: FormInstance | undefined) => {
     if (!loginForm) return
 
-    loginForm.validate((valid: any) => {
+    loginForm.validate((valid: any):any => {
       if (valid) {
         loading.value = true
         const store = useUserStore()

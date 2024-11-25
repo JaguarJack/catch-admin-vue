@@ -79,7 +79,7 @@ const schema = ref(schemaStore.getSchema)
 const form = ref<FormInstance>()
 const submitCreateTable = (formEl: FormInstance | undefined) => {
   if (!formEl) return
-  formEl.validate((valid: any) => {
+  formEl.validate((valid: any):any => {
     if (valid) {
       emits('next')
       schemaStore.setSchema(unref(schema))

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <VueDraggable v-model="structures" target=".el-table__body tbody" animation="150" @end="onEnd">
+    <VueDraggable v-model="structures" target=".el-table__body tbody" :animation="150" @end="onEnd">
       <el-table :data="structures" class="draggable">
         <el-table-column prop="field" :label="$t('generate.schema.structure.field_name.name')" />
         <el-table-column prop="type" :label="$t('generate.schema.structure.type.name')">
@@ -124,7 +124,7 @@ const updateField = (id: number) => {
 const form = ref<FormInstance>()
 const submitStructure = (formEl: FormInstance | undefined) => {
   if (!formEl) return
-  formEl.validate((valid: any) => {
+  formEl.validate((valid: any):any => {
     if (valid) {
       visible.value = !visible.value
       schemaStore.addStructure(structure.value)
