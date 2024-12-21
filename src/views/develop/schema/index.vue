@@ -11,7 +11,11 @@
       </template>
     </Search>
     <div class="table-default">
-      <Operate :show="open" />
+      <Operate :show="open">
+        <template #operate>
+          <el-button @click="existSchemaVisible = true">选择已有表</el-button>
+        </template>
+      </Operate>
       <el-table :data="tableData" class="mt-3" v-loading="loading">
         <el-table-column prop="module" label="所属模块" />
         <el-table-column prop="name" label="schema 名称" />
@@ -48,6 +52,11 @@
     <Dialog v-model="schemaVisible" title="Schema 结构" width="650px" destroy-on-close>
       <Show :id="id" :api="api" />
     </Dialog>
+
+    <!-- 从已有 Schema 选择 -->
+    <Dialog v-model="existSchemaVisible" title="选择已有表" width="650px" destroy-on-close>
+      <addExistSchema :api="api" @close="closeExistSchemaVisible" />
+    </Dialog>
   </div>
 </template>
 
@@ -56,11 +65,13 @@
 import { computed, onMounted, ref } from 'vue'
 import Create from './create.vue'
 import Show from './show.vue'
+import addExistSchema from './addExistSchema.vue'
 import { useGetList } from '@/composables/curd/useGetList'
 import { useDestroy } from '@/composables/curd/useDestroy'
 import { useOpen } from '@/composables/curd/useOpen'
 
 const schemaVisible = ref<boolean>(false)
+const existSchemaVisible = ref<boolean>(false)
 
 const api = 'schema'
 
@@ -75,7 +86,10 @@ const view = primaryId => {
 
   id.value = primaryId
 }
-
+const closeExistSchemaVisible = () => {
+  existSchemaVisible.value = false
+  reset()
+}
 onMounted(() => {
   search()
 

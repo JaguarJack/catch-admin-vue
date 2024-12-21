@@ -98,7 +98,7 @@ const zh = {
     code: {
       title: '生成代码',
       module: {
-        name: '模块',
+        name: '所属模块',
         placeholder: '请选择模块',
         verify: '请选择模块'
       },
