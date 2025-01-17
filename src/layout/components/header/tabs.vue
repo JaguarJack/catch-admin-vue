@@ -1,5 +1,5 @@
 <template>
-  <div class="relative flex w-full h-12 px-1 bg-white border-t border-gray-300 border-solid dark:bg-regal-dark sm:px-3 gap-x-2 menu" ref="container" v-if="tabs.length > 0">
+  <div class="flex w-full h-12 px-1 bg-white border-t border-gray-300 border-solid dark:bg-regal-dark sm:px-3 gap-x-2 menu" ref="container" v-if="tabs.length > 0">
     <ContextMenu>
       <el-tag
         class="mt-1.5 hover:cursor-pointer"
@@ -14,6 +14,7 @@
         {{ tag.meta.title }}
       </el-tag>
     </ContextMenu>
+    <!--
     <div :class="`fixed pt-2 left-0 w-5 h-10 bg-white shadow-xl ${leftWidth} cursor-pointer` + (isHasScollbars ? '' : ' hidden')" id="prev" @click="leftScroll()">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16">
         <path fill="none" stroke="black" d="M9.5 4.5L6 8l3.5 3.5" />
@@ -23,7 +24,7 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16">
         <path fill="none" stroke="black" d="M6 4.5L9.5 8L6 11.5" />
       </svg>
-    </div>
+    </div>-->
   </div>
 </template>
 

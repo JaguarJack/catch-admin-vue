@@ -2,7 +2,7 @@
   <div @contextmenu.prevent="handleContextMenu" class="flex gap-x-2">
     <slot></slot>
     <!-- 右击菜单 -->
-    <div v-if="showMenu" class="absolute z-[1000] bg-white dark:bg-regal-dark shadow-xl rounded border border-gray-200" :style="{ top: `${position.y}px`, left: `${position.x}px` }">
+    <div v-if="showMenu" class="absolute z-[999999] bg-white dark:bg-regal-dark shadow-xl rounded border border-gray-200" :style="{ top: `${position.y}px`, left: `${position.x}px` }">
       <ul class="w-20 py-1 text-center">
         <li v-for="(item, index) in menuItems" :key="index" @click="item.action()" class="hover:bg-gray-50 px-2 py-1 hover:cursor-pointer text-[12px]">
           {{ item.label }}
@@ -55,6 +55,7 @@ const handleContextMenu = (event: MouseEvent) => {
   event.preventDefault()
   position.x = event.clientX
   position.y = event.clientY
+  console.log(position)
   showMenu.value = true
 }
 
