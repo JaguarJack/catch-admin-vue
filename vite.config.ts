@@ -44,6 +44,15 @@ export default defineConfig(({ command, mode }) => {
         localEnabled: command === 'serve',
         watchFiles: true // 监视文件夹中的文件更改。 并实时同步到请求结果
       }),
+      {
+        configureServer(server) {
+          server.watcher.on('add', path => {
+            if (path.includes('views') && path.endsWith('.vue')) {
+              server.restart()
+            }
+          })
+        }
+      },
       AutoImport({
         imports: ['vue', 'vue-router', 'pinia', '@vueuse/core']
         // resolvers: [ ElementPlusResolver({importStyle: 'sass'}) ]
