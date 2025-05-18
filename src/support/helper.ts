@@ -105,6 +105,9 @@ export function _window(key: string) {
 }
 
 export function getBaseUrl() {
+  if (!isProd()) {
+    return '/api'
+  }
   return _window('BASE_URL') ? _window('BASE_URL') : env('VITE_BASE_URL')
 }
 
@@ -132,4 +135,13 @@ export const getFileExt = (filename: string): string => {
 // 获取文件名
 export const getFilename = (filename: string): string => {
   return filename.substring(filename.lastIndexOf('/') + 1)
+}
+
+/**
+ * 是否是生产环境
+ *
+ * @returns
+ */
+export function isProd() {
+  return (env('PROD') === true || env('PRODUCTION') === true) && env('MODE') === 'production'
 }

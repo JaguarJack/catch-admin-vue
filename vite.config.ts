@@ -86,7 +86,14 @@ export default defineConfig(({ command, mode }) => {
       port: 8001,
       open: true, // 自动打开浏览器
       cors: true, // 允许跨域
-      strictPort: true // 端口占用直接退出
+      strictPort: true, // 端口占用直接退出
+      proxy: {
+        '/api': {
+          target: env.VITE_BASE_URL, // 后端接口地址
+          changeOrigin: true, // 修改请求头中的 origin 为目标地址
+          rewrite: path => path.replace(/^\/api/, '') // 可选：移除请求路径中的 /api 前缀
+        }
+      }
     },
     build: {
       chunkSizeWarningLimit: 2000,
