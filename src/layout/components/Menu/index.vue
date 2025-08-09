@@ -52,6 +52,8 @@ function filterMenus(menus: Menu[] | undefined): Menu[] {
       return false
     }
 
+    newMenus.push(m)
+    /**
     if (isHasOnlyChild(m) && m.children?.length) {
       newMenus.push(
         Object.assign({
@@ -62,7 +64,7 @@ function filterMenus(menus: Menu[] | undefined): Menu[] {
       )
     } else {
       newMenus.push(m)
-    }
+    }*/
   })
 
   return newMenus
