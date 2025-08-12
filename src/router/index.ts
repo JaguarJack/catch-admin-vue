@@ -9,14 +9,15 @@ getModuleViewComponents()
 export const constantRoutes: RouteRecordRaw[] = [
   {
     path: '/dashboard',
+    meta: { title: 'Dashboard', icon: 'home' },
     component: () => import('@/layout/index.vue'),
     children: [
-      {
-        path: '',
-        name: 'Dashboard',
-        meta: { title: 'Dashboard', icon: 'home', hidden: false },
-        component: () => import('@/views/dashboard/index.vue')
-      }
+        {
+            path: 'dashboard',
+            name: 'Dashboard',
+            meta: { title: 'Home', icon: 'home' },
+            component: () => import('@/views/dashboard/index.vue')
+        }
     ]
   },
   {
