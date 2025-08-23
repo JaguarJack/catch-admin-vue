@@ -96,7 +96,7 @@ export const useGenerateStore = defineStore('generateStore', {
           this.structures.push(
             Object.assign({
               field: field.name,
-              label: '',
+              label: field.label,
               form_component: 'input',
               list: true,
               form: true,

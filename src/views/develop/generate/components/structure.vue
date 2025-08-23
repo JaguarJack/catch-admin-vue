@@ -7,7 +7,7 @@
           <el-input v-model="scope.row.label" />
         </template>
       </el-table-column>
-      <el-table-column prop="label" :label="$t('generate.schema.structure.form_component')" width="110px">
+      <el-table-column prop="form_component" :label="$t('generate.schema.structure.form_component')" width="200px">
         <template #default="scope">
           <el-select v-model="scope.row.form_component" class="w-full" filterable>
             <el-option v-for="component in formComponents" :key="component" :label="component" :value="component" />
