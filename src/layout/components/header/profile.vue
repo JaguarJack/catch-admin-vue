@@ -20,13 +20,16 @@
 
 <script lang="ts" setup>
 import { useUserStore } from '@/stores/modules/user'
+import { useNavTabStore } from "@/stores/modules/tabs";
 import Message from '@/support/message'
 
 const userStore = useUserStore()
+const navTabStore = useNavTabStore()
 
 const logout = () => {
   Message.confirm('确定退出系统吗?', () => {
-    userStore.logout()
+      userStore.logout()
+      navTabStore.removeAllTabs()
   })
 }
 </script>
