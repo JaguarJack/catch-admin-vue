@@ -1,5 +1,5 @@
 <template>
-  <el-switch @change="enabeldField" :active-value="activeValue" :inactive-value="inactiveValue" :model-value="modelValue" :loading="loading" />
+    <el-switch @change="enabledField" :active-value="activeValue" :inactive-value="inactiveValue" :model-value="modelValue" :loading="loading" />
 </template>
 
 <script lang="ts" setup>
@@ -8,24 +8,24 @@ import { Status } from '@/enum/app'
 import { ref, inject } from 'vue'
 
 const props = defineProps({
-  api: {
-    required: true,
-    type: String
-  },
-  id: {
-    required: false,
-    type: [String, Number]
-  },
-  field: {
-    require: false,
-    type: String,
-    default: 'status'
-  },
-  refresh: {
-    type: Function,
-    defaulat: null,
-    required: false
-  }
+    api: {
+        required: true,
+        type: String
+    },
+    id: {
+        required: false,
+        type: [String, Number]
+    },
+    field: {
+        require: false,
+        type: String,
+        default: 'status'
+    },
+    refresh: {
+        type: Function,
+        default: null,
+        required: false
+    }
 })
 
 const modelValue = defineModel()
@@ -36,27 +36,27 @@ const activeValue = ref<boolean | number | string>()
 const inactiveValue = ref<boolean | number | string>()
 
 if (typeof modelValue.value === 'boolean') {
-  activeValue.value = true
-  inactiveValue.value = false
+    activeValue.value = true
+    inactiveValue.value = false
 } else {
-  activeValue.value = Status.ENABLE
-  inactiveValue.value = Status.DISABLE
+    activeValue.value = Status.ENABLE
+    inactiveValue.value = Status.DISABLE
 }
 
 success(() => {
-  modelValue.value = modelValue.value === activeValue.value ? inactiveValue.value : activeValue.value
+    modelValue.value = modelValue.value === activeValue.value ? inactiveValue.value : activeValue.value
 })
 
 afterEnabled.value = () => {
-  if (props.refresh) {
-    props.refresh()
-  } else {
-    const refresh = inject('refresh') as Function
-    refresh()
-  }
+    if (props.refresh) {
+        props.refresh()
+    } else {
+        const refresh = inject('refresh') as Function
+        refresh()
+    }
 }
 
-const enabeldField = () => {
-  enabled(props.api, props.id as string | number, { field: props.field })
+const enabledField = () => {
+    enabled(props.api, props.id as string | number, { field: props.field })
 }
 </script>

@@ -12,12 +12,12 @@ export const constantRoutes: RouteRecordRaw[] = [
     meta: { title: 'Dashboard', icon: 'home' },
     component: () => import('@/layout/index.vue'),
     children: [
-        {
-            path: 'dashboard',
-            name: 'Dashboard',
-            meta: { title: 'Home', icon: 'home' },
-            component: () => import('@/views/dashboard/index.vue')
-        }
+      {
+        path: '',
+        name: 'Dashboard',
+        meta: { title: 'Dashboard', icon: 'home', hidden: false },
+        component: () => import('@/views/dashboard/index.vue')
+      }
     ]
   },
   {

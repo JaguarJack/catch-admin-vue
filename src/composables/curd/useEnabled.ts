@@ -10,6 +10,9 @@ export function useEnabled() {
   const afterEnabled = ref()
   function enabled(path: string, id: string | number, data: object = {}) {
     loading.value = true
+    if (!id) {
+       return false
+    }
     http
       .put(path + '/enable/' + id, data)
       .then(r => {
