@@ -145,3 +145,34 @@ export const getFilename = (filename: string): string => {
 export function isProd() {
   return (env('PROD') === true || env('PRODUCTION') === true) && env('MODE') === 'production'
 }
+
+
+/**
+ * 由于是前后端分离，所以必须使用加上 http://host 才能显示
+ *
+ * 如果前后端项目是同一个域名 则不需要
+ */
+export const warpHost = (path: string | null) => {
+    if (!path) {
+        return path
+    }
+
+    if (path.indexOf('http://') > -1 || path.indexOf('https://') > -1) {
+        return path
+    }
+
+    const serverURL: string = (getBaseUrl() as string).replace('/api', '').trim()
+
+    const currentHost = location.protocol + '//' + location.host
+    console.log(currentHost, serverURL)
+    if (serverURL.indexOf(currentHost) < 0) {
+        // 如果 path 不是以 / 开头 并且 serverUrl 也不是以 / 结尾 凭接的时候
+        // 则是 serverURL + '/' + path
+        if (!path.startsWith('/') && !serverURL.endsWith('/')) {
+            return serverURL + '/' + path
+        }
+        return serverURL + path
+    }
+
+    return path
+}
