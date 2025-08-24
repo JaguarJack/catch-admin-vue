@@ -9,20 +9,19 @@
     v-bind="$attrs"
     :on-success="handleSuccess"
   >
-    <template v-for="(index, name) in $slots" v-slot:[name]>
-      <slot :name="name"></slot>
-    </template>
-    <img :src="modelValue" v-if="modelValue" :class="imageClass" />
-    <div v-else class="flex justify-center w-24 h-24 pt-8 border border-blue-100 border-dashed rounded">
-      <Icon name="plus" />
+    <img v-if="fileModel" :src="fileModel" class="avatar" />
+    <div v-else>
+      <div class="flex justify-center items-center w-20 h-20 border border-collapse">
+        <el-icon><Plus /></el-icon>
+      </div>
     </div>
   </el-upload>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { env, getAuthToken } from '@/support/helper'
-
+import { env, getAuthToken, warpHost } from '@/support/helper'
+import { Plus } from '@element-plus/icons-vue'
 import { Code } from '@/enum/app'
 import Message from '@/support/message'
 
@@ -46,9 +45,11 @@ const props = defineProps({
   }
 })
 
-const emits = defineEmits(['update:modelValue'])
 const baseURL = env('VITE_BASE_URL')
-
+const fileModel = defineModel({
+  type: String,
+  default: ''
+})
 const actionApi = ref<string>('')
 
 actionApi.value = baseURL + props.action
@@ -58,7 +59,7 @@ token.value = 'Bearer ' + getAuthToken()
 
 const handleSuccess = (response: any) => {
   if (response.code === Code.SUCCESS) {
-    emits('update:modelValue', response.data.path)
+    fileModel.value = warpHost(response.data.path)
   } else {
     Message.error(response.message)
   }
