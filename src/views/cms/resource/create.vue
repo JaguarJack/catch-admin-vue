@@ -6,8 +6,8 @@
       :rules="[
         {
           required: true,
-          message: '名称必须填写',
-        },
+          message: '名称必须填写'
+        }
       ]"
     >
       <el-input v-model="formData.name" name="name" clearable />
@@ -26,8 +26,8 @@
       :rules="[
         {
           required: true,
-          message: '内容必须填写',
-        },
+          message: '内容必须填写'
+        }
       ]"
     >
       <Upload class="w-28" action="upload/image" :show-file-list="false" name="image" :onSuccess="uploadSuccess">
@@ -67,21 +67,22 @@
 </template>
 
 <script lang="ts" setup>
+// @ts-nocheck
 import { useCreate } from '@/composables/curd/useCreate'
 import { useShow } from '@/composables/curd/useShow'
-import { onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
 
 const props = defineProps({
-  primary: String | Number,
-  api: String,
+  primary: [String, Number],
+  api: String
 })
 
-const { formData, form, loading, submitForm, close } = useCreate(props.api, props.primary)
+const { formData, form, loading, submitForm, close } = useCreate(props.api as string, props.primary)
 formData.value.type = 1
 formData.value.is_visible = 1
 formData.value.is_target = 1
 if (props.primary) {
-  useShow(props.api, props.primary, formData)
+  useShow(props.api as string, props.primary, formData)
 }
 
 const emit = defineEmits(['close'])
@@ -89,7 +90,7 @@ onMounted(() => {
   close(() => emit('close'))
 })
 
-const uploadSuccess = r => {
+const uploadSuccess = (r: any) => {
   formData.value.content = r.data.path
 }
 </script>

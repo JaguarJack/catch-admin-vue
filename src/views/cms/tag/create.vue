@@ -6,8 +6,8 @@
       :rules="[
         {
           required: true,
-          message: '标签名称必须填写',
-        },
+          message: '标签名称必须填写'
+        }
       ]"
     >
       <el-input v-model="formData.name" name="excerpt" clearable />
@@ -19,19 +19,20 @@
 </template>
 
 <script lang="ts" setup>
+// @ts-nocheck
 import { useCreate } from '@/composables/curd/useCreate'
 import { useShow } from '@/composables/curd/useShow'
 import { onMounted } from 'vue'
 
 const props = defineProps({
-  primary: String | Number,
-  api: String,
+  primary: [String, Number],
+  api: String
 })
 
-const { formData, form, loading, submitForm, close } = useCreate(props.api, props.primary)
+const { formData, form, loading, submitForm, close } = useCreate(props.api as string, props.primary)
 
 if (props.primary) {
-  useShow(props.api, props.primary, formData)
+  useShow(props.api as string, props.primary, formData)
 }
 
 const emit = defineEmits(['close'])

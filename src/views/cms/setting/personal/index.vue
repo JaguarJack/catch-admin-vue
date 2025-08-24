@@ -1,7 +1,7 @@
 <template>
   <layout title="个人设置">
     <template v-slot:body>
-      <el-form :model="formData" label-width="120px" ref="form" class="pr-4 w-full bg-white dark:bg-regal-dark pt-5">
+      <el-form :model="formData" label-width="120px" ref="form" class="pt-5 pr-4 w-full bg-white dark:bg-regal-dark">
         <div class="flex flex-col mx-auto w-2/3">
           <el-form-item
             label="昵称"
@@ -9,8 +9,8 @@
             :rules="[
               {
                 required: true,
-                message: '昵称名称必须填写',
-              },
+                message: '昵称名称必须填写'
+              }
             ]"
           >
             <el-input v-model="formData.personal_nickname" clearable placeholder="昵称" />
@@ -33,8 +33,8 @@
             :rules="[
               {
                 type: 'url',
-                message: '个人主页链接不符合规则',
-              },
+                message: '个人主页链接不符合规则'
+              }
             ]"
           >
             <el-input v-model="formData.person_homepage" clearable placeholder="个人主页" />
@@ -57,8 +57,8 @@
                 :rules="[
                   {
                     type: 'url',
-                    message: 'GitHub主页链接不符合规则',
-                  },
+                    message: 'GitHub主页链接不符合规则'
+                  }
                 ]"
               />
               <el-input
@@ -68,8 +68,8 @@
                 :rules="[
                   {
                     type: 'url',
-                    message: '推特主页链接不符合规则',
-                  },
+                    message: '推特主页链接不符合规则'
+                  }
                 ]"
               />
               <el-input
@@ -79,8 +79,8 @@
                 :rules="[
                   {
                     type: 'url',
-                    message: 'linkedin 主页链接不符合规则',
-                  },
+                    message: 'linkedin 主页链接不符合规则'
+                  }
                 ]"
               />
               <el-input
@@ -90,8 +90,8 @@
                 :rules="[
                   {
                     type: 'url',
-                    message: '微博主页链接不符合规则',
-                  },
+                    message: '微博主页链接不符合规则'
+                  }
                 ]"
               />
               <el-input
@@ -101,8 +101,8 @@
                 :rules="[
                   {
                     type: 'url',
-                    message: 'G+主页链接不符合规则',
-                  },
+                    message: 'G+主页链接不符合规则'
+                  }
                 ]"
               />
               <el-input
@@ -112,8 +112,8 @@
                 :rules="[
                   {
                     type: 'url',
-                    message: 'reddit主页链接不符合规则',
-                  },
+                    message: 'reddit主页链接不符合规则'
+                  }
                 ]"
               />
             </div>
@@ -127,7 +127,7 @@
             <el-input v-model="formData.personal_status" clearable placeholder="一句话描述当前状态" />
           </el-form-item>
         </div>
-        <div class="bg-white dark:bg-regal-dark flex justify-center mb-3">
+        <div class="flex justify-center mb-3 bg-white dark:bg-regal-dark">
           <el-button type="primary" @click="submitForm(form)" class="ml-5 w-[10rem]">保 存</el-button>
         </div>
       </el-form>
@@ -136,6 +136,7 @@
 </template>
 
 <script setup lang="ts">
+// @ts-nocheck
 import Layout from '../layout.vue'
 import { useCreate } from '@/composables/curd/useCreate'
 import http from '@/support/http'

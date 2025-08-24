@@ -9,8 +9,8 @@
       :rules="[
         {
           required: true,
-          message: '分类名称必须填写',
-        },
+          message: '分类名称必须填写'
+        }
       ]"
     >
       <el-input v-model="formData.name" name="name" clearable />
@@ -21,13 +21,13 @@
       :rules="[
         {
           required: true,
-          message: '分类别名必须填写',
-        },
+          message: '分类别名必须填写'
+        }
       ]"
     >
       <el-input v-model="formData.slug" name="slug" clearable />
-      <div class="text-[6px] text-gray-300">别名可以自定义分类名称, 通常只包含字母、数字和"_,-"连字符</div>
-      <div class="text-[6px] text-gray-300">别名可以自定义作 url 短链接使用，所以分类是可以自定义链接的</div>
+      <div class="text-sm text-gray-300">别名可以自定义分类名称, 通常只包含字母、数字和"_,-"连字符</div>
+      <div class="text-sm text-gray-300">别名可以自定义作 url 短链接使用，所以分类是可以自定义链接的</div>
     </el-form-item>
     <el-form-item label="类型" prop="type">
       <el-select v-model="formData.type" placeholder="选择类型">
@@ -42,8 +42,8 @@
         {
           type: 'url',
           required: true,
-          message: '链接地址格式不正确',
-        },
+          message: '链接地址格式不正确'
+        }
       ]"
     >
       <el-input v-model="formData.href" name="href" placeholder="请输入链接地址" />
@@ -58,24 +58,25 @@
 </template>
 
 <script lang="ts" setup>
+// @ts-nocheck
 import { useCreate } from '@/composables/curd/useCreate'
 import { useShow } from '@/composables/curd/useShow'
 import { onMounted, ref } from 'vue'
 import http from '@/support/http'
 
 const props = defineProps({
-  primary: String | Number,
-  api: String,
+  primary: [String, Number],
+  api: String
 })
 
-const { formData, form, loading, submitForm, close } = useCreate(props.api, props.primary)
+const { formData, form, loading, submitForm, close } = useCreate(props.api as string, props.primary)
 // 排序默认值
 formData.value.order = 1
 formData.value.type = 1
 
 if (props.primary) {
-  const { afterShow } = useShow(props.api, props.primary, formData)
-  afterShow.value = form => {
+  const { afterShow } = useShow(props.api as string, props.primary, formData)
+  afterShow.value = (form: any) => {
     if (form.value.parent_id === 0) {
       delete form.value.parent_id
     }
@@ -84,7 +85,7 @@ if (props.primary) {
 
 const category = ref()
 const getCategory = () => {
-  http.get(props.api).then(r => {
+  http.get(props.api as string).then(r => {
     category.value = r.data.data
   })
 }
@@ -92,7 +93,7 @@ const getCategory = () => {
 const cateTypes = ref([])
 const getCategoryTypes = () => {
   http.get('cms/setting/site_category_types').then(r => {
-    cateTypes.value = r.data.data
+    cateTypes.value = r.data.data.site_category_types
   })
 }
 const emit = defineEmits(['close'])

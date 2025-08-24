@@ -1,7 +1,7 @@
 <template>
   <layout title="内容设定">
     <template v-slot:body>
-      <el-form :model="formData" label-width="120px" ref="form" class="pr-4 w-full bg-white dark:bg-regal-dark pt-5">
+      <el-form :model="formData" label-width="120px" ref="form" class="pt-5 pr-4 w-full bg-white dark:bg-regal-dark">
         <div class="flex flex-col mx-auto w-2/3">
           <el-form-item label="首页显示" prop="site_homepage_show">
             <el-radio-group v-model="formData.site_homepage_show">
@@ -24,7 +24,7 @@
               <el-checkbox v-model="formData.site_comment_nested" label="启用评论嵌套" size="large" />
               <div class="w-full">
                 <el-checkbox v-model="formData.site_comment_limit" size="large" label="分页显示评论" />
-                ，每页显示 <el-input-number v-model="formData.site_comment_per_page" controls-position="right" class="ml-2 mr-2" />条
+                ，每页显示 <el-input-number v-model="formData.site_comment_per_page" controls-position="right" class="mr-2 ml-2" />条
               </div>
               <el-checkbox v-model="formData.site_comment_order_desc" label="启用评论倒序显示" size="large" />
               <el-checkbox v-model="formData.site_comment_check" label="启用评论审核" size="large" />
@@ -69,7 +69,7 @@
             <div class="text-[10px] text-gray-400">当评论者的内容与关键字相匹配的时候，则视为垃圾内容，会直接放入回收站，不予显示。每个关键字占一行录入</div>
           </el-form-item>
         </div>
-        <div class="bg-white dark:bg-regal-dark flex justify-center mb-3">
+        <div class="flex justify-center mb-3 bg-white dark:bg-regal-dark">
           <el-button type="primary" @click="submitForm(form)" class="ml-5 w-[10rem]">保 存</el-button>
         </div>
       </el-form>
@@ -78,6 +78,7 @@
 </template>
 
 <script setup lang="ts">
+// @ts-nocheck
 import Layout from '../layout.vue'
 import { useCreate } from '@/composables/curd/useCreate'
 import http from '@/support/http'

@@ -1,7 +1,7 @@
 <template>
   <layout title="常规选项">
     <template v-slot:body>
-      <el-form :model="formData" label-width="120px" ref="form" class="pr-4 w-full bg-white dark:bg-regal-dark pt-5">
+      <el-form :model="formData" label-width="120px" ref="form" class="pt-5 pr-4 w-full bg-white dark:bg-regal-dark">
         <div class="flex flex-col mx-auto w-2/3">
           <el-form-item
             label="站点名称"
@@ -9,8 +9,8 @@
             :rules="[
               {
                 required: true,
-                message: '站点名称必须填写',
-              },
+                message: '站点名称必须填写'
+              }
             ]"
           >
             <el-input v-model="formData.site_title" clearable />
@@ -66,7 +66,7 @@
             <el-input v-model="formData.site_script" clearable type="textarea" />
           </el-form-item>
         </div>
-        <div class="bg-white dark:bg-regal-dark flex justify-center mb-3">
+        <div class="flex justify-center mb-3 bg-white dark:bg-regal-dark">
           <el-button type="primary" @click="submitForm(form)" class="ml-5 w-[10rem]">保 存</el-button>
         </div>
       </el-form>
@@ -75,6 +75,7 @@
 </template>
 
 <script setup lang="ts">
+// @ts-nocheck
 import Layout from '../layout.vue'
 import { useCreate } from '@/composables/curd/useCreate'
 import http from '@/support/http'

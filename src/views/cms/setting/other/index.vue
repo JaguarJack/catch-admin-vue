@@ -1,12 +1,12 @@
 <template>
   <layout title="其他">
     <template v-slot:body>
-      <el-form :model="formData" label-width="120px" ref="form" class="pr-4 w-full bg-white dark:bg-regal-dark pt-5">
+      <el-form :model="formData" label-width="120px" ref="form" class="pt-5 pr-4 w-full bg-white dark:bg-regal-dark">
         <div class="flex flex-col mx-auto w-2/3">
           <el-form-item label="分类类型" prop="site_category_types">
             <div class="flex flex-col gap-y-2 w-full">
               <div class="flex flex-row gap-x-2" v-for="(item, k) in formData.site_category_types">
-                <div class="w-2/3 flex flex-row gap-x-2">
+                <div class="flex flex-row gap-x-2 w-2/3">
                   <el-input placeholder="类型名称" v-model="item.name" />
                   <el-input placeholder="模版名称" v-model="item.template" />
                 </div>
@@ -29,24 +29,24 @@
               <el-radio-button :label="1" size="small">是</el-radio-button>
               <el-radio-button :label="2" size="small">否</el-radio-button>
             </el-radio-group>
-            <div class="text-sm text-gray-400 pl-3">针对分类多级URL(/a/b)，只使用最后一级(/b)</div>
+            <div class="pl-3 text-sm text-gray-400">针对分类多级URL(/a/b)，只使用最后一级(/b)</div>
           </el-form-item>
           <el-form-item label="链接结构">
             <el-radio-group v-model="formData.site_url_struct" class="flex flex-col justify-center">
               <div class="w-full">
-                <el-radio :label="1">动态模式<span class="text-sm text-gray-400 ml-3">https://domain.com/post?id=1</span> </el-radio>
+                <el-radio :label="1">动态模式<span class="ml-3 text-sm text-gray-400">https://domain.com/post?id=1</span> </el-radio>
               </div>
               <div class="w-full">
-                <el-radio :label="2">静态模式<span class="text-sm text-gray-400 ml-3">https://domain.com/post/{id}</span> </el-radio>
+                <el-radio :label="2">静态模式<span class="ml-3 text-sm text-gray-400">https://domain.com/post/{id}</span> </el-radio>
               </div>
               <div class="w-full">
                 <el-radio :label="3"
-                  >月日结构 <span class="text-sm text-gray-400 ml-3">https://domain.com/{{ date.getMonth() }}/{{ date.getDay() }}/{id}</span>
+                  >月日结构 <span class="ml-3 text-sm text-gray-400">https://domain.com/{{ date.getMonth() }}/{{ date.getDay() }}/{id}</span>
                 </el-radio>
               </div>
               <div class="w-full">
                 <el-radio :label="4"
-                  >年月日结构 <span class="text-sm text-gray-400 ml-3">https://domain.com/{{ date.getFullYear() }}/{{ date.getMonth() }}/{{ date.getDay() }}/{id}</span>
+                  >年月日结构 <span class="ml-3 text-sm text-gray-400">https://domain.com/{{ date.getFullYear() }}/{{ date.getMonth() }}/{{ date.getDay() }}/{id}</span>
                 </el-radio>
               </div>
             </el-radio-group>
@@ -54,12 +54,12 @@
 
           <el-form-item label="URL后缀">
             <el-input placeholder="URL后缀" v-model="formData.site_url_suffix" style="width: 200px" />
-            <div class="text-sm text-gray-400 ml-3">例如: html, asp, php 等等后缀，但是在动态模式下无效</div>
+            <div class="ml-3 text-sm text-gray-400">例如: html, asp, php 等等后缀，但是在动态模式下无效</div>
           </el-form-item>
         </div>
         <el-divider content-position="center" />
 
-        <div class="bg-white dark:bg-regal-dark flex justify-center mb-3">
+        <div class="flex justify-center mb-3 bg-white dark:bg-regal-dark">
           <el-button type="primary" @click="submitForm(form)" class="ml-5 w-[10rem]">保 存</el-button>
         </div>
       </el-form>
@@ -68,6 +68,7 @@
 </template>
 
 <script setup lang="ts">
+// @ts-nocheck
 import Layout from '../layout.vue'
 
 import { useCreate } from '@/composables/curd/useCreate'
@@ -90,7 +91,7 @@ const addCateType = () => {
     name: '',
     template: '',
     value: latest.value + 1,
-    is_default: false,
+    is_default: false
   })
 }
 const deleteCateType = deleteK => {

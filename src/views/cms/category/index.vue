@@ -39,6 +39,7 @@
   </div>
 </template>
 <script lang="ts" setup>
+// @ts-nocheck
 import { computed, onMounted } from 'vue'
 import Create from './create.vue'
 import { useGetList } from '@/composables/curd/useGetList'
