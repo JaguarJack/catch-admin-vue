@@ -42,7 +42,7 @@ import '@/public/tinymce/plugins/emoticons/plugin.min'
 import '@/public/tinymce/langs/zh-CN'
 
 import Editor from '@tinymce/tinymce-vue'
-import { env } from '@/support/helper'
+import { env, warpHost } from '@/support/helper'
 import Http from '@/support/http'
 import Message from '@/support/message'
 import { ref, watch } from 'vue'
@@ -97,7 +97,7 @@ const uploaded = (blobInfo: any, progress: any) =>
     } else {
       const params = new FormData()
       params.append('image', blobInfo.blob())
-      Http.post(env('VITE_BASE_URL') + 'upload/image', params)
+      Http.post(env('VITE_BASE_URL') + '/upload/image', params)
         .then(res => {
           if (res.data.code === 10000) {
             resolve(res.data.data.path)
