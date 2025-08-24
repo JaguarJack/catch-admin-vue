@@ -206,7 +206,6 @@ class Request {
         if (code === 1e4) {
           return response
         }
-        console.log(Code.LOGIN_EXPIRED, code)
         if (code === 10004) {
           Message.error(message || 'Error')
         } else if (code === Code.LOST_LOGIN || code === Code.LOGIN_EXPIRED) {
