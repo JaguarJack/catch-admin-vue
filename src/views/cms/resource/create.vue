@@ -30,7 +30,7 @@
         }
       ]"
     >
-      <Upload class="w-28" action="upload/image" :show-file-list="false" name="image" :onSuccess="uploadSuccess">
+      <Upload class="w-28" action="/upload/image" :show-file-list="false" name="image" :onSuccess="uploadSuccess">
         <div class="flex flex-col">
           <img :src="formData.content" v-if="formData.content" />
           <el-button type="success" v-else size="small">选择</el-button>

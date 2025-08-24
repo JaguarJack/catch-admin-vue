@@ -21,7 +21,7 @@
         <el-table-column prop="id" label="ID" width="50" />
         <el-table-column prop="title" label="标题" />
         <el-table-column prop="category" label="分类" />
-        <el-table-column prop="author" label="作者" />
+        <el-table-column prop="author_name" label="作者" />
         <el-table-column prop="status" label="状态">
           <template #default="scope">
             <Status v-model="scope.row.status" :id="scope.row.id" api="/cms/post" />
