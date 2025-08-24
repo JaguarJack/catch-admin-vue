@@ -211,7 +211,7 @@ class Request {
           Message.error(message || 'Error')
         } else if (code === Code.LOST_LOGIN || code === Code.LOGIN_EXPIRED) {
           // to re-login
-          Message.confirm(message + '，需要重新登陆', function () {
+          Message.confirm('登录已失效，需要重新登陆', function () {
             removeAuthToken()
             router.push('/login')
           })
