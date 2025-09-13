@@ -9,7 +9,7 @@ export interface Permission {
   permission_mark: string
   route: string
   redirect: string
-  keepAlive: boolean
+  keepalive: number
   hidden: boolean
   active_menu: string
 }
