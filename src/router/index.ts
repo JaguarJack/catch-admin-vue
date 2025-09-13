@@ -2,10 +2,64 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import type { App } from 'vue'
 // module routers
 import { getModuleViewComponents } from './constantRoutes'
-import { isGenerate } from '@/support/helper'
+import { isGenerate, isProd } from '@/support/helper'
 
 // const userStore = useUserStore()
 getModuleViewComponents()
+const notInProdRoute = () => {
+  if (isProd()) {
+    return [] as RouteRecordRaw[]
+  } else {
+    return [
+      {
+        path: '/develop',
+        component: () => import('@/layout/index.vue'),
+        meta: { title: '开发工具', icon: 'wrench-screwdriver', hidden: !isGenerate() },
+        children: [
+          {
+            path: 'modules',
+            name: 'modules',
+            meta: {
+              title: '模块管理'
+            },
+            component: () => import('@/views/develop/module/index.vue')
+          },
+          {
+            path: 'schemas',
+            name: 'schemas',
+            meta: {
+              title: 'Schema'
+            },
+            component: () => import('@/views/develop/schema/index.vue')
+          },
+          {
+            path: 'generate/:schema',
+            name: 'generate',
+            meta: { title: '代码生成', hidden: true, active_menu: '/develop/schemas' },
+            component: () => import('@/views/develop/generate/index.vue')
+          }
+        ]
+      },
+      {
+        path: '/develop',
+        component: () => import('@/layout/index.vue'),
+        meta: { title: '开发工具', icon: 'wrench-screwdriver', hidden: isGenerate() },
+        children: [
+          {
+            path: 'generates',
+            name: 'generates',
+            meta: {
+              title: '生成代码'
+            },
+            component: () => import('@/views/develop/generator/index.vue')
+          }
+        ]
+      }
+    ]
+  }
+}
+// @ts-ignore
+// .concat(moduleRoutes)
 export const constantRoutes: RouteRecordRaw[] = [
   {
     path: '/dashboard',
@@ -19,55 +73,8 @@ export const constantRoutes: RouteRecordRaw[] = [
         component: () => import('@/views/dashboard/index.vue')
       }
     ]
-  },
-  {
-    path: '/develop',
-    component: () => import('@/layout/index.vue'),
-    meta: { title: '开发工具', icon: 'wrench-screwdriver', hidden: !isGenerate() },
-    children: [
-      {
-        path: 'modules',
-        name: 'modules',
-        meta: {
-          title: '模块管理'
-        },
-        component: () => import('@/views/develop/module/index.vue')
-      },
-      {
-        path: 'schemas',
-        name: 'schemas',
-        meta: {
-          title: 'Schema'
-        },
-        component: () => import('@/views/develop/schema/index.vue')
-      },
-      {
-        path: 'generate/:schema',
-        name: 'generate',
-        meta: { title: '代码生成', hidden: true, active_menu: '/develop/schemas' },
-        component: () => import('@/views/develop/generate/index.vue')
-      }
-    ]
-  },
-  {
-    path: '/develop',
-    component: () => import('@/layout/index.vue'),
-    meta: { title: '开发工具', icon: 'wrench-screwdriver', hidden: isGenerate() },
-    children: [
-      {
-        path: 'generates',
-        name: 'generates',
-        meta: {
-          title: '生成代码'
-        },
-        component: () => import('@/views/develop/generator/index.vue')
-      }
-    ]
   }
-]
-// @ts-ignore
-// .concat(moduleRoutes)
-
+].concat(notInProdRoute() as any)
 // default routes, it will not change to menus
 const defaultRoutes: RouteRecordRaw[] = [
   {
