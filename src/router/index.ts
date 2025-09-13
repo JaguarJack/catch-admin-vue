@@ -20,7 +20,8 @@ const notInProdRoute = () => {
             path: 'modules',
             name: 'modules',
             meta: {
-              title: '模块管理'
+              title: '模块管理',
+              keepalive: 1
             },
             component: () => import('@/views/develop/module/index.vue')
           },
@@ -28,14 +29,15 @@ const notInProdRoute = () => {
             path: 'schemas',
             name: 'schemas',
             meta: {
-              title: 'Schema'
+              title: 'Schema',
+              keepalive: 1
             },
             component: () => import('@/views/develop/schema/index.vue')
           },
           {
             path: 'generate/:schema',
             name: 'generate',
-            meta: { title: '代码生成', hidden: true, active_menu: '/develop/schemas' },
+            meta: { title: '代码生成', hidden: true, active_menu: '/develop/schemas', keepalive: 1 },
             component: () => import('@/views/develop/generate/index.vue')
           }
         ]
@@ -43,13 +45,14 @@ const notInProdRoute = () => {
       {
         path: '/develop',
         component: () => import('@/layout/index.vue'),
-        meta: { title: '开发工具', icon: 'wrench-screwdriver', hidden: isGenerate() },
+        meta: { title: '开发工具', icon: 'wrench-screwdriver', hidden: isGenerate(), keepalive: 1 },
         children: [
           {
             path: 'generates',
             name: 'generates',
             meta: {
-              title: '生成代码'
+              title: '生成代码',
+              keepalive: 1
             },
             component: () => import('@/views/develop/generator/index.vue')
           }
@@ -69,7 +72,7 @@ export const constantRoutes: RouteRecordRaw[] = [
       {
         path: '',
         name: 'Dashboard',
-        meta: { title: 'Dashboard', icon: 'home', hidden: false },
+        meta: { title: 'Dashboard', icon: 'home', hidden: false, keepalive: 1 },
         component: () => import('@/views/dashboard/index.vue')
       }
     ]
