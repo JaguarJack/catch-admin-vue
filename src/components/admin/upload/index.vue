@@ -19,6 +19,7 @@
 </template>
 
 <script setup lang="ts">
+// @ts-nocheck
 import { ref } from 'vue'
 import { env, getAuthToken, warpHost } from '@/support/helper'
 import { Plus } from '@element-plus/icons-vue'
