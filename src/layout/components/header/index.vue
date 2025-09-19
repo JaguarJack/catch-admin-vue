@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row h-14 w-full drop-shadow border-l border-gray-200" style="background-color: var(--header-bg-color)">
+  <div class="flex flex-row h-14 w-full border-b border-l dark:border-gray-800" style="background-color: var(--header-bg-color)">
     <div class="flex flex-row justify-between w-full h-14">
       <div class="flex flex-row min-w-[17rem]">
         <div class="h-full flex items-center w-8 ml-2 hover:cursor-pointer" @click="store.changeExpaned">

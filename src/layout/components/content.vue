@@ -5,7 +5,7 @@
     <!-- Tag view -->
     <!--<div class=""></div>-->
     <!-- Container -->
-    <div class="overflow-auto p-1 max-w-full h-screen sm:p-3 sm:overflow-x-hidden">
+    <div class="overflow-auto p-1 max-w-full h-screen sm:p-3 sm:overflow-x-hidden dark:bg-regal-deep-dark">
       <div class="min-h-[calc(100vh-8rem)]">
         <router-view v-slot="{ Component }">
           <transition name="fade-transform" mode="out-in">

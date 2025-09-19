@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full h-12 px-1 bg-white border-t border-gray-300 border-solid dark:bg-regal-dark sm:px-3 gap-x-2 menu" ref="container" v-if="tabs.length > 0">
+  <div class="flex w-full h-12 px-1 bg-white dark:bg-regal-dark sm:px-3 gap-x-2 menu" ref="container" v-if="tabs.length > 0">
     <ContextMenu>
       <el-tag
         class="mt-1.5 hover:cursor-pointer"
